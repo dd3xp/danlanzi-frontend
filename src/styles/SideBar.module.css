@@ -3,15 +3,15 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 64px;
+  width: 82px;
   height: 100vh;
   background: var(--bg);
-  border-right: 1px solid #181818;
+  border-right: 1px solid #1a1a1a;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px 0;
-  z-index: 1000;
+  z-index: 2000;
   transition: width 0.3s ease;
   overflow: hidden;
 }
@@ -30,15 +30,15 @@
   justify-content: center;
   transition: background-color 0.2s ease;
   cursor: pointer;
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 /* Homepage按钮样式 */
 .homepage {
   width: 100%;
-  height: 48px;
+  height: 64px;
   border-radius: 0;
-  margin-bottom: 12px;
+  margin-bottom: 0;
   background: var(--bg);
   color: #b0b0b0;
   justify-content: center;
@@ -52,9 +52,9 @@
 /* 通用导航按钮样式（与homepage一致） */
 .navItem {
   width: 100%;
-  height: 48px;
+  height: 64px;
   border-radius: 0;
-  margin-bottom: 12px;
+  margin-bottom: 0;
   background: var(--bg);
   color: #b0b0b0;
   justify-content: center;
@@ -63,6 +63,11 @@
   display: flex;
   align-items: center;
   position: relative;
+}
+
+/* 第一个导航按钮与汉堡菜单拉开一点距离 */
+.sidebar > .navItem:first-of-type {
+  margin-top: 16px;
 }
 
 /* 展开后按钮位置写死 */
@@ -78,9 +83,15 @@
   color: #e0e0e0;      /* 提升文字对比度 */
 }
 
-/* 当homepage悬停时，sidebar展开 */
-.sidebar:has(.homepage:hover),
-.sidebar:has(.navItem:hover) {
+/* 当前页面激活状态 */
+.navItem.active {
+  background: #2a2b2c; /* 比悬停稍深的背景 */
+  color: #ffffff;      /* 更亮的文字颜色 */
+  border-left: 4px solid #ffffff; /* 左侧白色竖线 */
+}
+
+/* 悬停展开状态（通过JavaScript控制） */
+.sidebar.hovered {
   width: 200px;
 }
 
@@ -90,26 +101,26 @@
 }
 
 .homepage svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
   display: block;
   position: absolute;
-  left: 22px;
+  left: 28px;
 }
 
 .navItem svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
   display: block;
   position: absolute;
-  left: 22px;
+  left: 28px;
 }
 
 .homepageText {
   position: absolute;
-  left: 60px;
+  left: 72px;
   font-size: 14px;
   white-space: nowrap;
   opacity: 0;
@@ -119,7 +130,7 @@
 
 .navText {
   position: absolute;
-  left: 60px;
+  left: 72px;
   font-size: 14px;
   white-space: nowrap;
   opacity: 0;
@@ -127,8 +138,8 @@
   display: none;
 }
 
-.sidebar:has(.homepage:hover) .homepageText,
-.sidebar:has(.navItem:hover) .navText {
+.sidebar.hovered .homepageText,
+.sidebar.hovered .navText {
   opacity: 1;
   display: block;
 }
@@ -150,10 +161,10 @@
 
 /* 汉堡图标 */
 .hamburger {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 16px; /* 增加底部间距 */
   background: var(--bg);
   color: #b0b0b0;
   justify-content: center;
@@ -163,27 +174,27 @@
   align-items: center;
   position: relative;
   align-self: flex-start;
-  margin-left: 12px;
+  margin-left: 16px; /* 左内边距 16 + 汉堡线左 8 = 24 视觉对齐 */
 }
 
 .hamburgerLine {
   display: block;
-  width: 18px;
+  width: 22px;
   height: 2px;
   background: #b0b0b0;
   border-radius: 1px;
   position: absolute;
-  left: 11px;
+  left: 14px;
 }
 
 .hamburgerLine:nth-child(1) {
-  top: 12px;
+  top: 14px;
 }
 
 .hamburgerLine:nth-child(2) {
-  top: 19px;
+  top: 22px;
 }
 
 .hamburgerLine:nth-child(3) {
-  top: 26px;
+  top: 30px;
 }

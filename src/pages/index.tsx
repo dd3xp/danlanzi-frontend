@@ -1,20 +1,20 @@
-import SideBar from '@/components/SideBar';
-import Avatar from '@/components/Avatar';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function Home() {
-  return (
-    <>
-      <SideBar />
-      <Avatar />
-      <main className="app-main" />
-    </>
-  );
+  const router = useRouter();
+  
+  useEffect(() => {
+    router.replace('/user');
+  }, [router]);
+  
+  return null;
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'zh', ['common'])), // 默认语言调整
+    ...(await serverSideTranslations(locale ?? 'zh', ['common'])),
   },
 });

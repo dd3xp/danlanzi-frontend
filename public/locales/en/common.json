@@ -1,4 +1,5 @@
 {
+  "logoAlt": "Dan Basket Logo",
   "avatar": {
     "alt": "User Avatar",
     "ariaLabel": "User"
@@ -6,6 +7,19 @@
   "sidebar": {
     "homepage": "Home",
     "courses": "Courses",
-    "myCourses": "My Courses"
+    "myCourses": "My Courses",
+    "resources": "Resources"
+  },
+  "login": {
+    "subtitle": "Sign in to Dan Basket",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "loginButton": "Sign In",
+    "noAccount": "Don't have an account?",
+    "signup": "Sign up now"
   }
 }

@@ -7,7 +7,7 @@
 }
 
 .avatarBorder {
-  border: 2px solid var(--red);
+  border: 2px solid var(--blue);
   border-radius: 50%;
   padding: 2px; /* 头像和边框的间距 */
   width: 36px;

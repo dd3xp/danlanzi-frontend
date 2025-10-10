@@ -1,0 +1,26 @@
+/* Logo 组件样式 */
+.logoContainer {
+  position: fixed;
+  top: 16px;
+  left: 100px; /* 避开侧边栏，侧边栏宽度是82px */
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  opacity: 1;
+}
+
+/* 去掉hover效果，Logo保持静态 */
+ 
+.logoTitle {
+  margin-left: 10px;
+  font-size: 20px;
+  color: #b0b0b0;
+  white-space: nowrap;
+}

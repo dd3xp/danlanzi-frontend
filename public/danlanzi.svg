@@ -1,0 +1,26 @@
+<!-- 旦篮子 Logo：实心篮筐 + 横竖各 2 条镂空线，线条与边缘保持间距；高椭圆提手 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="16 16 96 96" role="img" aria-label="旦篮子 Logo">
+  <defs>
+    <!-- 使用遮罩在实心篮筐上“挖空”横竖细线，线条不触碰边缘 -->
+    <mask id="basketMask" maskUnits="userSpaceOnUse">
+      <rect width="128" height="128" fill="black"/>
+      <!-- 篮筐主区域（半圆） -->
+      <path d="M28 60 A36 36 0 0 0 100 60 Z" fill="white"/>
+      <!-- 内部镂空线条，距离边缘留空 -->
+      <g stroke="black" stroke-width="4" stroke-linecap="round">
+        <!-- 横线 -->
+        <path d="M40 72 H88"/>
+        <path d="M44 84 H84"/>
+        <!-- 竖线 -->
+        <path d="M56 68 V92"/>
+        <path d="M72 68 V92"/>
+      </g>
+    </mask>
+  </defs>
+
+  <!-- 高而窄的椭圆提手（像蛋形上半部） -->
+  <path d="M46 60 A18 32 0 0 1 82 60" fill="none" stroke="#2563EB" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 实心篮筐（半圆），应用遮罩得到镂空线 -->
+  <path d="M28 60 A36 36 0 0 0 100 60 Z" fill="#2563EB" mask="url(#basketMask)"/>
+</svg>

@@ -1,4 +1,5 @@
 {
+  "logoAlt": "旦篮子 Logo",
   "avatar": {
     "alt": "用户头像",
     "ariaLabel": "用户"
@@ -6,6 +7,19 @@
   "sidebar": {
     "homepage": "主界面",
     "courses": "课程板块",
-    "myCourses": "我的课程"
+    "myCourses": "我的课程",
+    "resources": "资源管理"
+  },
+  "login": {
+    "subtitle": "登录到旦篮子",
+    "username": "用户名",
+    "usernamePlaceholder": "请输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "rememberMe": "记住我",
+    "forgotPassword": "忘记密码？",
+    "loginButton": "登录",
+    "noAccount": "还没有账户？",
+    "signup": "立即注册"
   }
 }
