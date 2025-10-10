@@ -1,0 +1,189 @@
+/* 侧边栏样式 */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 100vh;
+  background: var(--bg);
+  border-right: 1px solid #181818;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  z-index: 1000;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+/* 图标按钮基础样式 */
+.iconButton {
+  appearance: none;
+  outline: none;
+  border: none;
+  background: var(--bg);
+  height: 40px;
+  width: 40px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+/* Homepage按钮样式 */
+.homepage {
+  width: 100%;
+  height: 48px;
+  border-radius: 0;
+  margin-bottom: 12px;
+  background: var(--bg);
+  color: #b0b0b0;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* 通用导航按钮样式（与homepage一致） */
+.navItem {
+  width: 100%;
+  height: 48px;
+  border-radius: 0;
+  margin-bottom: 12px;
+  background: var(--bg);
+  color: #b0b0b0;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* 展开后按钮位置写死 */
+.sidebar:has(.homepage:hover) .homepage {
+  justify-content: center;
+  padding: 0;
+}
+
+.homepage:hover,
+.navItem:hover {
+  border-radius: 0;
+  background: #232425; /* 更浅的悬停背景 */
+  color: #e0e0e0;      /* 提升文字对比度 */
+}
+
+/* 当homepage悬停时，sidebar展开 */
+.sidebar:has(.homepage:hover),
+.sidebar:has(.navItem:hover) {
+  width: 200px;
+}
+
+/* 侧边栏展开状态（通过点击汉堡菜单） */
+.sidebar.expanded {
+  width: 200px;
+}
+
+.homepage svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: block;
+  position: absolute;
+  left: 22px;
+}
+
+.navItem svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: block;
+  position: absolute;
+  left: 22px;
+}
+
+.homepageText {
+  position: absolute;
+  left: 60px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: none;
+}
+
+.navText {
+  position: absolute;
+  left: 60px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: none;
+}
+
+.sidebar:has(.homepage:hover) .homepageText,
+.sidebar:has(.navItem:hover) .navText {
+  opacity: 1;
+  display: block;
+}
+
+/* 展开状态下显示homepage文字 */
+.sidebar.expanded .homepageText,
+.sidebar.expanded .navText {
+  opacity: 1;
+  display: block;
+}
+
+.iconButton:hover {
+  background: #232425; /* 更浅的悬停背景 */
+}
+
+.iconButton:active {
+  background: #262728; /* 稍深于hover，仍然较浅 */
+}
+
+/* 汉堡图标 */
+.hamburger {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--bg);
+  color: #b0b0b0;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  position: relative;
+  align-self: flex-start;
+  margin-left: 12px;
+}
+
+.hamburgerLine {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: #b0b0b0;
+  border-radius: 1px;
+  position: absolute;
+  left: 11px;
+}
+
+.hamburgerLine:nth-child(1) {
+  top: 12px;
+}
+
+.hamburgerLine:nth-child(2) {
+  top: 19px;
+}
+
+.hamburgerLine:nth-child(3) {
+  top: 26px;
+}

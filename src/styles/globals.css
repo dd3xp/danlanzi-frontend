@@ -1,26 +1,33 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #141516;            /* 页面与sidebar背景：稍微调浅 */
+    --panel: #0b0b0b;         /* sidebar和头像背景（原来的bg色） */
+    --text: #e8e8e8;          /* 浅文本 */
+    --muted: #9aa0a6;         /* 次要色 */
+    --red: #e11d2e;           /* 主红色 */
+    --red-600: #c51624;       /* 深红 */
+    --red-700: #a1121e;
+    --border: #1a1a1a;        /* 细边框 */
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  
+  * { box-sizing: border-box; }
+  html, body, #__next {
+    height: 100%;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+  }
+  
+  
+  /* 主内容区域（空） */
+  .app-main {
+    height: 100vh;
+    width: calc(100% - 64px); /* 压缩宽度，为左侧sidebar留出空间 */
+    margin-left: 64px; /* 向右偏移 */
+    background: transparent; /* 继承整体暗色背景 */
+    transition: margin-left 0.3s ease, width 0.3s ease;
+  }
+  

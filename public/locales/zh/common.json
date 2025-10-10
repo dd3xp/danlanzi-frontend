@@ -1,0 +1,11 @@
+{
+  "avatar": {
+    "alt": "用户头像",
+    "ariaLabel": "用户"
+  },
+  "sidebar": {
+    "homepage": "主界面",
+    "courses": "课程板块",
+    "myCourses": "我的课程"
+  }
+}

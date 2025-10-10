@@ -1,0 +1,47 @@
+/* 头像组件样式 */
+.avatar {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 1001;
+}
+
+.avatarBorder {
+  border: 2px solid var(--red);
+  border-radius: 50%;
+  padding: 2px; /* 头像和边框的间距 */
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+}
+
+.iconButton {
+  appearance: none;
+  outline: none;
+  border: none;
+  background: var(--panel);
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  position: relative; /* 为fill属性提供定位上下文 */
+}
+
+.iconButton:hover {
+  background: #1a1a1a;
+}
+
+.iconButton:active {
+  background: #0f0f0f;
+}
+
+.avatarImage {
+  border-radius: 50%;
+  object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}

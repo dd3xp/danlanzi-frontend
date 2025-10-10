@@ -1,0 +1,11 @@
+{
+  "avatar": {
+    "alt": "User Avatar",
+    "ariaLabel": "User"
+  },
+  "sidebar": {
+    "homepage": "Home",
+    "courses": "Courses",
+    "myCourses": "My Courses"
+  }
+}
