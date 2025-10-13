@@ -1,0 +1,46 @@
+.menu {
+  position: absolute;
+  top: 44px; /* 更靠近头像（头像底部约36px+间距） */
+  right: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 6px;
+  min-width: 168px;
+  z-index: 1000;
+  transform-origin: top right;
+  animation: slideDown 160ms ease-out;
+}
+
+.menuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.menuItem:hover {
+  background: #161616;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scaleY(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+

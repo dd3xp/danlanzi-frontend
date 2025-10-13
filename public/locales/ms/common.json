@@ -1,0 +1,81 @@
+{
+  "logoAlt": "Logo Dan Basket",
+  "avatar": {
+    "alt": "Avatar Pengguna",
+    "ariaLabel": "Pengguna"
+  },
+  "userMenu": {
+    "ariaLabel": "Menu pengguna",
+    "logout": "Log keluar"
+  },
+  "sidebar": {
+    "homepage": "Laman Utama",
+    "courses": "Kursus",
+    "myCourses": "Kursus Saya",
+    "resources": "Sumber"
+  },
+  "login": {
+    "subtitle": "Log masuk ke Dan Basket",
+    "username": "Emel",
+    "usernamePlaceholder": "Masukkan alamat emel anda",
+    "password": "Kata Laluan",
+    "passwordPlaceholder": "Masukkan kata laluan anda",
+    "rememberMe": "Ingat saya",
+    "forgotPassword": "Terlupa kata laluan?",
+    "loginButton": "Log Masuk",
+    "noAccount": "Tiada akaun?",
+    "signup": "Daftar sekarang",
+    "loading": {
+      "logging": "Sedang log masuk..."
+    },
+    "errors": {
+      "emailRequired": "Sila masukkan alamat emel anda",
+      "passwordRequired": "Sila masukkan kata laluan anda"
+    },
+    "success": {
+      "loginSuccess": "Berjaya log masuk"
+    }
+  },
+  "register": {
+    "subtitle": "Cipta Akaun Dan Basket",
+    "nickname": "Nama panggilan",
+    "nicknamePlaceholder": "Masukkan nama panggilan anda",
+    "email": "Emel",
+    "emailPlaceholder": "Masukkan alamat emel anda",
+    "verificationCode": "Kod Pengesahan Emel",
+    "verificationCodePlaceholder": "Masukkan kod pengesahan",
+    "sendCode": "Hantar Kod",
+    "password": "Kata Laluan",
+    "passwordPlaceholder": "Masukkan kata laluan anda",
+    "confirmPassword": "Sahkan Kata Laluan",
+    "confirmPasswordPlaceholder": "Masukkan semula kata laluan",
+    "registerButton": "Daftar",
+    "haveAccount": "Sudah mempunyai akaun?",
+    "login": "Log masuk sekarang",
+    "errors": {
+      "nicknameRequired": "Sila masukkan nama panggilan",
+      "nicknameMinLength": "Nama panggilan mesti sekurang-kurangnya 2 aksara",
+      "emailRequired": "Sila masukkan alamat emel",
+      "emailInvalid": "Sila masukkan alamat emel yang sah",
+      "emailNotFudan": "Hanya alamat emel Universiti Fudan disokong (fudan.edu.cn atau m.fudan.edu.cn)",
+      "emailStudentIdInvalid": "Bahagian sebelum @ hendaklah 11 digit",
+      "passwordRequired": "Sila masukkan kata laluan",
+      "passwordMinLength": "Kata laluan mesti sekurang-kurangnya 6 aksara",
+      "confirmPasswordRequired": "Sila sahkan kata laluan",
+      "passwordMismatch": "Kata laluan tidak sepadan",
+      "verificationCodeRequired": "Sila masukkan kod pengesahan",
+      "verificationCodeLength": "Kod pengesahan hendaklah 6 digit"
+    },
+    "verificationEmail": {
+      "registrationVerificationSubject": "Kod Pengesahan Pendaftaran Dan Basket",
+      "registrationVerificationText": "Kod pengesahan pendaftaran anda ialah: ",
+      "registrationVerificationHtml": "<p>Kod pengesahan pendaftaran anda ialah: <strong>"
+    },
+    "loading": {
+      "sending": "Menghantar...",
+      "registering": "Sedang mendaftar..."
+    }
+  }
+}
+
+

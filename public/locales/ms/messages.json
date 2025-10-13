@@ -1,0 +1,69 @@
+{
+  "common": {
+    "errors": {
+      "serverResponseError": "Ralat format respons pelayan",
+      "networkError": "Sambungan rangkaian gagal, sila cuba lagi kemudian"
+    }
+  },
+  "auth": {
+    "errors": {
+      "invalidCredentials": "Emel atau kata laluan tidak sah",
+      "registrationFailed": "Pendaftaran gagal",
+      "loginFailed": "Log masuk gagal",
+      "emailAlreadyRegistered": "Emel telah didaftarkan"
+    },
+    "success": {
+      "registrationSuccessful": "Pendaftaran berjaya",
+      "loginSuccessful": "Log masuk berjaya"
+    }
+  },
+  "verification": {
+    "errors": {
+      "invalidOrExpired": "Kod pengesahan tidak sah atau telah tamat tempoh",
+      "sendFailed": "Gagal menghantar kod pengesahan",
+      "verifyFailed": "Gagal mengesahkan kod pengesahan"
+    },
+    "success": {
+      "sent": "Kod pengesahan berjaya dihantar",
+      "verified": "Kod pengesahan berjaya disahkan"
+    }
+  },
+  "email": {
+    "errors": {
+      "sendFailed": "Penghantaran emel gagal",
+      "notConfigured": "Perkhidmatan emel Gmail tidak dikonfigurasi, sila semak pembolehubah persekitaran EMAIL_USER dan EMAIL_PASS",
+      "configIncomplete": "Konfigurasi Gmail tidak lengkap",
+      "connectionFailed": "Ujian sambungan Gmail gagal"
+    },
+    "success": {
+      "sent": "Emel berjaya dihantar",
+      "configCorrect": "Konfigurasi Gmail betul, ujian sambungan berjaya"
+    }
+  },
+  "validation": {
+    "errors": {
+      "parameterValidationFailed": "Pengesahan parameter gagal",
+      "invalidEmailFormat": "Format emel tidak sah",
+      "emailSubjectRequired": "Subjek emel tidak boleh kosong",
+      "emailContentRequired": "Kandungan emel tidak boleh kosong",
+      "invalidVerificationCodeType": "Jenis kod pengesahan tidak sah"
+    }
+  },
+  "system": {
+    "errors": {
+      "databaseConnectionFailed": "Sambungan pangkalan data gagal",
+      "internalServerError": "Ralat pelayan dalaman",
+      "serviceUnavailable": "Perkhidmatan buat sementara tidak tersedia"
+    }
+  },
+  "user": {
+    "errors": {
+      "alreadyExists": "Pengguna sudah wujud",
+      "notFound": "Pengguna tidak ditemui",
+      "accountDisabled": "Akaun telah dinyahaktifkan",
+      "accountLocked": "Akaun telah dikunci"
+    }
+  }
+}
+
+

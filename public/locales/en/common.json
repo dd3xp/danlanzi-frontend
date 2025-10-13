@@ -4,6 +4,10 @@
     "alt": "User Avatar",
     "ariaLabel": "User"
   },
+  "userMenu": {
+    "ariaLabel": "User menu",
+    "logout": "Sign out"
+  },
   "sidebar": {
     "homepage": "Home",
     "courses": "Courses",

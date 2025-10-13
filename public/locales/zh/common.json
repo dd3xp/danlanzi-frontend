@@ -4,6 +4,10 @@
     "alt": "用户头像",
     "ariaLabel": "用户"
   },
+  "userMenu": {
+    "ariaLabel": "用户菜单",
+    "logout": "退出登录"
+  },
   "sidebar": {
     "homepage": "主界面",
     "courses": "课程板块",
