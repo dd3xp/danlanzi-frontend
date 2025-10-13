@@ -70,7 +70,13 @@ export function translateBackendMessage(
     'User already exists': 'user.errors.alreadyExists',
     'User not found': 'user.errors.notFound',
     'Account is disabled': 'user.errors.accountDisabled',
-    'Account is locked': 'user.errors.accountLocked'
+    'Account is locked': 'user.errors.accountLocked',
+    
+    // 用户信息相关消息
+    'User profile retrieved successfully': 'user.success.profileRetrieved',
+    'Failed to retrieve user profile': 'user.errors.profileRetrieveFailed',
+    'Access token required': 'auth.errors.accessTokenRequired',
+    'Invalid or expired token': 'auth.errors.invalidOrExpiredToken'
   };
 
   const translationKey = messageMap[message];

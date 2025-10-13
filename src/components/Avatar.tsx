@@ -3,14 +3,45 @@ import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import styles from '../styles/Avatar.module.css';
 import UserMenu from './UserMenu';
-import { logout } from '../utils/auth';
+import { logout, getToken } from '../utils/auth';
 import { useRouter } from 'next/router';
+import backendUrl from '../services/backendUrl';
 
 export default function Avatar() {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // 获取用户信息
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = getToken();
+        if (!token) {
+          setIsLoading(false);
+          return;
+        }
+
+        const response = await fetch(`${backendUrl}/api/userprofile/profile`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.user) {
+          setUserProfile(data.user);
+        }
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
@@ -33,6 +64,15 @@ export default function Avatar() {
     router.push('/user/login');
   };
 
+  // 如果正在加载，不显示头像
+  if (isLoading) {
+    return null;
+  }
+
+  // 获取显示内容：优先头像，其次昵称首字母
+  const avatarDataUrl = userProfile?.avatar_data_url;
+  const displayChar = userProfile?.nickname?.trim()?.charAt(0)?.toUpperCase() || '';
+
   return (
     <div className={styles.avatar} ref={containerRef}>
       <div className={styles.avatarBorder}>
@@ -42,12 +82,16 @@ export default function Avatar() {
           type="button"
           onClick={() => setOpen((v) => !v)}
         >
-          <Image
-            src="/DefaultAvatar.jpg"
-            alt={t('avatar.alt')}
-            fill
-            className={styles.avatarImage}
-          />
+          {avatarDataUrl ? (
+            <Image
+              src={avatarDataUrl}
+              alt={t('avatar.alt')}
+              fill
+              className={styles.avatarImage}
+            />
+          ) : (
+            displayChar
+          )}
         </button>
       </div>
       {open && (
