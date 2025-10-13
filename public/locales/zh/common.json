@@ -21,5 +21,36 @@
     "loginButton": "登录",
     "noAccount": "还没有账户？",
     "signup": "立即注册"
+  },
+  "register": {
+    "subtitle": "注册旦篮子账户",
+    "nickname": "昵称",
+    "nicknamePlaceholder": "请输入昵称",
+    "email": "邮箱",
+    "emailPlaceholder": "请输入邮箱地址",
+    "verificationCode": "邮箱验证码",
+    "verificationCodePlaceholder": "请输入验证码",
+    "sendCode": "发送验证码",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "confirmPassword": "确认密码",
+    "confirmPasswordPlaceholder": "请再次输入密码",
+    "registerButton": "注册",
+    "haveAccount": "已有账户？",
+    "login": "立即登录",
+    "errors": {
+      "nicknameRequired": "请输入昵称",
+      "nicknameMinLength": "昵称至少需要2个字符",
+      "emailRequired": "请输入邮箱地址",
+      "emailInvalid": "请输入有效的邮箱地址",
+      "emailNotFudan": "仅支持复旦大学邮箱（fudan.edu.cn 或 m.fudan.edu.cn）",
+      "emailStudentIdInvalid": "邮箱@前应为11位数字",
+      "passwordRequired": "请输入密码",
+      "passwordMinLength": "密码至少需要6个字符",
+      "confirmPasswordRequired": "请确认密码",
+      "passwordMismatch": "两次输入的密码不一致",
+      "verificationCodeRequired": "请输入验证码",
+      "verificationCodeLength": "验证码应为6位数字"
+    }
   }
 }

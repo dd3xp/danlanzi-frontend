@@ -74,7 +74,7 @@ export default function Login() {
         <div className={styles.loginFooter}>
           <p className={styles.signupText}>
             {t('login.noAccount')}{' '}
-            <a href="#" className={styles.signupLink}>
+            <a href="/user/register" className={styles.signupLink}>
               {t('login.signup')}
             </a>
           </p>

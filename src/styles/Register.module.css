@@ -1,0 +1,289 @@
+/* 注册页面容器 */
+.registerContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 20px;
+}
+
+/* 注册卡片 */
+.registerCard {
+  width: 100%;
+  max-width: 400px;
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 40px 32px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+/* 注册头部 */
+.registerHeader {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Logo 容器 */
+.logoContainer {
+  margin-bottom: 8px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.registerSubtitle {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* 注册表单 */
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 输入组 */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.inputField {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: 12px solid var(--border);
+  border-radius: 12px;
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+  color: var(--text) !important;
+  font-size: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  caret-color: white;
+}
+
+/* 覆盖浏览器自动填充样式 */
+.inputField:-webkit-autofill,
+.inputField:-webkit-autofill:hover,
+.inputField:-webkit-autofill:focus,
+.inputField:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  background-color: #1a1a1a !important;
+  border-radius: 12px !important;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border: 12px solid var(--border);
+}
+
+.inputField::placeholder {
+  color: var(--muted);
+}
+
+/* 移除所有边框高亮效果，只保留错误提示文字 */
+
+/* 自定义错误提示 */
+.errorMessage {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.errorIcon {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+
+/* 验证状态图标 */
+.validationIcon {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+.validationIcon.success {
+  color: #10b981;
+}
+
+.validationIcon.error {
+  color: #ef4444;
+}
+
+/* 验证码输入组 */
+.codeInputGroup {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.codeInputField {
+  flex: 1;
+  height: 48px;
+  width: 225px;
+  padding: 0 16px;
+  border: 12px solid var(--border);
+  border-radius: 12px;
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+  color: var(--text) !important;
+  font-size: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  caret-color: white;
+}
+
+.codeInputField:-webkit-autofill,
+.codeInputField:-webkit-autofill:hover,
+.codeInputField:-webkit-autofill:focus,
+.codeInputField:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  background-color: #1a1a1a !important;
+  border-radius: 12px !important;
+}
+
+.codeInputField:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border: 12px solid var(--border);
+}
+
+.codeInputField::placeholder {
+  color: var(--muted);
+}
+
+/* 发送验证码按钮 */
+.sendCodeButton {
+  height: 48px;
+  padding: 0 16px;
+  background: #dddddd;
+  color: rgb(17, 17, 17);
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.sendCodeButton:hover:not(:disabled) {
+  background: #c2c2c2;
+}
+
+.sendCodeButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.sendCodeButton:disabled {
+  background: #666666;
+  color: #999999;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* 注册按钮 */
+.registerButton {
+  width: 100%;
+  height: 48px;
+  background: #dddddd;
+  color: rgb(17, 17, 17);
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 8px;
+}
+
+.registerButton:hover {
+  background: #c2c2c2;
+}
+
+.registerButton:active {
+  transform: translateY(1px);
+}
+
+/* 注册底部 */
+.registerFooter {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.loginText {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.loginLink {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.loginLink:hover {
+  color: var(--blue-600);
+  text-decoration: underline;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .registerContainer {
+    padding: 16px;
+  }
+  
+  .registerCard {
+    padding: 32px 24px;
+  }
+  
+  .codeInputGroup {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .sendCodeButton {
+    width: 100%;
+    min-width: auto;
+  }
+}

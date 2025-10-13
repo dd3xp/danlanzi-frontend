@@ -21,5 +21,36 @@
     "loginButton": "Sign In",
     "noAccount": "Don't have an account?",
     "signup": "Sign up now"
+  },
+  "register": {
+    "subtitle": "Create Dan Basket Account",
+    "nickname": "Nickname",
+    "nicknamePlaceholder": "Enter your nickname",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email address",
+    "verificationCode": "Email Verification Code",
+    "verificationCodePlaceholder": "Enter verification code",
+    "sendCode": "Send Code",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Enter password again",
+    "registerButton": "Register",
+    "haveAccount": "Already have an account?",
+    "login": "Sign in now",
+    "errors": {
+      "nicknameRequired": "Please enter your nickname",
+      "nicknameMinLength": "Nickname must be at least 2 characters",
+      "emailRequired": "Please enter your email address",
+      "emailInvalid": "Please enter a valid email address",
+      "emailNotFudan": "Only Fudan University email addresses are supported (fudan.edu.cn or m.fudan.edu.cn)",
+      "emailStudentIdInvalid": "The part before @ should be 11 digits",
+      "passwordRequired": "Please enter your password",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordMismatch": "Passwords do not match",
+      "verificationCodeRequired": "Please enter verification code",
+      "verificationCodeLength": "Verification code should be 6 digits"
+    }
   }
 }
