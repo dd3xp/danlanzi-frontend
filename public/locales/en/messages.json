@@ -1,0 +1,67 @@
+{
+  "common": {
+    "errors": {
+      "serverResponseError": "Server response format error",
+      "networkError": "Network connection failed, please try again later"
+    }
+  },
+  "auth": {
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "registrationFailed": "Registration failed",
+      "loginFailed": "Login failed",
+      "emailAlreadyRegistered": "Email already registered"
+    },
+    "success": {
+      "registrationSuccessful": "Registration successful",
+      "loginSuccessful": "Login successful"
+    }
+  },
+  "verification": {
+    "errors": {
+      "invalidOrExpired": "Invalid or expired verification code",
+      "sendFailed": "Failed to send verification code",
+      "verifyFailed": "Failed to verify verification code"
+    },
+    "success": {
+      "sent": "Verification code sent successfully",
+      "verified": "Verification code verified successfully"
+    }
+  },
+  "email": {
+    "errors": {
+      "sendFailed": "Failed to send email",
+      "notConfigured": "Gmail email service not configured, please check EMAIL_USER and EMAIL_PASS environment variables",
+      "configIncomplete": "Gmail configuration incomplete",
+      "connectionFailed": "Gmail connection test failed"
+    },
+    "success": {
+      "sent": "Email sent successfully",
+      "configCorrect": "Gmail configuration correct, connection test successful"
+    }
+  },
+  "validation": {
+    "errors": {
+      "parameterValidationFailed": "Parameter validation failed",
+      "invalidEmailFormat": "Invalid email format",
+      "emailSubjectRequired": "Email subject cannot be empty",
+      "emailContentRequired": "Email content cannot be empty",
+      "invalidVerificationCodeType": "Invalid verification code type"
+    }
+  },
+  "system": {
+    "errors": {
+      "databaseConnectionFailed": "Database connection failed",
+      "internalServerError": "Internal server error",
+      "serviceUnavailable": "Service temporarily unavailable"
+    }
+  },
+  "user": {
+    "errors": {
+      "alreadyExists": "User already exists",
+      "notFound": "User not found",
+      "accountDisabled": "Account is disabled",
+      "accountLocked": "Account is locked"
+    }
+  }
+}

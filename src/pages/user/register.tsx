@@ -6,10 +6,11 @@ import { useRouter } from 'next/router';
 import styles from '../../styles/Register.module.css';
 import { validateFudanEmail, getEmailValidationError } from '../../utils/emailFormat';
 import { sendVerificationCode, verifyCode, registerUser } from '../../services/authService';
+import { translateBackendMessage } from '../../utils/messageTranslator';
 import ErrorMessage from '../../components/ErrorMessage';
 
 export default function Register() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'messages']);
   const router = useRouter();
   const [formData, setFormData] = useState({
     nickname: '',
@@ -168,9 +169,7 @@ export default function Register() {
 
         // 检查验证码验证结果
         if (verifyResult.status === 'error') {
-          const errorMessage = verifyResult.message === 'SERVER_RESPONSE_ERROR' 
-            ? t('register.errors.serverResponseError')
-            : verifyResult.message;
+          const errorMessage = translateBackendMessage(verifyResult, t);
           setErrors(prev => ({
             ...prev,
             verificationCode: errorMessage
@@ -188,9 +187,7 @@ export default function Register() {
 
         // 检查注册结果
         if (registerResult.status === 'error') {
-          const errorMessage = registerResult.message === 'SERVER_RESPONSE_ERROR' 
-            ? t('register.errors.serverResponseError')
-            : registerResult.message;
+          const errorMessage = translateBackendMessage(registerResult, t);
           setErrors(prev => ({
             ...prev,
             general: errorMessage
@@ -237,9 +234,7 @@ export default function Register() {
 
       // 检查发送结果
       if (sendResult.status === 'error') {
-        const errorMessage = sendResult.message === 'SERVER_RESPONSE_ERROR' 
-          ? t('register.errors.serverResponseError')
-          : sendResult.message;
+        const errorMessage = translateBackendMessage(sendResult, t);
         setErrors(prev => ({
           ...prev,
           email: errorMessage
@@ -433,6 +428,6 @@ export default function Register() {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'zh', ['common'])),
+    ...(await serverSideTranslations(locale ?? 'zh', ['common', 'messages'])),
   },
 });

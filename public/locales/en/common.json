@@ -26,10 +26,7 @@
     },
     "errors": {
       "emailRequired": "Please enter your email address",
-      "passwordRequired": "Please enter your password",
-      "invalidCredentials": "Invalid email or password",
-      "networkError": "Network connection failed, please try again later",
-      "serverResponseError": "Server response format error"
+      "passwordRequired": "Please enter your password"
     },
     "success": {
       "loginSuccess": "Login successful"
@@ -63,9 +60,7 @@
       "confirmPasswordRequired": "Please confirm your password",
       "passwordMismatch": "Passwords do not match",
       "verificationCodeRequired": "Please enter verification code",
-      "verificationCodeLength": "Verification code should be 6 digits",
-      "networkError": "Network connection failed, please try again later",
-      "serverResponseError": "Server response format error"
+      "verificationCodeLength": "Verification code should be 6 digits"
     },
     "verificationEmail": {
       "registrationVerificationSubject": "Dan Basket Registration Verification Code",

@@ -6,10 +6,11 @@ import { useRouter } from 'next/router';
 import styles from '../../styles/Login.module.css';
 import { loginUser } from '../../services/authService';
 import { setToken, setUser } from '../../utils/auth';
+import { translateBackendMessage } from '../../utils/messageTranslator';
 import ErrorMessage from '../../components/ErrorMessage';
 
 export default function Login() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'messages']);
   const router = useRouter();
   
   const [formData, setFormData] = useState({
@@ -76,11 +77,7 @@ export default function Login() {
       });
       
       if (loginResult.status === 'error') {
-        const errorMessage = loginResult.message === 'SERVER_RESPONSE_ERROR' 
-          ? t('login.errors.serverResponseError')
-          : loginResult.message === 'Invalid email or password'
-          ? t('login.errors.invalidCredentials')
-          : loginResult.message;
+        const errorMessage = translateBackendMessage(loginResult, t);
         
         setErrors(prev => ({
           ...prev,
@@ -189,6 +186,6 @@ export default function Login() {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'zh', ['common'])),
+    ...(await serverSideTranslations(locale ?? 'zh', ['common', 'messages'])),
   },
 });
