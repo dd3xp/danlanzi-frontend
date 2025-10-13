@@ -12,15 +12,28 @@
   },
   "login": {
     "subtitle": "登录到旦篮子",
-    "username": "用户名",
-    "usernamePlaceholder": "请输入用户名",
+    "username": "邮箱",
+    "usernamePlaceholder": "请输入邮箱地址",
     "password": "密码",
     "passwordPlaceholder": "请输入密码",
     "rememberMe": "记住我",
     "forgotPassword": "忘记密码？",
     "loginButton": "登录",
     "noAccount": "还没有账户？",
-    "signup": "立即注册"
+    "signup": "立即注册",
+    "loading": {
+      "logging": "登录中..."
+    },
+    "errors": {
+      "emailRequired": "请输入邮箱地址",
+      "passwordRequired": "请输入密码",
+      "invalidCredentials": "邮箱或密码错误",
+      "networkError": "网络连接失败，请稍后重试",
+      "serverResponseError": "服务器响应格式错误"
+    },
+    "success": {
+      "loginSuccess": "登录成功"
+    }
   },
   "register": {
     "subtitle": "注册旦篮子账户",
@@ -50,7 +63,18 @@
       "confirmPasswordRequired": "请确认密码",
       "passwordMismatch": "两次输入的密码不一致",
       "verificationCodeRequired": "请输入验证码",
-      "verificationCodeLength": "验证码应为6位数字"
+      "verificationCodeLength": "验证码应为6位数字",
+      "networkError": "网络连接失败，请稍后重试",
+      "serverResponseError": "服务器响应格式错误"
+    },
+    "verificationEmail": {
+      "registrationVerificationSubject": "旦篮子注册验证码",
+      "registrationVerificationText": "您的注册验证码是：",
+      "registrationVerificationHtml": "<p>您的注册验证码是：<strong>"
+    },
+    "loading": {
+      "sending": "发送中...",
+      "registering": "注册中..."
     }
   }
 }

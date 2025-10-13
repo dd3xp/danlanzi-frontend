@@ -191,7 +191,6 @@
   text-decoration: underline;
 }
 
-/* 响应式设计 */
 @media (max-width: 480px) {
   .loginContainer {
     padding: 16px;

@@ -102,25 +102,8 @@
   color: var(--muted);
 }
 
-/* 移除所有边框高亮效果，只保留错误提示文字 */
 
-/* 自定义错误提示 */
-.errorMessage {
-  color: #ef4444;
-  font-size: 12px;
-  margin-top: 4px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
 
-.errorIcon {
-  width: 12px;
-  height: 12px;
-  fill: currentColor;
-}
-
-/* 验证状态图标 */
 .validationIcon {
   width: 16px;
   height: 16px;
@@ -267,7 +250,6 @@
   text-decoration: underline;
 }
 
-/* 响应式设计 */
 @media (max-width: 480px) {
   .registerContainer {
     padding: 16px;

@@ -1,16 +1,113 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import styles from '../../styles/Login.module.css';
+import { loginUser } from '../../services/authService';
+import { setToken, setUser } from '../../utils/auth';
+import ErrorMessage from '../../components/ErrorMessage';
 
 export default function Login() {
   const { t } = useTranslation('common');
+  const router = useRouter();
+  
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // 检查URL参数中的注册成功消息
+  useEffect(() => {
+    const { message } = router.query;
+    if (message === 'registration_success') {
+      // 可以在这里显示注册成功的提示
+      console.log('Registration successful');
+    }
+  }, [router.query]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // 清除对应字段的错误
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: {[key: string]: string} = {};
+    
+    if (!formData.email.trim()) {
+      newErrors.email = t('login.errors.emailRequired');
+    }
+    
+    if (!formData.password) {
+      newErrors.password = t('login.errors.passwordRequired');
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 暂时不实现功能
-    console.log('登录表单提交');
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    try {
+      const loginResult = await loginUser({
+        email: formData.email,
+        password: formData.password
+      });
+      
+      if (loginResult.status === 'error') {
+        const errorMessage = loginResult.message === 'SERVER_RESPONSE_ERROR' 
+          ? t('login.errors.serverResponseError')
+          : loginResult.message === 'Invalid email or password'
+          ? t('login.errors.invalidCredentials')
+          : loginResult.message;
+        
+        setErrors(prev => ({
+          ...prev,
+          general: errorMessage
+        }));
+        return;
+      }
+      
+      // 登录成功，存储token和用户信息
+      if (loginResult.status === 'success' && loginResult.user && loginResult.token) {
+        setToken(loginResult.token);
+        setUser(loginResult.user);
+        
+        // 跳转到主页或用户想要访问的页面
+        const redirectTo = router.query.redirect as string || '/user';
+        router.push(redirectTo);
+      }
+      
+    } catch (error) {
+      console.error('登录失败:', error);
+      setErrors(prev => ({
+        ...prev,
+        general: t('login.errors.networkError')
+      }));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -29,17 +126,19 @@ export default function Login() {
 
         <form className={styles.loginForm} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
-            <label htmlFor="username" className={styles.inputLabel}>
+            <label htmlFor="email" className={styles.inputLabel}>
               {t('login.username')}
             </label>
             <input
-              type="text"
-              id="username"
-              name="username"
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
               className={styles.inputField}
               placeholder={t('login.usernamePlaceholder')}
-              required
             />
+            <ErrorMessage message={errors.email} />
           </div>
 
           <div className={styles.inputGroup}>
@@ -50,10 +149,12 @@ export default function Login() {
               type="password"
               id="password"
               name="password"
+              value={formData.password}
+              onChange={handleInputChange}
               className={styles.inputField}
               placeholder={t('login.passwordPlaceholder')}
-              required
             />
+            <ErrorMessage message={errors.password} />
           </div>
 
           <div className={styles.optionsGroup}>
@@ -66,9 +167,11 @@ export default function Login() {
             </a>
           </div>
 
-          <button type="submit" className={styles.loginButton}>
-            {t('login.loginButton')}
+          <button type="submit" className={styles.loginButton} disabled={isLoading}>
+            {isLoading ? t('login.loading.logging') : t('login.loginButton')}
           </button>
+          
+          <ErrorMessage message={errors.general} />
         </form>
 
         <div className={styles.loginFooter}>

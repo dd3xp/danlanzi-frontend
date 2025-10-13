@@ -2,11 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import styles from '../../styles/Register.module.css';
 import { validateFudanEmail, getEmailValidationError } from '../../utils/emailFormat';
+import { sendVerificationCode, verifyCode, registerUser } from '../../services/authService';
+import ErrorMessage from '../../components/ErrorMessage';
 
 export default function Register() {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const [formData, setFormData] = useState({
     nickname: '',
     email: '',
@@ -16,6 +20,8 @@ export default function Register() {
   });
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [countdown, setCountdown] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSendingCode, setIsSendingCode] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 页面加载时恢复倒计时状态
@@ -132,7 +138,7 @@ export default function Register() {
     return formData.confirmPassword && formData.password && formData.confirmPassword !== formData.password;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // 验证所有字段
@@ -150,12 +156,64 @@ export default function Register() {
     setErrors(newErrors);
     
     if (!hasErrors) {
-      // 暂时不实现功能
-      console.log('注册表单提交', formData);
+      setIsLoading(true);
+      
+      try {
+        // 先验证验证码
+        const verifyResult = await verifyCode({
+          email: formData.email,
+          code: formData.verificationCode,
+          type: 'email_verification'
+        });
+
+        // 检查验证码验证结果
+        if (verifyResult.status === 'error') {
+          const errorMessage = verifyResult.message === 'SERVER_RESPONSE_ERROR' 
+            ? t('register.errors.serverResponseError')
+            : verifyResult.message;
+          setErrors(prev => ({
+            ...prev,
+            verificationCode: errorMessage
+          }));
+          return;
+        }
+
+        // 验证码验证成功，调用注册API
+        const registerResult = await registerUser({
+          nickname: formData.nickname,
+          email: formData.email,
+          password: formData.password,
+          verificationCode: formData.verificationCode
+        });
+
+        // 检查注册结果
+        if (registerResult.status === 'error') {
+          const errorMessage = registerResult.message === 'SERVER_RESPONSE_ERROR' 
+            ? t('register.errors.serverResponseError')
+            : registerResult.message;
+          setErrors(prev => ({
+            ...prev,
+            general: errorMessage
+          }));
+          return;
+        }
+
+        // 注册成功，跳转到登录页面
+        router.push('/user/login?message=registration_success');
+        
+      } catch (error) {
+        console.error('网络错误:', error);
+        setErrors(prev => ({
+          ...prev,
+          general: t('register.errors.networkError')
+        }));
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
-  const handleSendCode = () => {
+  const handleSendCode = async () => {
     // 验证邮箱是否为复旦大学邮箱
     if (!validateFudanEmail(formData.email)) {
       // 如果邮箱验证失败，设置错误信息
@@ -166,37 +224,73 @@ export default function Register() {
       return;
     }
 
-    // 暂时不实现功能
-    console.log('发送验证码到邮箱:', formData.email);
+    setIsSendingCode(true);
     
-    // 清除之前的定时器
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-    
-    // 开始倒计时
-    setCountdown(60);
-    
-    // 保存倒计时状态到localStorage
-    localStorage.setItem('register_countdown', '60');
-    localStorage.setItem('register_countdown_timestamp', Date.now().toString());
-    
-    // 设置倒计时定时器
-    timerRef.current = setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) {
-          if (timerRef.current) {
-            clearInterval(timerRef.current);
-            timerRef.current = null;
-          }
-          // 清除localStorage
-          localStorage.removeItem('register_countdown');
-          localStorage.removeItem('register_countdown_timestamp');
-          return 0;
-        }
-        return prev - 1;
+    try {
+      // 发送验证码API调用
+      const sendResult = await sendVerificationCode({
+        to: formData.email,
+        subject: t('register.verificationEmail.registrationVerificationSubject'),
+        text: t('register.verificationEmail.registrationVerificationText'),
+        type: 'email_verification'
       });
-    }, 1000);
+
+      // 检查发送结果
+      if (sendResult.status === 'error') {
+        const errorMessage = sendResult.message === 'SERVER_RESPONSE_ERROR' 
+          ? t('register.errors.serverResponseError')
+          : sendResult.message;
+        setErrors(prev => ({
+          ...prev,
+          email: errorMessage
+        }));
+        return;
+      }
+
+      // 发送成功，清除之前的定时器
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+      
+      // 开始倒计时
+      setCountdown(60);
+      
+      // 保存倒计时状态到localStorage
+      localStorage.setItem('register_countdown', '60');
+      localStorage.setItem('register_countdown_timestamp', Date.now().toString());
+      
+      // 设置倒计时定时器
+      timerRef.current = setInterval(() => {
+        setCountdown(prev => {
+          if (prev <= 1) {
+            if (timerRef.current) {
+              clearInterval(timerRef.current);
+              timerRef.current = null;
+            }
+            // 清除localStorage
+            localStorage.removeItem('register_countdown');
+            localStorage.removeItem('register_countdown_timestamp');
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      // 清除邮箱错误
+      setErrors(prev => ({
+        ...prev,
+        email: ''
+      }));
+
+    } catch (error) {
+      console.error('网络错误:', error);
+      setErrors(prev => ({
+        ...prev,
+        email: t('register.errors.networkError')
+      }));
+    } finally {
+      setIsSendingCode(false);
+    }
   };
 
   return (
@@ -214,6 +308,7 @@ export default function Register() {
         </div>
 
         <form className={styles.registerForm} onSubmit={handleSubmit}>
+          <ErrorMessage message={errors.general} />
           <div className={styles.inputGroup}>
             <label htmlFor="nickname" className={styles.inputLabel}>
               {t('register.nickname')}
@@ -227,14 +322,7 @@ export default function Register() {
               className={styles.inputField}
               placeholder={t('register.nicknamePlaceholder')}
             />
-            {errors.nickname && (
-              <div className={styles.errorMessage}>
-                <svg className={styles.errorIcon} viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                {errors.nickname}
-              </div>
-            )}
+            <ErrorMessage message={errors.nickname} />
           </div>
 
           <div className={styles.inputGroup}>
@@ -250,14 +338,7 @@ export default function Register() {
               className={styles.inputField}
               placeholder={t('register.passwordPlaceholder')}
             />
-            {errors.password && (
-              <div className={styles.errorMessage}>
-                <svg className={styles.errorIcon} viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                {errors.password}
-              </div>
-            )}
+            <ErrorMessage message={errors.password} />
           </div>
 
           <div className={styles.inputGroup}>
@@ -287,14 +368,7 @@ export default function Register() {
               className={styles.inputField}
               placeholder={t('register.confirmPasswordPlaceholder')}
             />
-            {errors.confirmPassword && (
-              <div className={styles.errorMessage}>
-                <svg className={styles.errorIcon} viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                {errors.confirmPassword}
-              </div>
-            )}
+            <ErrorMessage message={errors.confirmPassword} />
           </div>
 
           <div className={styles.inputGroup}>
@@ -310,14 +384,7 @@ export default function Register() {
               className={styles.inputField}
               placeholder={t('register.emailPlaceholder')}
             />
-            {errors.email && (
-              <div className={styles.errorMessage}>
-                <svg className={styles.errorIcon} viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                {errors.email}
-              </div>
-            )}
+            <ErrorMessage message={errors.email} />
           </div>
 
           <div className={styles.inputGroup}>
@@ -338,23 +405,16 @@ export default function Register() {
                 type="button"
                 onClick={handleSendCode}
                 className={styles.sendCodeButton}
-                disabled={countdown > 0}
+                disabled={countdown > 0 || isSendingCode}
               >
-                {countdown > 0 ? `${countdown}s` : t('register.sendCode')}
+                {isSendingCode ? t('register.loading.sending') : countdown > 0 ? `${countdown}s` : t('register.sendCode')}
               </button>
             </div>
-            {errors.verificationCode && (
-              <div className={styles.errorMessage}>
-                <svg className={styles.errorIcon} viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                {errors.verificationCode}
-              </div>
-            )}
+            <ErrorMessage message={errors.verificationCode} />
           </div>
 
-          <button type="submit" className={styles.registerButton}>
-            {t('register.registerButton')}
+          <button type="submit" className={styles.registerButton} disabled={isLoading}>
+            {isLoading ? t('register.loading.registering') : t('register.registerButton')}
           </button>
         </form>
 

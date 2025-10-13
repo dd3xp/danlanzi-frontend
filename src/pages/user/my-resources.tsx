@@ -1,6 +1,7 @@
 import SideBar from '@/components/SideBar';
 import Avatar from '@/components/Avatar';
 import Logo from '@/components/Logo';
+import ProtectedRoute from '@/components/ProtectedRoute';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
@@ -8,12 +9,12 @@ import { useTranslation } from 'next-i18next';
 export default function MyResources() {
   const { t } = useTranslation('common');
   return (
-    <>
+    <ProtectedRoute>
       <SideBar />
       <Avatar />
       <Logo title={t('sidebar.resources')} />
       <main className="app-main" />
-    </>
+    </ProtectedRoute>
   );
 }
 
