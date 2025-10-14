@@ -4,9 +4,29 @@
     "alt": "Avatar Pengguna",
     "ariaLabel": "Pengguna"
   },
+  "userProfile": {
+    "tabs": {
+      "ariaLabel": "Navigasi profil",
+      "overview": "Halaman Utama",
+      "resources": "Sumber",
+      "messages": "Mesej"
+    },
+    "sections": {
+      "overview": "Halaman Utama",
+      "resources": "Sumber",
+      "messages": "Mesej"
+    },
+    "placeholders": {
+      "noBio": "Tiada bio lagi…",
+      "noResources": "Tiada sumber lagi",
+      "noMessages": "Tiada mesej lagi"
+    }
+  },
   "userMenu": {
     "ariaLabel": "Menu pengguna",
-    "logout": "Log keluar"
+    "profile": "Profil",
+    "settings": "Tetapan",
+    "security": "Keselamatan"
   },
   "sidebar": {
     "homepage": "Laman Utama",

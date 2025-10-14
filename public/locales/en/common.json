@@ -4,9 +4,29 @@
     "alt": "User Avatar",
     "ariaLabel": "User"
   },
+  "userProfile": {
+    "tabs": {
+      "ariaLabel": "Profile navigation",
+      "overview": "Overview",
+      "resources": "Resources",
+      "messages": "Messages"
+    },
+    "sections": {
+      "overview": "Overview",
+      "resources": "Resources",
+      "messages": "Messages"
+    },
+    "placeholders": {
+      "noBio": "No bio yet…",
+      "noResources": "No resources yet",
+      "noMessages": "No messages yet"
+    }
+  },
   "userMenu": {
     "ariaLabel": "User menu",
-    "logout": "Sign out"
+    "profile": "Profile",
+    "settings": "Settings",
+    "security": "Security"
   },
   "sidebar": {
     "homepage": "Home",

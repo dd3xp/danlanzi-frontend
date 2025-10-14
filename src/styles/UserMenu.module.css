@@ -7,7 +7,7 @@
   border-radius: 10px;
   box-shadow: var(--shadow);
   padding: 6px;
-  min-width: 168px;
+  min-width: 280px;
   z-index: 1000;
   transform-origin: top right;
   animation: slideDown 160ms ease-out;
@@ -30,6 +30,108 @@
 
 .menuItem:hover {
   background: #161616;
+}
+
+.menuItemIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  position: relative;
+}
+
+.sectionDivider {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 12px;
+}
+
+.avatarContainer {
+  flex-shrink: 0;
+}
+
+.userAvatarWrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.userAvatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userAvatarPlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.userDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.nickname {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.studentId {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logoutButton {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.logoutButton:hover {
+  background: #161616;
+  color: var(--text);
+}
+
+.logoutIcon {
+  width: 16px;
+  height: 16px;
 }
 
 @keyframes slideDown {

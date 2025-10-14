@@ -1,0 +1,56 @@
+.profileContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+
+.tab {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 12px 16px;
+  border-bottom: 3px solid transparent; /* 统一高度避免切换抖动 */
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: color 180ms ease, border-bottom-color 220ms ease; /* 不再过渡高度，避免布局变化 */
+  will-change: color, border-bottom-color;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.active {
+  color: var(--text);
+  border-bottom-color: #fff;
+}
+
+.tabPanel {
+  padding-top: 16px;
+}
+
+.sectionCard {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.sectionTitle {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+

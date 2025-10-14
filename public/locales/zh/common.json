@@ -4,9 +4,29 @@
     "alt": "用户头像",
     "ariaLabel": "用户"
   },
+  "userProfile": {
+    "tabs": {
+      "ariaLabel": "用户资料导航",
+      "overview": "个人主页",
+      "resources": "发布资源",
+      "messages": "留言"
+    },
+    "sections": {
+      "overview": "个人主页",
+      "resources": "发布的资源",
+      "messages": "留言板"
+    },
+    "placeholders": {
+      "noBio": "暂无个人简介……",
+      "noResources": "暂无资源内容",
+      "noMessages": "暂无留言"
+    }
+  },
   "userMenu": {
     "ariaLabel": "用户菜单",
-    "logout": "退出登录"
+    "profile": "用户资料",
+    "settings": "设置",
+    "security": "账号安全"
   },
   "sidebar": {
     "homepage": "主界面",
