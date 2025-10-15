@@ -22,6 +22,30 @@
       "noMessages": "No messages yet"
     }
   },
+  "profile": {
+    "actions": {
+      "edit": "Edit profile",
+      "save": "Save",
+      "discard": "Discard",
+      "upload": "Upload avatar",
+      "gallery": "System avatar"
+    },
+    "fields": {
+      "nickname": "Nickname",
+      "studentId": "Student ID",
+      "studentIdHidden": "Student ID hidden",
+      "studentIdVisible": "Student ID visible",
+      "department": "Department",
+      "departmentHidden": "Department hidden",
+      "departmentVisible": "Department visible",
+      "major": "Major",
+      "majorHidden": "Major hidden",
+      "majorVisible": "Major visible",
+      "bio": "Bio",
+      "bioHidden": "Bio hidden",
+      "bioVisible": "Bio visible"
+    }
+  },
   "userMenu": {
     "ariaLabel": "User menu",
     "profile": "Profile",

@@ -22,6 +22,30 @@
       "noMessages": "暂无留言"
     }
   },
+  "profile": {
+    "actions": {
+      "edit": "编辑资料",
+      "save": "保存",
+      "discard": "舍弃",
+      "upload": "上传头像",
+      "gallery": "系统头像"
+    },
+    "fields": {
+      "nickname": "昵称",
+      "studentId": "学号",
+      "studentIdHidden": "学号已隐藏",
+      "studentIdVisible": "学号可见",
+      "department": "院系",
+      "departmentHidden": "院系已隐藏",
+      "departmentVisible": "院系可见",
+      "major": "专业",
+      "majorHidden": "专业已隐藏",
+      "majorVisible": "专业可见",
+      "bio": "个人介绍",
+      "bioHidden": "个人介绍已隐藏",
+      "bioVisible": "个人介绍可见"
+    }
+  },
   "userMenu": {
     "ariaLabel": "用户菜单",
     "profile": "用户资料",

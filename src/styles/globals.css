@@ -8,6 +8,8 @@
     --blue-700: #1d4ed8;      /* 更深蓝 */
     --border: #1a1a1a;        /* 细边框 */
     --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    --card: #161718;          /* 页面内容卡片背景（比底略浅） */
+    --card-border: #262728;   /* 卡片边框色 */
   }
   
   * { box-sizing: border-box; }

@@ -22,6 +22,30 @@
       "noMessages": "Tiada mesej lagi"
     }
   },
+  "profile": {
+    "actions": {
+      "edit": "Edit profil",
+      "save": "Simpan",
+      "discard": "Batalkan",
+      "upload": "Muat naik avatar",
+      "gallery": "Avatar sistem"
+    },
+    "fields": {
+      "nickname": "Nama panggilan",
+      "studentId": "ID Pelajar",
+      "studentIdHidden": "ID pelajar disembunyikan",
+      "studentIdVisible": "ID pelajar kelihatan",
+      "department": "Jabatan",
+      "departmentHidden": "Jabatan disembunyikan",
+      "departmentVisible": "Jabatan kelihatan",
+      "major": "Pengkhususan",
+      "majorHidden": "Pengkhususan disembunyikan",
+      "majorVisible": "Pengkhususan kelihatan",
+      "bio": "Bio",
+      "bioHidden": "Bio disembunyikan",
+      "bioVisible": "Bio kelihatan"
+    }
+  },
   "userMenu": {
     "ariaLabel": "Menu pengguna",
     "profile": "Profil",
@@ -97,5 +121,3 @@
     }
   }
 }
-
-

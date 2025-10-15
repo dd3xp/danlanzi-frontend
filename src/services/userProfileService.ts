@@ -79,9 +79,10 @@ async function apiCall<T>(
   }
 }
 
-// 获取用户信息
-export const getUserProfile = async (): Promise<ApiResponse<User>> => {
-  return apiCall<User>('/userprofile/profile', {
+// 获取用户信息（可选传入userId以查看他人资料）
+export const getUserProfile = async (userId?: string | number): Promise<ApiResponse<User>> => {
+  const endpoint = userId ? `/userprofile/profile/${userId}` : '/userprofile/profile';
+  return apiCall<User>(endpoint, {
     method: 'GET',
   }, true); // 需要认证
 };

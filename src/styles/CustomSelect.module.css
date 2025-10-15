@@ -1,0 +1,127 @@
+/* React Select 样式 */
+.reactSelectWrapper {
+  position: relative;
+  width: 100%;
+  padding-right: 50px;
+}
+
+/* 全局 React Select 样式 */
+:global(.react-select-container) {
+  width: 100%;
+}
+
+:global(.react-select__control) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: auto !important;
+}
+
+:global(.react-select__control:hover) {
+  border: none !important;
+}
+
+:global(.react-select__value-container) {
+  padding: 0 !important;
+}
+
+:global(.react-select__input-container) {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--text) !important;
+}
+
+:global(.react-select__placeholder) {
+  color: var(--text-secondary) !important;
+  margin: 0 !important;
+}
+
+:global(.react-select__single-value) {
+  color: var(--text) !important;
+  margin: 0 !important;
+}
+
+:global(.react-select__indicator-separator) {
+  display: none !important;
+}
+
+:global(.react-select__dropdown-indicator) {
+  color: var(--text-secondary) !important;
+  padding: 0 !important;
+}
+
+:global(.react-select__dropdown-indicator:hover) {
+  color: var(--text-secondary) !important;
+}
+
+:global(.react-select__menu) {
+  background: #2a2a2a !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  margin-top: 4px !important;
+}
+
+:global(.react-select__menu-list) {
+  padding: 8px !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+
+/* 自定义滚动条样式 - 只显示垂直滚动条 */
+:global(.react-select__menu-list::-webkit-scrollbar) {
+  width: 6px;
+}
+
+:global(.react-select__menu-list::-webkit-scrollbar:horizontal) {
+  display: none;
+}
+
+:global(.react-select__menu-list::-webkit-scrollbar-track) {
+  background: #1a1a1a;
+  border-radius: 3px;
+}
+
+:global(.react-select__menu-list::-webkit-scrollbar-thumb) {
+  background: #4a4a4a;
+  border-radius: 3px;
+}
+
+:global(.react-select__menu-list::-webkit-scrollbar-thumb:hover) {
+  background: #5a5a5a;
+}
+
+:global(.react-select__option) {
+  background: transparent !important;
+  color: var(--text) !important;
+  padding: 12px 20px !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  border-radius: 8px !important;
+  margin: 2px auto !important;
+  max-width: 100% !important;
+}
+
+:global(.react-select__option:hover) {
+  background: #3a3a3a !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+}
+
+:global(.react-select__option--is-selected) {
+  background: transparent !important;
+  color: var(--text) !important;
+  font-weight: 500 !important;
+}
+
+:global(.react-select__option--is-selected:hover) {
+  background: #3a3a3a !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+}
+
+:global(.react-select__option--is-focused) {
+  background: #3a3a3a !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+}

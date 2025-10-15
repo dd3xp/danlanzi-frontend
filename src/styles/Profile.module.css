@@ -16,11 +16,11 @@
   border: none;
   color: var(--text-secondary);
   padding: 12px 16px;
-  border-bottom: 3px solid transparent; /* 统一高度避免切换抖动 */
+  border-bottom: 3px solid transparent; 
   cursor: pointer;
   font-weight: 600;
   font-size: 16px;
-  transition: color 180ms ease, border-bottom-color 220ms ease; /* 不再过渡高度，避免布局变化 */
+  transition: color 180ms ease, border-bottom-color 220ms ease;
   will-change: color, border-bottom-color;
 }
 
@@ -36,6 +36,265 @@
 .tabPanel {
   padding-top: 16px;
 }
+
+.cardAction {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.cardAction:hover { background: #191a1b; color: var(--text); }
+
+.cardActionIcon { width: 18px; height: 18px; }
+
+.cardActionGroup { position: absolute; top: 12px; right: 12px; display: inline-flex; gap: 8px; }
+.cardActionGroup .cardAction { position: static; }
+
+.heroCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 300px 1fr; 
+  align-items: center;
+  gap: 32px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 36px 40px;
+  min-height: 450px;
+  overflow: hidden;
+}
+
+/* left column wrapper for avatar */
+
+.heroAvatarRing {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  border: 5px solid var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroAvatarWrap {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.heroAvatar { object-fit: cover; }
+
+.heroAvatarFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+/* 编辑头像覆盖层 */
+.avatarEditOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+.avatarEditOverlay::after {
+  content: '';
+  position: absolute;
+  top: 12%;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 2px dashed rgba(255,255,255,.35);
+}
+.avatarEditAction {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.avatarEditAction:hover { background: rgba(255,255,255,.08); }
+.avatarEditIcon { width: 28px; height: 28px; }
+
+.heroBody { min-width: 0; }
+.handle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.displayName {
+  margin: 0 0 8px 0;
+  font-size: 36px;
+}
+.metaText { font-size: 16px; color: var(--text-secondary); }
+
+.displayGroup { display: flex; flex-direction: column; gap: 6px; max-width: 440px; }
+.editGroup { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+
+.fieldLabel { color: var(--text-secondary); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+
+.fieldControl {
+  position: relative;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 16px 14px 48px;
+}
+
+.fieldControl:focus-within { border-color: #ffffff; box-shadow: 0 0 0 2px rgba(255,255,255,.12); }
+.fieldControl:focus-within .ghostButton { outline: none; }
+
+.nameInput {
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.selectInput {
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+
+.bioInput {
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+}
+
+.bioText {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 8px;
+  white-space: pre-wrap;
+}
+
+.inlineField {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+}
+.inlineField .nameInput {
+  width: 100%;
+  padding-right: 50px;
+  padding-left: 3px; 
+}
+
+.inlineField .selectInput {
+  width: 100%;
+  padding-right: 50px;
+  padding-left: 3px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 30px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+.inlineField .bioInput {
+  width: 100%;
+  padding-right: 40px;
+  padding-left: 3px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.inlineField .ghostButton {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+/* 文本域的眼睛按钮位置调整 */
+.inlineField:has(.bioInput) .ghostButton {
+  top: 20px;
+  transform: none;
+}
+
+.fieldIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+}
+
+/* 文本域的图标位置调整 */
+.inlineField:has(.bioInput) .fieldIcon {
+  top: 20px;
+  transform: none;
+}
+
+/* 学号输入沿用 nameInput 视觉尺寸，因此不单独定义宽高 */
+
+.ghostButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ghostButton:hover { background: #191a1b; color: var(--text); }
+.ghostIcon { width: 18px; height: 18px; }
+
 
 .sectionCard {
   background: var(--panel);
