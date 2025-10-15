@@ -61,7 +61,31 @@
       "alreadyExists": "用户已存在",
       "notFound": "用户不存在",
       "accountDisabled": "账户已被禁用",
-      "accountLocked": "账户已被锁定"
+      "accountLocked": "账户已被锁定",
+      "profileRetrieveFailed": "获取用户资料失败",
+      "profileUpdateFailed": "更新用户资料失败",
+      "publicProfileRetrieveFailed": "获取公开资料失败"
+    },
+    "success": {
+      "profileRetrieved": "用户资料获取成功",
+      "profileUpdated": "用户资料更新成功",
+      "publicProfileRetrieved": "公开资料获取成功"
+    }
+  },
+  "avatar": {
+    "errors": {
+      "invalidFieldName": "请使用字段名 \"avatar\" 上传文件",
+      "fileSizeExceeded": "文件大小不能超过 5MB",
+      "invalidFileType": "只允许上传图片文件",
+      "uploadFailed": "文件上传失败",
+      "noFileSelected": "请选择要上传的头像文件",
+      "noPermission": "无权限修改其他用户的头像",
+      "avatarSizeExceeded": "头像文件大小不能超过 5MB",
+      "imageProcessingFailed": "图片处理失败，请检查图片格式是否正确",
+      "updateFailed": "头像更新失败"
+    },
+    "success": {
+      "updated": "头像更新成功"
     }
   }
 }

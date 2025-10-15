@@ -52,6 +52,7 @@
   color: var(--text-secondary);
   cursor: pointer;
   transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  z-index: 10; 
 }
 
 .cardAction:hover { background: #191a1b; color: var(--text); }
@@ -63,19 +64,25 @@
 
 .heroCard {
   position: relative;
-  display: grid;
-  grid-template-columns: 300px 1fr; 
-  align-items: center;
-  gap: 32px;
+  display: block;
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: 16px;
   padding: 36px 40px;
   min-height: 450px;
-  overflow: hidden;
+  overflow: visible;
 }
 
-/* left column wrapper for avatar */
+/* 编辑状态下的卡片高度 */
+.heroCard:has(.editGroup) {
+  min-height: 700px;
+}
+
+.heroLeft {
+  position: absolute;
+  left: 40px;
+  top: 80px;
+}
 
 .heroAvatarRing {
   width: 280px;
@@ -109,7 +116,6 @@
   font-weight: 700;
 }
 
-/* 编辑头像覆盖层 */
 .avatarEditOverlay {
   position: absolute;
   inset: 0;
@@ -140,7 +146,13 @@
 .avatarEditAction:hover { background: rgba(255,255,255,.08); }
 .avatarEditIcon { width: 28px; height: 28px; }
 
-.heroBody { min-width: 0; }
+.heroBody { 
+  position: absolute;
+  left: 372px;
+  top: 80px;
+  min-width: 0;
+  width: calc(100% - 412px);
+}
 .handle {
   color: var(--text-secondary);
   font-size: 14px;
@@ -148,11 +160,76 @@
 }
 .displayName {
   margin: 0 0 8px 0;
-  font-size: 36px;
+  font-size: 48px;
 }
-.metaText { font-size: 16px; color: var(--text-secondary); }
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+  min-height: 20px;
+  padding: 4px 0;
+}
 
-.displayGroup { display: flex; flex-direction: column; gap: 6px; max-width: 440px; }
+.infoIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.infoText { 
+  font-size: 16px; 
+  color: #888;
+  line-height: 1.2;
+}
+
+.infoIcon.studentId {
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='14' rx='2'/%3E%3Cpath d='M3 8h18'/%3E%3C/svg%3E");
+  background-size: 24px 24px;
+  background-position: center 1px;
+}
+
+.infoIcon.department {
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18'/%3E%3Cpath d='M5 21V7l8-4v18'/%3E%3Cpath d='M19 21V11l-6-4'/%3E%3C/svg%3E");
+  background-size: 24px 24px;
+}
+
+.infoIcon.major {
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'/%3E%3Cpath d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'/%3E%3C/svg%3E");
+  background-size: 21px 21px;
+  background-position: center 2px;
+}
+
+.infoIcon.bio {
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14,2 14,8 20,8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cpolyline points='10,9 9,9 8,9'/%3E%3C/svg%3E");
+  background-size: 21px 21px;
+}
+
+
+.nameContainer {
+  position: absolute;
+  top: 30px; 
+  left: 40px; 
+  max-width: 440px;
+  z-index: 1;
+}
+
+.infoContainer {
+  margin-top: 130px; 
+  margin-left: 40px; 
+  max-width: 440px;
+}
 .editGroup { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
 
 .fieldLabel { color: var(--text-secondary); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
@@ -210,13 +287,7 @@
   font-family: inherit;
 }
 
-.bioText {
-  font-size: 16px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-top: 8px;
-  white-space: pre-wrap;
-}
+
 
 .inlineField {
   position: relative;

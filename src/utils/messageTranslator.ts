@@ -75,6 +75,26 @@ export function translateBackendMessage(
     // 用户信息相关消息
     'User profile retrieved successfully': 'user.success.profileRetrieved',
     'Failed to retrieve user profile': 'user.errors.profileRetrieveFailed',
+    'User profile updated successfully': 'user.success.profileUpdated',
+    'Failed to update user profile': 'user.errors.profileUpdateFailed',
+    'Public profile retrieved successfully': 'user.success.publicProfileRetrieved',
+    'Failed to retrieve public profile': 'user.errors.publicProfileRetrieveFailed',
+    
+    // 头像上传相关消息
+    '请使用字段名 "avatar" 上传文件': 'avatar.errors.invalidFieldName',
+    '文件大小不能超过 5MB': 'avatar.errors.fileSizeExceeded',
+    '只允许上传图片文件': 'avatar.errors.invalidFileType',
+    '文件上传失败': 'avatar.errors.uploadFailed',
+    '请选择要上传的头像文件': 'avatar.errors.noFileSelected',
+    '无权限修改其他用户的头像': 'avatar.errors.noPermission',
+    '用户不存在': 'user.errors.notFound',
+    '头像文件大小不能超过 5MB': 'avatar.errors.avatarSizeExceeded',
+    '图片处理失败，请检查图片格式是否正确': 'avatar.errors.imageProcessingFailed',
+    '头像更新成功': 'avatar.success.updated',
+    '头像更新失败': 'avatar.errors.updateFailed',
+    
+    
+    // 认证相关消息
     'Access token required': 'auth.errors.accessTokenRequired',
     'Invalid or expired token': 'auth.errors.invalidOrExpiredToken'
   };

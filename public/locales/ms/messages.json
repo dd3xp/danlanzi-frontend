@@ -61,7 +61,31 @@
       "alreadyExists": "Pengguna sudah wujud",
       "notFound": "Pengguna tidak ditemui",
       "accountDisabled": "Akaun telah dinyahaktifkan",
-      "accountLocked": "Akaun telah dikunci"
+      "accountLocked": "Akaun telah dikunci",
+      "profileRetrieveFailed": "Gagal mendapatkan profil pengguna",
+      "profileUpdateFailed": "Gagal mengemas kini profil pengguna",
+      "publicProfileRetrieveFailed": "Gagal mendapatkan profil awam"
+    },
+    "success": {
+      "profileRetrieved": "Profil pengguna berjaya diperoleh",
+      "profileUpdated": "Profil pengguna berjaya dikemas kini",
+      "publicProfileRetrieved": "Profil awam berjaya diperoleh"
+    }
+  },
+  "avatar": {
+    "errors": {
+      "invalidFieldName": "Sila gunakan nama medan \"avatar\" untuk memuat naik fail",
+      "fileSizeExceeded": "Saiz fail tidak boleh melebihi 5MB",
+      "invalidFileType": "Hanya fail imej dibenarkan",
+      "uploadFailed": "Muat naik fail gagal",
+      "noFileSelected": "Sila pilih fail avatar untuk dimuat naik",
+      "noPermission": "Tiada kebenaran untuk mengubah suai avatar pengguna lain",
+      "avatarSizeExceeded": "Saiz fail avatar tidak boleh melebihi 5MB",
+      "imageProcessingFailed": "Pemprosesan imej gagal, sila semak sama ada format imej betul",
+      "updateFailed": "Kemas kini avatar gagal"
+    },
+    "success": {
+      "updated": "Avatar berjaya dikemas kini"
     }
   }
 }

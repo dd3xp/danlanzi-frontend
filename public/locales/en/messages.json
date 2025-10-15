@@ -61,7 +61,31 @@
       "alreadyExists": "User already exists",
       "notFound": "User not found",
       "accountDisabled": "Account is disabled",
-      "accountLocked": "Account is locked"
+      "accountLocked": "Account is locked",
+      "profileRetrieveFailed": "Failed to retrieve user profile",
+      "profileUpdateFailed": "Failed to update user profile",
+      "publicProfileRetrieveFailed": "Failed to retrieve public profile"
+    },
+    "success": {
+      "profileRetrieved": "User profile retrieved successfully",
+      "profileUpdated": "User profile updated successfully",
+      "publicProfileRetrieved": "Public profile retrieved successfully"
+    }
+  },
+  "avatar": {
+    "errors": {
+      "invalidFieldName": "Please use field name \"avatar\" to upload file",
+      "fileSizeExceeded": "File size cannot exceed 5MB",
+      "invalidFileType": "Only image files are allowed",
+      "uploadFailed": "File upload failed",
+      "noFileSelected": "Please select an avatar file to upload",
+      "noPermission": "No permission to modify other users' avatars",
+      "avatarSizeExceeded": "Avatar file size cannot exceed 5MB",
+      "imageProcessingFailed": "Image processing failed, please check if the image format is correct",
+      "updateFailed": "Avatar update failed"
+    },
+    "success": {
+      "updated": "Avatar updated successfully"
     }
   }
 }

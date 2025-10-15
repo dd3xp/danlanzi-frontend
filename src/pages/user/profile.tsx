@@ -8,7 +8,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import styles from '@/styles/Profile.module.css';
 import Image from 'next/image';
-import { getUserProfile } from '@/services/userProfileService';
+import { getUserProfile, updateUserProfile } from '@/services/userProfileService';
 import { useRouter } from 'next/router';
 
 export default function UserProfilePage() {
@@ -19,11 +19,11 @@ export default function UserProfilePage() {
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState('');
   const [isRefreshing, setIsRefreshing] = useState(false);
-  // 临时去除可视性逻辑，由后端支持后再接入
-  const [maskStudentId, setMaskStudentId] = useState(false); // 仅前端视觉：切换眼睛图标斜杠
-  const [maskDepartment, setMaskDepartment] = useState(false);
-  const [maskMajor, setMaskMajor] = useState(false);
-  const [maskBio, setMaskBio] = useState(false);
+  // 隐私设置状态（与后端show_*字段对应）
+  const [showStudentId, setShowStudentId] = useState(true);
+  const [showDepartment, setShowDepartment] = useState(true);
+  const [showMajor, setShowMajor] = useState(true);
+  const [showBio, setShowBio] = useState(true);
   
   // 新增字段状态
   const [departmentInput, setDepartmentInput] = useState('');
@@ -76,10 +76,15 @@ export default function UserProfilePage() {
         if (res.status === 'success' && res.user) {
           setUser(res.user);
           setNameInput(res.user?.nickname || '');
-          // 这些字段暂时为空，等后端支持后再从user对象读取
-          setDepartmentInput('');
-          setMajorInput('');
-          setBioInput('');
+          // 从后端返回的数据中读取新字段
+          setDepartmentInput(res.user?.department || '');
+          setMajorInput(res.user?.major || '');
+          setBioInput(res.user?.bio || '');
+          // 从后端读取隐私设置
+          setShowStudentId(res.user?.show_student_id ?? true);
+          setShowDepartment(res.user?.show_department ?? true);
+          setShowMajor(res.user?.show_major ?? true);
+          setShowBio(res.user?.show_bio ?? true);
         }
       } catch (e) {
         // 忽略错误，后续可加错误提示
@@ -150,22 +155,41 @@ export default function UserProfilePage() {
                       aria-label={t('profile.actions.save')}
                       title={t('profile.actions.save')}
                       onClick={async () => {
-                        // 刷新卡片，不落库
+                        // 保存用户资料
                         try {
                           setIsRefreshing(true);
-                          const userId = typeof router.query.id === 'string' ? router.query.id : undefined;
-                          const res = await getUserProfile(userId);
+                          const res = await updateUserProfile({
+                            nickname: nameInput,
+                            department: departmentInput,
+                            major: majorInput,
+                            bio: bioInput,
+                            show_student_id: showStudentId,
+                            show_department: showDepartment,
+                            show_major: showMajor,
+                            show_bio: showBio
+                          });
                           if (res.status === 'success' && res.user) {
-                            setUser(res.user);
+                            // 保持原有的avatar_data_url，因为后端updateUserProfile不返回这个字段
+                            const updatedUser = {
+                              ...res.user,
+                              avatar_data_url: user?.avatar_data_url
+                            };
+                            setUser(updatedUser);
                             setNameInput(res.user?.nickname || '');
-                            // 这些字段暂时为空，等后端支持后再从user对象读取
-                            setDepartmentInput('');
-                            setMajorInput('');
-                            setBioInput('');
+                            // 从后端返回的数据中读取新字段
+                            setDepartmentInput(res.user?.department || '');
+                            setMajorInput(res.user?.major || '');
+                            setBioInput(res.user?.bio || '');
+                            // 同步隐私设置
+                            setShowStudentId(res.user?.show_student_id ?? true);
+                            setShowDepartment(res.user?.show_department ?? true);
+                            setShowMajor(res.user?.show_major ?? true);
+                            setShowBio(res.user?.show_bio ?? true);
                           }
+                        } catch (e) {
+                          // 忽略错误，后续可加错误提示
                         } finally {
                           setIsRefreshing(false);
-                          // 保存时依据可视状态决定展示：若不可视则在浏览态隐藏学号
                           setEditing(false);
                         }
                       }}
@@ -182,10 +206,15 @@ export default function UserProfilePage() {
                       title={t('profile.actions.discard')}
                       onClick={() => {
                         setNameInput(user?.nickname || '');
-                        // 重置为空值
-                        setDepartmentInput('');
-                        setMajorInput('');
-                        setBioInput('');
+                        // 重置为原始用户数据
+                        setDepartmentInput(user?.department || '');
+                        setMajorInput(user?.major || '');
+                        setBioInput(user?.bio || '');
+                        // 重置隐私设置为后端数据
+                        setShowStudentId(user?.show_student_id ?? true);
+                        setShowDepartment(user?.show_department ?? true);
+                        setShowMajor(user?.show_major ?? true);
+                        setShowBio(user?.show_bio ?? true);
                         setEditing(false);
                       }}
                     >
@@ -238,25 +267,37 @@ export default function UserProfilePage() {
                 </div>
                 <div className={styles.heroBody}>
                   {!editing ? (
-                    <div className={styles.displayGroup}>
-                      <h1 className={styles.displayName}>{user?.nickname || 'User'}</h1>
-                      {user?.student_id && !maskStudentId && (
-                        <div className={styles.metaText}>{user.student_id}</div>
-                      )}
-                      {departmentInput && !maskDepartment && (
-                        <div className={styles.metaText}>
-                          {departments.find(d => d.value === departmentInput)?.label || departmentInput}
-                        </div>
-                      )}
-                      {majorInput && !maskMajor && (
-                        <div className={styles.metaText}>
-                          {getAvailableMajors().find(m => m.value === majorInput)?.label || majorInput}
-                        </div>
-                      )}
-                      {bioInput && !maskBio && (
-                        <div className={styles.bioText}>{bioInput}</div>
-                      )}
-                    </div>
+                    <>
+                      <div className={styles.nameContainer}>
+                        <h1 className={styles.displayName}>{user?.nickname || 'User'}</h1>
+                      </div>
+                      <div className={styles.infoContainer}>
+                        {user?.student_id && showStudentId && (
+                          <div className={styles.infoItem}>
+                            <div className={`${styles.infoIcon} ${styles.studentId}`}></div>
+                            <span className={styles.infoText}>{user.student_id}</span>
+                          </div>
+                        )}
+                        {departmentInput && showDepartment && (
+                          <div className={styles.infoItem}>
+                            <div className={`${styles.infoIcon} ${styles.department}`}></div>
+                            <span className={styles.infoText}>{departments.find(d => d.value === departmentInput)?.label || departmentInput}</span>
+                          </div>
+                        )}
+                        {majorInput && showMajor && (
+                          <div className={styles.infoItem}>
+                            <div className={`${styles.infoIcon} ${styles.major}`}></div>
+                            <span className={styles.infoText}>{getAvailableMajors().find(m => m.value === majorInput)?.label || majorInput}</span>
+                          </div>
+                        )}
+                        {bioInput && showBio && (
+                          <div className={styles.infoItem}>
+                            <div className={`${styles.infoIcon} ${styles.bio}`}></div>
+                            <span className={styles.infoText}>{bioInput}</span>
+                          </div>
+                        )}
+                      </div>
+                    </>
                   ) : (
                     <div className={styles.editGroup}>
                       <div>
@@ -299,13 +340,13 @@ export default function UserProfilePage() {
                           <button
                             type="button"
                             className={styles.ghostButton}
-                            aria-label={maskStudentId ? t('profile.fields.studentIdHidden') : t('profile.fields.studentIdVisible')}
-                            title={maskStudentId ? t('profile.fields.studentIdHidden') : t('profile.fields.studentIdVisible')}
+                            aria-label={!showStudentId ? t('profile.fields.studentIdHidden') : t('profile.fields.studentIdVisible')}
+                            title={!showStudentId ? t('profile.fields.studentIdHidden') : t('profile.fields.studentIdVisible')}
                             tabIndex={-1}
                             onMouseDown={(e) => e.preventDefault()} // 防止触发父容器 focus-within 高亮
-                            onClick={() => setMaskStudentId((v) => !v)}
+                            onClick={() => setShowStudentId((v) => !v)}
                           >
-                            {maskStudentId ? (
+                            {!showStudentId ? (
                               <svg className={styles.ghostIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94" />
                                 <path d="M1 1l22 22" />
@@ -345,13 +386,13 @@ export default function UserProfilePage() {
                             <button
                               type="button"
                               className={styles.ghostButton}
-                              aria-label={maskDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}
-                              title={maskDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}
+                              aria-label={!showDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}
+                              title={!showDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}
                               tabIndex={-1}
                               onMouseDown={(e) => e.preventDefault()}
-                              onClick={() => setMaskDepartment((v) => !v)}
+                              onClick={() => setShowDepartment((v) => !v)}
                             >
-                              {maskDepartment ? (
+                              {!showDepartment ? (
                                 <svg className={styles.ghostIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94" />
                                   <path d="M1 1l22 22" />
@@ -390,13 +431,13 @@ export default function UserProfilePage() {
                             <button
                               type="button"
                               className={styles.ghostButton}
-                              aria-label={maskMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}
-                              title={maskMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}
+                              aria-label={!showMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}
+                              title={!showMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}
                               tabIndex={-1}
                               onMouseDown={(e) => e.preventDefault()}
-                              onClick={() => setMaskMajor((v) => !v)}
+                              onClick={() => setShowMajor((v) => !v)}
                             >
-                              {maskMajor ? (
+                              {!showMajor ? (
                                 <svg className={styles.ghostIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94" />
                                   <path d="M1 1l22 22" />
@@ -435,13 +476,13 @@ export default function UserProfilePage() {
                             <button
                               type="button"
                               className={styles.ghostButton}
-                              aria-label={maskBio ? t('profile.fields.bioHidden') : t('profile.fields.bioVisible')}
-                              title={maskBio ? t('profile.fields.bioHidden') : t('profile.fields.bioVisible')}
+                              aria-label={!showBio ? t('profile.fields.bioHidden') : t('profile.fields.bioVisible')}
+                              title={!showBio ? t('profile.fields.bioHidden') : t('profile.fields.bioVisible')}
                               tabIndex={-1}
                               onMouseDown={(e) => e.preventDefault()}
-                              onClick={() => setMaskBio((v) => !v)}
+                              onClick={() => setShowBio((v) => !v)}
                             >
-                              {maskBio ? (
+                              {!showBio ? (
                                 <svg className={styles.ghostIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94" />
                                   <path d="M1 1l22 22" />

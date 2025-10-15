@@ -75,24 +75,28 @@ export default function Avatar() {
 
   return (
     <div className={styles.avatar} ref={containerRef}>
-      <div className={styles.avatarBorder}>
-        <button
-          className={styles.iconButton}
-          aria-label={t('avatar.ariaLabel')}
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {avatarDataUrl ? (
-            <Image
-              src={avatarDataUrl}
-              alt={t('avatar.alt')}
-              fill
-              className={styles.avatarImage}
-            />
-          ) : (
-            displayChar
-          )}
-        </button>
+      <div className={styles.avatarRing}>
+        <div className={styles.avatarWrap}>
+          <button
+            className={styles.iconButton}
+            aria-label={t('avatar.ariaLabel')}
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {avatarDataUrl ? (
+              <Image
+                src={avatarDataUrl}
+                alt={t('avatar.alt')}
+                fill
+                className={styles.avatarImage}
+              />
+            ) : (
+              <div className={styles.avatarFallback}>
+                {displayChar}
+              </div>
+            )}
+          </button>
+        </div>
       </div>
       {open && (
         <UserMenu onLogout={handleLogout} userProfile={userProfile} />
