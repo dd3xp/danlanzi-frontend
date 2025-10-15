@@ -11,9 +11,9 @@ import { translateApiMessage } from '@/utils/messageTranslator';
 const UPLOAD_CONFIG = {
   MAX_SIZE_MB: 20,
   ACCEPTED_TYPES: ['image/jpeg', 'image/jpg', 'image/png'] as const,
-  MIN_ZOOM: 0.5,
-  MAX_ZOOM: 3,
-  ZOOM_SPEED: 0.2
+  MIN_ZOOM: 0.1,
+  MAX_ZOOM: 5,
+  ZOOM_SPEED: 0.05
 } as const;
 
 interface AvatarUploadModalProps {
@@ -162,8 +162,24 @@ export default function AvatarUploadModal({ open, onClose, onUploaded, maxSizeMB
   return (
     <Modal
       open={open}
-      onCancel={() => !uploading && onClose()}
-      onOk={() => onClose()}
+      onCancel={() => {
+        if (!uploading) {
+          setStep('pick');
+          setSrc('');
+          setCrop({ x: 0, y: 0 });
+          setZoom(1);
+          setCroppedAreaPixels(null);
+          onClose();
+        }
+      }}
+      onOk={() => {
+        setStep('pick');
+        setSrc('');
+        setCrop({ x: 0, y: 0 });
+        setZoom(1);
+        setCroppedAreaPixels(null);
+        onClose();
+      }}
       okButtonProps={{ disabled: uploading }}
       cancelButtonProps={{ disabled: uploading }}
       title={<div className={styles.titleRow}>{t('profile.actions.upload')}</div>}
@@ -203,6 +219,9 @@ export default function AvatarUploadModal({ open, onClose, onUploaded, maxSizeMB
                 onZoomChange={setZoom}
                 onCropComplete={onCropComplete}
                 showGrid={false}
+                minZoom={UPLOAD_CONFIG.MIN_ZOOM}
+                maxZoom={UPLOAD_CONFIG.MAX_ZOOM}
+                zoomSpeed={UPLOAD_CONFIG.ZOOM_SPEED}
               />
             </div>
             <div className={styles.actionButtons}>
@@ -212,7 +231,7 @@ export default function AvatarUploadModal({ open, onClose, onUploaded, maxSizeMB
                 onClick={() => { setStep('pick'); setSrc(''); }}
                 disabled={uploading}
               >
-                {t('common.cancel')}
+                {t('avatar.actions.cancel')}
               </button>
               <button 
                 type="button" 
@@ -224,7 +243,7 @@ export default function AvatarUploadModal({ open, onClose, onUploaded, maxSizeMB
                   <span className={styles.loadingDots}>
                     <span>.</span><span>.</span><span>.</span>
                   </span>
-                ) : t('common.confirm')}
+                ) : t('avatar.actions.confirm')}
               </button>
             </div>
           </>

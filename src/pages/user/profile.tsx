@@ -15,6 +15,7 @@ import { getUserProfile, updateUserProfile } from '@/services/userProfileService
 import { uploadAvatar, getUserAvatar } from '@/services/userAvatarService';
 import { useRouter } from 'next/router';
 import { eventBus, EVENTS } from '@/utils/eventBus';
+import { getDepartments, getAvailableMajors } from '@/utils/academicOptions';
 
 export default function UserProfilePage() {
   const { t } = useTranslation('common');
@@ -64,37 +65,9 @@ export default function UserProfilePage() {
     setAvatarModalOpen(false);
   };
 
-  // 院系和专业选项数据
-  const noneOption = { value: '', label: t('profile.fields.none') };
-  const departments = [
-    noneOption,
-    { value: 'computerScience', label: tAcademic('departments.computerScience') },
-    { value: 'mathematics', label: tAcademic('departments.mathematics') }
-  ];
-
-  const majors = {
-    computerScience: [
-      { value: 'cs', label: tAcademic('majors.computerScience.cs') },
-      { value: 'ai', label: tAcademic('majors.computerScience.ai') },
-      { value: 'informationSecurity', label: tAcademic('majors.computerScience.informationSecurity') },
-      { value: 'confidentiality', label: tAcademic('majors.computerScience.confidentiality') },
-      { value: 'csElite', label: tAcademic('majors.computerScience.csElite') }
-    ],
-    mathematics: [
-      { value: 'pureMath', label: tAcademic('majors.mathematics.pureMath') },
-      { value: 'appliedMath', label: tAcademic('majors.mathematics.appliedMath') },
-      { value: 'financialMath', label: tAcademic('majors.mathematics.financialMath') },
-      { value: 'bigData', label: tAcademic('majors.mathematics.bigData') },
-      { value: 'cryptography', label: tAcademic('majors.mathematics.cryptography') }
-    ]
-  };
-
-  // 根据选择的院系获取对应专业
-  const getAvailableMajors = () => {
-    if (!departmentInput) return [];
-    const current = majors[departmentInput as keyof typeof majors] || [];
-    return [noneOption, ...current];
-  };
+  // 从 academicOptions 获取选项数据
+  const departments = getDepartments(t);
+  const availableMajors = getAvailableMajors(t, departmentInput);
 
   // 院系变化时重置专业选择
   const handleDepartmentChange = (newDepartment: string) => {
@@ -344,7 +317,7 @@ export default function UserProfilePage() {
                         {majorInput && showMajor && (
                           <div className={styles.infoItem}>
                             <div className={`${styles.infoIcon} ${styles.major}`}></div>
-                            <span className={styles.infoText}>{getAvailableMajors().find(m => m.value === majorInput)?.label || majorInput}</span>
+                            <span className={styles.infoText}>{getAvailableMajors(t, departmentInput).find(m => m.value === majorInput)?.label || majorInput}</span>
                           </div>
                         )}
                         {bioInput && showBio && (
@@ -482,13 +455,13 @@ export default function UserProfilePage() {
                               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                             </svg>
                             <CustomSelect
-                              value={majorInput ? getAvailableMajors().find(m => m.value === majorInput) || null : null}
+                              value={majorInput ? getAvailableMajors(t, departmentInput).find(m => m.value === majorInput) || null : null}
                               onChange={(selectedOption) => {
                                 if (selectedOption) {
                                   setMajorInput(selectedOption.value);
                                 }
                               }}
-                              options={getAvailableMajors()}
+                              options={availableMajors}
                               placeholder={t('profile.fields.major')}
                               isDisabled={isRefreshing || !departmentInput}
                             />

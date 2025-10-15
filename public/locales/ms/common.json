@@ -2,7 +2,11 @@
   "logoAlt": "Logo Dan Basket",
   "avatar": {
     "alt": "Avatar Pengguna",
-    "ariaLabel": "Pengguna"
+    "ariaLabel": "Pengguna",
+    "actions": {
+      "cancel": "Batal",
+      "confirm": "Sahkan"
+    }
   },
   "userProfile": {
     "tabs": {

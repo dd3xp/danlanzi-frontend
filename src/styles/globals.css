@@ -2,8 +2,10 @@
     --bg: #141516;            /* 页面与sidebar背景：稍微调浅 */
     --panel: #0b0b0b;         /* sidebar和头像背景（原来的bg色） */
     --text: #e8e8e8;          /* 浅文本 */
+    --text-2: #b0b0b0;        /* 暗文本 */
     --muted: #9aa0a6;         /* 次要色 */
     --blue: #3b82f6;          /* 主蓝色 */
+    --blue-logo: #457ef8;     /* 图标蓝 */
     --blue-600: #2563eb;      /* 深蓝 */
     --blue-700: #1d4ed8;      /* 更深蓝 */
     --border: #1a1a1a;        /* 细边框 */
@@ -28,9 +30,9 @@
   /* 主内容区域（空） */
   .app-main {
     height: 100vh;
-    width: calc(100% - 82px); /* 压缩宽度，为左侧sidebar留出空间 */
-    margin-left: 82px; /* 向右偏移 */
-    background: transparent; /* 继承整体暗色背景 */
+    width: calc(100% - 82px);
+    margin-left: 82px;
+    background: transparent;
     transition: margin-left 0.3s ease, width 0.3s ease;
   }
 

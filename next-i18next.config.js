@@ -1,6 +1,11 @@
+const i18nConfig = {
+  defaultLocale: 'ms',
+  locales: ['zh', 'en', 'ms'],
+};
+
 module.exports = {
-  i18n: {
-    defaultLocale: 'zh',
-    locales: ['zh', 'en', 'ms'],
-  },
-}
+  i18n: i18nConfig
+};
+
+// 导出配置供 next.config.ts 使用
+module.exports.i18nConfig = i18nConfig;

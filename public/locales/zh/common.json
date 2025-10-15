@@ -2,7 +2,11 @@
   "logoAlt": "旦篮子 Logo",
   "avatar": {
     "alt": "用户头像",
-    "ariaLabel": "用户"
+    "ariaLabel": "用户",
+    "actions": {
+      "cancel": "取消",
+      "confirm": "确定"
+    }
   },
   "userProfile": {
     "tabs": {
@@ -137,9 +141,5 @@
     "fileTooLargeWithLimit": "文件不能超过 {{limit}}MB",
     "uploadFailed": "上传失败",
     "loadSystemAvatarsFailed": "加载系统头像失败"
-  },
-  "common": {
-    "cancel": "取消",
-    "confirm": "确定"
   }
 }

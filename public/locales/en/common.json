@@ -2,7 +2,11 @@
   "logoAlt": "Dan Basket Logo",
   "avatar": {
     "alt": "User Avatar",
-    "ariaLabel": "User"
+    "ariaLabel": "User",
+    "actions": {
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    }
   },
   "userProfile": {
     "tabs": {

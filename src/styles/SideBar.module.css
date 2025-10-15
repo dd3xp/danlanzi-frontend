@@ -33,30 +33,14 @@
   margin-bottom: 0;
 }
 
-/* Homepage按钮样式 */
-.homepage {
-  width: 100%;
-  height: 64px;
-  border-radius: 0;
-  margin-bottom: 0;
-  background: var(--bg);
-  color: #b0b0b0;
-  justify-content: center;
-  padding: 0;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-/* 通用导航按钮样式（与homepage一致） */
+/* 通用导航按钮样式 */
 .navItem {
   width: 100%;
   height: 64px;
   border-radius: 0;
   margin-bottom: 0;
   background: var(--bg);
-  color: #b0b0b0;
+  color: var(--text-2);
   justify-content: center;
   padding: 0;
   transition: all 0.3s ease;
@@ -70,13 +54,6 @@
   margin-top: 2px;
 }
 
-/* 展开后按钮位置写死 */
-.sidebar:has(.homepage:hover) .homepage {
-  justify-content: center;
-  padding: 0;
-}
-
-.homepage:hover,
 .navItem:hover {
   border-radius: 0;
   background: #232425;
@@ -92,12 +69,12 @@
 
 /* 悬停展开状态（通过JavaScript控制） */
 .sidebar.hovered {
-  width: 200px;
+  width: 220px;
 }
 
 /* 侧边栏展开状态（通过点击汉堡菜单） */
 .sidebar.expanded {
-  width: 200px;
+  width: 220px;
 }
 
 .navItem svg {
@@ -108,17 +85,6 @@
   position: absolute;
   left: 23px;
 }
-
-.homepageText {
-  position: absolute;
-  left: 72px;
-  font-size: 14px;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  display: none;
-}
-
 .navText {
   position: absolute;
   left: 72px;
@@ -129,14 +95,7 @@
   display: none;
 }
 
-.sidebar.hovered .homepageText,
-.sidebar.hovered .navText {
-  opacity: 1;
-  display: block;
-}
-
-/* 展开状态下显示homepage文字 */
-.sidebar.expanded .homepageText,
+.sidebar.hovered .navText,
 .sidebar.expanded .navText {
   opacity: 1;
   display: block;
@@ -168,7 +127,7 @@
   height: 48px;
   border-radius: 8px;
   background: var(--bg);
-  color: #b0b0b0;
+  color: var(--text-2);
   justify-content: center;
   padding: 0;
   transition: all 0.3s ease;
@@ -196,7 +155,7 @@
 .logoText {
   font-size: 16px;
   font-weight: 600;
-  color: #b0b0b0;
+  color: var(--blue-logo);
   white-space: nowrap;
 }
 
@@ -215,7 +174,7 @@
   display: block;
   width: 22px;
   height: 2px;
-  background: #b0b0b0;
+  background: var(--text-2);
   border-radius: 1px;
   position: absolute;
   left: 14px;
