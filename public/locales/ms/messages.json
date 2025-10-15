@@ -82,12 +82,17 @@
       "noPermission": "Tiada kebenaran untuk mengubah suai avatar pengguna lain",
       "avatarSizeExceeded": "Saiz fail avatar tidak boleh melebihi 5MB",
       "imageProcessingFailed": "Pemprosesan imej gagal, sila semak sama ada format imej betul",
-      "updateFailed": "Kemas kini avatar gagal"
+      "updateFailed": "Kemas kini avatar gagal",
+      "systemDirectoryNotFound": "Direktori avatar sistem tidak ditemui",
+      "systemAvatarsRetrieveFailed": "Gagal mendapatkan senarai avatar sistem",
+      "invalidSystemAvatarFilename": "Nama fail tidak boleh kosong dan hanya fail PNG disokong",
+      "systemAvatarNotFound": "Fail avatar tidak ditemui",
+      "systemAvatarReadFailed": "Gagal membaca fail avatar",
+      "systemAvatarRetrieveFailed": "Gagal mendapatkan fail avatar sistem"
     },
     "success": {
-      "updated": "Avatar berjaya dikemas kini"
+      "updated": "Avatar berjaya dikemas kini",
+      "systemAvatarsRetrieved": "Senarai avatar sistem berjaya diperoleh"
     }
   }
 }
-
-

@@ -5,7 +5,9 @@ import styles from '../styles/Avatar.module.css';
 import UserMenu from './UserMenu';
 import { logout, getToken } from '../utils/auth';
 import { useRouter } from 'next/router';
-import backendUrl from '../services/backendUrl';
+import { getUserProfile } from '../services/userProfileService';
+import { getUserAvatar } from '../services/userAvatarService';
+import { eventBus, EVENTS } from '../utils/eventBus';
 
 export default function Avatar() {
   const { t } = useTranslation('common');
@@ -15,32 +17,48 @@ export default function Avatar() {
   const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // 获取用户信息
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const token = getToken();
-        if (!token) {
-          setIsLoading(false);
-          return;
-        }
-
-        const response = await fetch(`${backendUrl}/api/userprofile/profile`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json();
-        
-        if (data.status === 'success' && data.user) {
-          setUserProfile(data.user);
-        }
-      } catch (error) {
-        console.error('Failed to fetch user profile:', error);
-      } finally {
+  // 获取用户信息和头像
+  const fetchUserData = async () => {
+    try {
+      const token = getToken();
+      if (!token) {
         setIsLoading(false);
+        return;
       }
-    };
 
-    fetchUserProfile();
+      // 获取用户资料
+      const profileResponse = await getUserProfile();
+      if (profileResponse.status === 'success' && profileResponse.user) {
+        const profile = profileResponse.user;
+        
+        // 获取用户头像
+        const avatarResponse = await getUserAvatar(profile.id);
+        if (avatarResponse.status === 'success' && avatarResponse.avatar_data_url) {
+          // 合并头像数据到用户资料中
+          setUserProfile({
+            ...profile,
+            avatar_data_url: avatarResponse.avatar_data_url
+          });
+        } else {
+          setUserProfile(profile);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch user data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 初始加载
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  // 监听头像更新事件
+  useEffect(() => {
+    const unsubscribe = eventBus.subscribe(EVENTS.AVATAR_UPDATED, fetchUserData);
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {

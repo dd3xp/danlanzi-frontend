@@ -92,7 +92,7 @@ async function apiCall<T>(
 
 // 获取用户信息（可选传入userId以查看他人资料）
 export const getUserProfile = async (userId?: string | number): Promise<ApiResponse<User>> => {
-  const endpoint = userId ? `/userprofile/profile/${userId}` : '/userprofile/profile';
+  const endpoint = userId ? `/userProfile/profile/${userId}` : '/userProfile/profile';
   return apiCall<User>(endpoint, {
     method: 'GET',
   }, true); // 需要认证
@@ -112,66 +112,24 @@ export const updateUserProfile = async (profileData: {
   show_major?: boolean;
   show_bio?: boolean;
 }): Promise<ApiResponse<User>> => {
-  return apiCall<User>('/userprofile/profile', {
+  return apiCall<User>('/userProfile/profile', {
     method: 'PUT',
     body: JSON.stringify(profileData),
   }, true); // 需要认证
 };
 
-// 上传头像
-export const uploadAvatar = async (file: File): Promise<ApiResponse<{
-  avatar_path: string;
-  file_info: {
-    originalname: string;
-    original_size: number;
-    original_mimetype: string;
-    converted_size: number;
-    converted_format: string;
-    dimensions: string;
-  };
-}>> => {
-  const formData = new FormData();
-  formData.append('avatar', file);
-
-  const headers: Record<string, string> = {};
-  const authHeaders = getAuthHeaders();
-  Object.assign(headers, authHeaders);
-  // 不设置Content-Type，让浏览器自动设置multipart/form-data
-
-  const response = await fetch(`${API_BASE_URL}/userprofile/avatar`, {
-    method: 'POST',
-    headers,
-    body: formData,
-  });
-
-  let data;
-  try {
-    data = await response.json();
-  } catch (jsonError) {
-    return {
-      status: 'error',
-      message: 'SERVER_RESPONSE_ERROR',
-      error: 'SERVER_RESPONSE_ERROR'
-    };
-  }
-
-  if (!response.ok) {
-    return {
-      status: 'error',
-      message: data.message || 'Avatar upload failed',
-      error: data.message || 'Avatar upload failed'
-    };
-  }
-
-  return data;
-};
-
-
 // 获取公开用户资料
 export const getPublicProfile = async (userId: string | number): Promise<ApiResponse<User>> => {
-  return apiCall<User>(`/userprofile/profile/${userId}`, {
+  return apiCall<User>(`/userProfile/profile/${userId}`, {
     method: 'GET',
-  }, false); // 不需要认证
+  }, false);
+};
+
+// 获取系统头像列表
+export const getSystemAvatars = async (): Promise<ApiResponse<string[]>> => {
+  return apiCall<string[]>('/userAvatar/system', {
+    method: 'GET',
+  }, true);
 };
 
 

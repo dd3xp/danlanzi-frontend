@@ -1,0 +1,284 @@
+/* Avatar 上传弹窗样式（深色主题，匹配项目风格） */
+
+.modalContent {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+}
+
+.modalTitle {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.modalBody {
+  padding: 24px;
+  background: var(--card);
+}
+
+.modalInner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dragger {
+  padding: 40px 20px;
+  height: 320px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 2px dashed var(--card-border);
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+
+.dragger:hover {
+  border-color: var(--blue);
+  background: rgba(255,255,255,.02);
+}
+
+.dragInner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.uploadIcon {
+  width: 48px;
+  height: 48px;
+  color: var(--blue);
+}
+
+.dragTitle {
+  color: var(--text);
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.dragDesc {
+  color: var(--muted);
+  margin: 0;
+  font-size: 14px;
+}
+
+.cropArea {
+  position: relative;
+  width: 100%;
+  height: calc(70vh - 200px);
+  min-height: 300px;
+  max-height: 500px;
+  background: #111;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cancelButton,
+.confirmButton {
+  appearance: none;
+  border: none;
+  height: 36px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 160ms ease, transform 0.1s ease;
+}
+
+.cancelButton,
+.confirmButton {
+  background: #dddddd;
+  color: rgb(17, 17, 17);
+}
+
+.cancelButton:hover:not(:disabled),
+.confirmButton:hover:not(:disabled) {
+  background: #c2c2c2;
+}
+
+.cancelButton:active:not(:disabled),
+.confirmButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.cancelButton:disabled,
+.confirmButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loadingDots {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.loadingDots span {
+  animation: loadingDots 1.4s infinite;
+}
+
+.loadingDots span:nth-child(2) { animation-delay: 0.2s; }
+.loadingDots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes loadingDots {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+/* 标签页样式 */
+.tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 12px;
+}
+
+.tab {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 160ms ease;
+}
+
+.tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab.active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 系统头像网格 */
+.systemAvatars {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 16px;
+  padding: 16px;
+  max-height: 320px;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.systemAvatar {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 160ms ease;
+  overflow: hidden;
+}
+
+.systemAvatar:hover {
+  transform: scale(1.05);
+  border-color: var(--blue);
+}
+
+.systemAvatar.selected {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px var(--blue-alpha);
+}
+
+.systemAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loadingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.loadingAvatar {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
+/* 覆盖 antd 默认拖拽样式 */
+:global(.ant-upload-wrapper .ant-upload-drag) {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* 移除默认图标占位 */
+:global(.ant-upload-drag-icon) {
+  display: none !important;
+}
+
+/* 提高覆盖强度，确保卡片非白色 */
+:global(.ant-modal .ant-modal-content) {
+  background: var(--card) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+}
+
+:global(.ant-modal .ant-modal-header) {
+  background: var(--card) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+  padding: 0 0 16px 0 !important;
+  margin: 0 !important;
+}
+
+:global(.ant-modal .ant-modal-body) {
+  padding: 24px 0 0 0 !important;
+}
+
+:global(.ant-modal .ant-modal-title) {
+  color: var(--text) !important;
+  font-weight: 700 !important;
+}
+
+:global(.ant-modal .ant-modal-close) {
+  color: rgba(255, 255, 255, 0.65) !important;
+  transition: all 160ms ease !important;
+  top: 24px !important;
+  right: 24px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+}
+
+:global(.ant-modal .ant-modal-close:hover) {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.05) !important;
+}

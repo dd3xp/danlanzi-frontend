@@ -82,10 +82,17 @@
       "noPermission": "No permission to modify other users' avatars",
       "avatarSizeExceeded": "Avatar file size cannot exceed 5MB",
       "imageProcessingFailed": "Image processing failed, please check if the image format is correct",
-      "updateFailed": "Avatar update failed"
+      "updateFailed": "Avatar update failed",
+      "systemDirectoryNotFound": "System avatar directory not found",
+      "systemAvatarsRetrieveFailed": "Failed to retrieve system avatars list",
+      "invalidSystemAvatarFilename": "Filename cannot be empty and only PNG files are supported",
+      "systemAvatarNotFound": "Avatar file not found",
+      "systemAvatarReadFailed": "Failed to read avatar file",
+      "systemAvatarRetrieveFailed": "Failed to retrieve system avatar file"
     },
     "success": {
-      "updated": "Avatar updated successfully"
+      "updated": "Avatar updated successfully",
+      "systemAvatarsRetrieved": "System avatars retrieved successfully"
     }
   }
 }

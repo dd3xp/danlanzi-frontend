@@ -23,7 +23,7 @@ export default function Tooltip({
       placement={placement}
       mouseEnterDelay={delay}
       mouseLeaveDelay={0.1}
-      overlayClassName={`custom-tooltip ${className}`}
+      classNames={{ root: `custom-tooltip ${className}` }}
     >
       {children}
     </AntTooltip>

@@ -82,10 +82,17 @@
       "noPermission": "无权限修改其他用户的头像",
       "avatarSizeExceeded": "头像文件大小不能超过 5MB",
       "imageProcessingFailed": "图片处理失败，请检查图片格式是否正确",
-      "updateFailed": "头像更新失败"
+      "updateFailed": "头像更新失败",
+      "systemDirectoryNotFound": "系统头像目录不存在",
+      "systemAvatarsRetrieveFailed": "获取系统头像列表失败",
+      "invalidSystemAvatarFilename": "文件名不能为空，且只支持PNG文件",
+      "systemAvatarNotFound": "头像文件不存在",
+      "systemAvatarReadFailed": "读取头像文件失败",
+      "systemAvatarRetrieveFailed": "获取系统头像文件失败"
     },
     "success": {
-      "updated": "头像更新成功"
+      "updated": "头像更新成功",
+      "systemAvatarsRetrieved": "系统头像列表获取成功"
     }
   }
 }

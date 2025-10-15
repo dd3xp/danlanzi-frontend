@@ -55,7 +55,11 @@
     z-index: 10; 
   }
   
-  .cardAction:hover { background: #191a1b; color: var(--text); }
+  .cardAction:hover { 
+    background: rgba(255, 255, 255, 0.1); 
+    color: #fff;
+    transform: scale(1.05);
+  }
   
   .cardActionIcon { width: 18px; height: 18px; }
   
@@ -143,7 +147,10 @@
     justify-content: center;
     cursor: pointer;
   }
-  .avatarEditAction:hover { background: rgba(255,255,255,.08); }
+  .avatarEditAction:hover { 
+    background: rgba(255,255,255,.15);
+    transform: scale(1.05);
+  }
   .avatarEditIcon { width: 28px; height: 28px; }
   
   .heroBody { 
@@ -152,23 +159,20 @@
     top: 80px;
     min-width: 0;
     width: calc(100% - 412px);
+    max-width: 600px;
   }
   .handle {
     color: var(--text-secondary);
     font-size: 14px;
     margin-bottom: 4px;
   }
-  .displayName {
-    margin: 0 0 8px 0;
-    font-size: 48px;
-  }
   .infoItem {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     min-height: 20px;
-    padding: 4px 0;
+    padding: 2px 0;
   }
   
   .infoIcon {
@@ -178,12 +182,18 @@
     background-size: 20px 20px;
     background-repeat: no-repeat;
     background-position: center;
+    margin-top: 4px;
   }
   
   .infoText { 
     font-size: 16px; 
     color: #888;
-    line-height: 1.2;
+    line-height: 1.5;
+    padding-top: 2px;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
   }
   
   .infoIcon.studentId {
@@ -191,7 +201,7 @@
     height: 20px;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='14' rx='2'/%3E%3Cpath d='M3 8h18'/%3E%3C/svg%3E");
     background-size: 24px 24px;
-    background-position: center 1px;
+    background-position: center 0px;
   }
   
   .infoIcon.department {
@@ -217,19 +227,29 @@
   }
   
   
-  .nameContainer {
-    position: absolute;
-    top: 30px; 
-    left: 40px; 
-    max-width: 440px;
-    z-index: 1;
-  }
+.nameContainer {
+  position: relative;
+  margin: 20px 40px;
+  max-width: 600px;
+  overflow: visible;
+}
+
+.displayName {
+  font-size: 40px;
+  line-height: 1.2;
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--muted);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  min-height: 100px;
+}
   
-  .infoContainer {
-    margin-top: 130px; 
-    margin-left: 40px; 
-    max-width: 440px;
-  }
+.infoContainer {
+  margin: 24px 40px;
+  max-width: 600px;
+}
   .editGroup { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
   
   .fieldLabel { color: var(--text-secondary); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
@@ -363,7 +383,10 @@
     cursor: pointer;
   }
   
-  .ghostButton:hover { background: #191a1b; color: var(--text); }
+  .ghostButton:hover { 
+    background: rgba(255, 255, 255, 0.1); 
+    color: #fff;
+  }
   .ghostIcon { width: 18px; height: 18px; }
   
   

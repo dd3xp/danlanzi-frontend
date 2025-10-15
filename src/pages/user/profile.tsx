@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import SideBar from '@/components/SideBar';
 import Avatar from '@/components/Avatar';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import CustomSelect from '@/components/CustomSelect';
 import Tooltip from '@/components/Tooltip';
+import AvatarUploadModal from '@/components/AvatarUploadModal';
+import SystemAvatarModal from '@/components/SystemAvatarModal';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import styles from '@/styles/Profile.module.css';
 import Image from 'next/image';
 import { getUserProfile, updateUserProfile } from '@/services/userProfileService';
+import { uploadAvatar, getUserAvatar } from '@/services/userAvatarService';
 import { useRouter } from 'next/router';
+import { eventBus, EVENTS } from '@/utils/eventBus';
 
 export default function UserProfilePage() {
   const { t } = useTranslation('common');
@@ -25,6 +29,10 @@ export default function UserProfilePage() {
   const [showDepartment, setShowDepartment] = useState(true);
   const [showMajor, setShowMajor] = useState(true);
   const [showBio, setShowBio] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const [avatarModalOpen, setAvatarModalOpen] = useState(false);
+  const [systemAvatarModalOpen, setSystemAvatarModalOpen] = useState(false);
   
   // 新增字段状态
   const [departmentInput, setDepartmentInput] = useState('');
@@ -32,6 +40,29 @@ export default function UserProfilePage() {
   const [bioInput, setBioInput] = useState('');
 
   const router = useRouter();
+  const handleAvatarUploadClick = () => {
+    setAvatarModalOpen(true);
+  };
+
+  const handleAvatarUploaded = async () => {
+    // 上传完成后刷新用户资料
+    const refreshed = await getUserProfile(typeof router.query.id === 'string' ? router.query.id : undefined);
+    if (refreshed.status === 'success' && refreshed.user) {
+      const profile = refreshed.user;
+      
+      // 获取新的头像数据
+      const avatarRes = await getUserAvatar(profile.id);
+      if (avatarRes.status === 'success' && avatarRes.avatar_data_url) {
+        profile.avatar_data_url = avatarRes.avatar_data_url;
+      }
+      
+      setUser(profile);
+      
+      // 通知其他组件头像已更新
+      eventBus.emit(EVENTS.AVATAR_UPDATED);
+    }
+    setAvatarModalOpen(false);
+  };
 
   // 院系和专业选项数据
   const noneOption = { value: '', label: t('profile.fields.none') };
@@ -78,17 +109,25 @@ export default function UserProfilePage() {
         const userId = typeof router.query.id === 'string' ? router.query.id : undefined;
         const res = await getUserProfile(userId);
         if (res.status === 'success' && res.user) {
-          setUser(res.user);
-          setNameInput(res.user?.nickname || '');
+          const profile = res.user;
+          
+          // 获取用户头像
+          const avatarRes = await getUserAvatar(profile.id);
+          if (avatarRes.status === 'success' && avatarRes.avatar_data_url) {
+            profile.avatar_data_url = avatarRes.avatar_data_url;
+          }
+          
+          setUser(profile);
+          setNameInput(profile?.nickname || '');
           // 从后端返回的数据中读取新字段
-          setDepartmentInput(res.user?.department || '');
-          setMajorInput(res.user?.major || '');
-          setBioInput(res.user?.bio || '');
+          setDepartmentInput(profile?.department || '');
+          setMajorInput(profile?.major || '');
+          setBioInput(profile?.bio || '');
           // 从后端读取隐私设置
-          setShowStudentId(res.user?.show_student_id ?? true);
-          setShowDepartment(res.user?.show_department ?? true);
-          setShowMajor(res.user?.show_major ?? true);
-          setShowBio(res.user?.show_bio ?? true);
+          setShowStudentId(profile?.show_student_id ?? true);
+          setShowDepartment(profile?.show_department ?? true);
+          setShowMajor(profile?.show_major ?? true);
+          setShowBio(profile?.show_bio ?? true);
         }
       } catch (e) {
         // 忽略错误，后续可加错误提示
@@ -174,22 +213,25 @@ export default function UserProfilePage() {
                             show_bio: showBio
                           });
                           if (res.status === 'success' && res.user) {
-                            // 保持原有的avatar_data_url，因为后端updateUserProfile不返回这个字段
-                            const updatedUser = {
-                              ...res.user,
-                              avatar_data_url: user?.avatar_data_url
-                            };
-                            setUser(updatedUser);
-                            setNameInput(res.user?.nickname || '');
+                            const profile = res.user;
+                            
+                            // 获取用户头像
+                            const avatarRes = await getUserAvatar(profile.id);
+                            if (avatarRes.status === 'success' && avatarRes.avatar_data_url) {
+                              profile.avatar_data_url = avatarRes.avatar_data_url;
+                            }
+                            
+                            setUser(profile);
+                            setNameInput(profile?.nickname || '');
                             // 从后端返回的数据中读取新字段
-                            setDepartmentInput(res.user?.department || '');
-                            setMajorInput(res.user?.major || '');
-                            setBioInput(res.user?.bio || '');
+                            setDepartmentInput(profile?.department || '');
+                            setMajorInput(profile?.major || '');
+                            setBioInput(profile?.bio || '');
                             // 同步隐私设置
-                            setShowStudentId(res.user?.show_student_id ?? true);
-                            setShowDepartment(res.user?.show_department ?? true);
-                            setShowMajor(res.user?.show_major ?? true);
-                            setShowBio(res.user?.show_bio ?? true);
+                            setShowStudentId(profile?.show_student_id ?? true);
+                            setShowDepartment(profile?.show_department ?? true);
+                            setShowMajor(profile?.show_major ?? true);
+                            setShowBio(profile?.show_bio ?? true);
                           }
                         } catch (e) {
                           // 忽略错误，后续可加错误提示
@@ -251,7 +293,7 @@ export default function UserProfilePage() {
                       {editing && (
                         <div className={styles.avatarEditOverlay}>
                           <Tooltip title={t('profile.actions.upload')}>
-                            <button type="button" className={styles.avatarEditAction} aria-label={t('profile.actions.upload')}>
+                            <button type="button" className={styles.avatarEditAction} aria-label={t('profile.actions.upload')} onClick={handleAvatarUploadClick} disabled={isUploadingAvatar}>
                               {/* plus icon */}
                               <svg className={styles.avatarEditIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="12" y1="5" x2="12" y2="19" />
@@ -260,7 +302,13 @@ export default function UserProfilePage() {
                             </button>
                           </Tooltip>
                           <Tooltip title={t('profile.actions.gallery')}>
-                            <button type="button" className={styles.avatarEditAction} aria-label={t('profile.actions.gallery')}>
+                            <button 
+                              type="button" 
+                              className={styles.avatarEditAction} 
+                              aria-label={t('profile.actions.gallery')}
+                              onClick={() => setSystemAvatarModalOpen(true)}
+                              disabled={isUploadingAvatar}
+                            >
                               {/* gallery icon */}
                               <svg className={styles.avatarEditIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <rect x="3" y="4" width="18" height="14" rx="2" />
@@ -321,10 +369,15 @@ export default function UserProfilePage() {
                             className={styles.nameInput}
                             value={nameInput}
                             onChange={(e) => {
-                          const val = e.target.value;
-                          // 限制：20英文或10中文（粗略：中文占2单位，英文占1单位）
-                          const lengthUnits = Array.from(val).reduce((sum, ch) => sum + (/[\u4e00-\u9fa5]/.test(ch) ? 2 : 1), 0);
-                          if (lengthUnits <= 20) setNameInput(val);
+                              const val = e.target.value;
+                              // 计算长度：中文字符算2个单位，其他字符算1个单位
+                              const lengthUnits = Array.from(val).reduce((sum, ch) => 
+                                sum + (/[\u4e00-\u9fa5]/.test(ch) ? 2 : 1), 0
+                              );
+                              // 限制总长度不超过20个单位
+                              if (lengthUnits <= 20) {
+                                setNameInput(val);
+                              }
                             }}
                             placeholder={user?.nickname || 'User'}
                             disabled={isRefreshing}
@@ -482,9 +535,14 @@ export default function UserProfilePage() {
                               value={bioInput}
                               onChange={(e) => {
                                 const val = e.target.value;
-                                // 限制：50个中文字符或100个英文字母
-                                const lengthUnits = Array.from(val).reduce((sum, ch) => sum + (/[\u4e00-\u9fa5]/.test(ch) ? 2 : 1), 0);
-                                if (lengthUnits <= 100) setBioInput(val);
+                                // 计算长度：中文字符算2个单位，其他字符算1个单位
+                                const lengthUnits = Array.from(val).reduce((sum, ch) => 
+                                  sum + (/[\u4e00-\u9fa5]/.test(ch) ? 2 : 1), 0
+                                );
+                                // 限制总长度不超过100个单位
+                                if (lengthUnits <= 100) {
+                                  setBioInput(val);
+                                }
                               }}
                               placeholder={t('userProfile.placeholders.noBio')}
                               disabled={isRefreshing}
@@ -534,6 +592,16 @@ export default function UserProfilePage() {
             )}
           </section>
         </div>
+        <AvatarUploadModal
+          open={avatarModalOpen}
+          onClose={() => setAvatarModalOpen(false)}
+          onUploaded={handleAvatarUploaded}
+        />
+        <SystemAvatarModal
+          open={systemAvatarModalOpen}
+          onClose={() => setSystemAvatarModalOpen(false)}
+          onSelected={handleAvatarUploaded}
+        />
       </main>
     </ProtectedRoute>
   );

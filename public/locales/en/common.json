@@ -122,5 +122,12 @@
       "sending": "Sending...",
       "registering": "Registering..."
     }
+  },
+  "messages": {
+    "dragHereOrClick": "Drag file here, or click to select",
+    "supportedTypes": "Supported PNG/JPG, max",
+    "invalidImage": "Only PNG/JPG images are allowed",
+    "fileTooLarge": "File is too large",
+    "fileTooLargeWithLimit": "File size must be less than {{limit}}MB"
   }
 }

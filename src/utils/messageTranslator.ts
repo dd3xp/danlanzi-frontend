@@ -93,6 +93,17 @@ export function translateBackendMessage(
     '头像更新成功': 'avatar.success.updated',
     '头像更新失败': 'avatar.errors.updateFailed',
     
+    // 系统头像相关消息
+    '系统头像目录不存在': 'avatar.errors.systemDirectoryNotFound',
+    '系统头像列表获取成功': 'avatar.success.systemAvatarsRetrieved',
+    '获取系统头像列表失败': 'avatar.errors.systemAvatarsRetrieveFailed',
+    '文件名不能为空，且只支持PNG文件': 'avatar.errors.invalidSystemAvatarFilename',
+    '头像文件不存在': 'avatar.errors.systemAvatarNotFound',
+    '读取头像文件失败': 'avatar.errors.systemAvatarReadFailed',
+    '获取系统头像文件失败': 'avatar.errors.systemAvatarRetrieveFailed',
+    '系统头像设置成功': 'avatar.success.systemAvatarSet',
+    '设置系统头像失败': 'avatar.errors.systemAvatarSetFailed',
+    
     
     // 认证相关消息
     'Access token required': 'auth.errors.accessTokenRequired',

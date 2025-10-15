@@ -122,5 +122,12 @@
       "sending": "Menghantar...",
       "registering": "Sedang mendaftar..."
     }
+  },
+  "messages": {
+    "dragHereOrClick": "Seret fail ke sini, atau klik untuk pilih",
+    "supportedTypes": "Sokong PNG/JPG, maksimum",
+    "invalidImage": "Hanya gambar PNG/JPG dibenarkan",
+    "fileTooLarge": "Fail terlalu besar",
+    "fileTooLargeWithLimit": "Saiz fail mesti kurang daripada {{limit}}MB"
   }
 }
