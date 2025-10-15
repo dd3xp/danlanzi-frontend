@@ -3,6 +3,7 @@ import SideBar from '@/components/SideBar';
 import Avatar from '@/components/Avatar';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import CustomSelect from '@/components/CustomSelect';
+import Tooltip from '@/components/Tooltip';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
@@ -33,7 +34,9 @@ export default function UserProfilePage() {
   const router = useRouter();
 
   // 院系和专业选项数据
+  const noneOption = { value: '', label: t('profile.fields.none') };
   const departments = [
+    noneOption,
     { value: 'computerScience', label: tAcademic('departments.computerScience') },
     { value: 'mathematics', label: tAcademic('departments.mathematics') }
   ];
@@ -58,7 +61,8 @@ export default function UserProfilePage() {
   // 根据选择的院系获取对应专业
   const getAvailableMajors = () => {
     if (!departmentInput) return [];
-    return majors[departmentInput as keyof typeof majors] || [];
+    const current = majors[departmentInput as keyof typeof majors] || [];
+    return [noneOption, ...current];
   };
 
   // 院系变化时重置专业选择
@@ -134,27 +138,28 @@ export default function UserProfilePage() {
             {activeTab === 'overview' && (
               <div className={styles.heroCard}>
                 {!editing ? (
-                  <button
-                    type="button"
-                    className={styles.cardAction}
-                    aria-label={t('profile.actions.edit')}
-                    title={t('profile.actions.edit')}
-                    onClick={() => setEditing(true)}
-                  >
-                    {/* edit (pencil) */}
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardActionIcon}>
-                      <path d="M12 20h9" />
-                      <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-                    </svg>
-                  </button>
-                ) : (
-                  <div className={styles.cardActionGroup}>
+                  <Tooltip title={t('profile.actions.edit')}>
                     <button
                       type="button"
                       className={styles.cardAction}
-                      aria-label={t('profile.actions.save')}
-                      title={t('profile.actions.save')}
-                      onClick={async () => {
+                      aria-label={t('profile.actions.edit')}
+                      onClick={() => setEditing(true)}
+                    >
+                    {/* edit (pencil) */}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardActionIcon}>
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                      </svg>
+                    </button>
+                  </Tooltip>
+                ) : (
+                  <div className={styles.cardActionGroup}>
+                    <Tooltip title={t('profile.actions.save')}>
+                      <button
+                        type="button"
+                        className={styles.cardAction}
+                        aria-label={t('profile.actions.save')}
+                        onClick={async () => {
                         // 保存用户资料
                         try {
                           setIsRefreshing(true);
@@ -195,16 +200,17 @@ export default function UserProfilePage() {
                       }}
                     >
                       {/* save (check) */}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardActionIcon}>
-                        <path d="M20 6L9 17l-5-5" />
-                      </svg>
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.cardAction}
-                      aria-label={t('profile.actions.discard')}
-                      title={t('profile.actions.discard')}
-                      onClick={() => {
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardActionIcon}>
+                          <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                      </button>
+                    </Tooltip>
+                    <Tooltip title={t('profile.actions.discard')}>
+                      <button
+                        type="button"
+                        className={styles.cardAction}
+                        aria-label={t('profile.actions.discard')}
+                        onClick={() => {
                         setNameInput(user?.nickname || '');
                         // 重置为原始用户数据
                         setDepartmentInput(user?.department || '');
@@ -219,11 +225,12 @@ export default function UserProfilePage() {
                       }}
                     >
                       {/* discard (x) */}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardActionIcon}>
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                      </svg>
-                    </button>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardActionIcon}>
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                      </button>
+                    </Tooltip>
                   </div>
                 )}
                 <div className={styles.heroLeft}>
@@ -243,23 +250,25 @@ export default function UserProfilePage() {
                       )}
                       {editing && (
                         <div className={styles.avatarEditOverlay}>
-                          <button type="button" className={styles.avatarEditAction} aria-label={t('profile.actions.upload')}
-                            title={t('profile.actions.upload')}>
-                            {/* plus icon */}
-                            <svg className={styles.avatarEditIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <line x1="12" y1="5" x2="12" y2="19" />
-                              <line x1="5" y1="12" x2="19" y2="12" />
-                            </svg>
-                          </button>
-                          <button type="button" className={styles.avatarEditAction} aria-label={t('profile.actions.gallery')}
-                            title={t('profile.actions.gallery')}>
-                            {/* gallery icon */}
-                            <svg className={styles.avatarEditIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <rect x="3" y="4" width="18" height="14" rx="2" />
-                              <circle cx="8.5" cy="9.5" r="1.5" />
-                              <path d="M21 14l-4.5-4.5L12 14l-2.5-2.5L3 18" />
-                            </svg>
-                          </button>
+                          <Tooltip title={t('profile.actions.upload')}>
+                            <button type="button" className={styles.avatarEditAction} aria-label={t('profile.actions.upload')}>
+                              {/* plus icon */}
+                              <svg className={styles.avatarEditIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                              </svg>
+                            </button>
+                          </Tooltip>
+                          <Tooltip title={t('profile.actions.gallery')}>
+                            <button type="button" className={styles.avatarEditAction} aria-label={t('profile.actions.gallery')}>
+                              {/* gallery icon */}
+                              <svg className={styles.avatarEditIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="4" width="18" height="14" rx="2" />
+                                <circle cx="8.5" cy="9.5" r="1.5" />
+                                <path d="M21 14l-4.5-4.5L12 14l-2.5-2.5L3 18" />
+                              </svg>
+                            </button>
+                          </Tooltip>
                         </div>
                       )}
                     </div>
@@ -337,15 +346,15 @@ export default function UserProfilePage() {
                             disabled
                           />
                           {/* 眼睛按钮（仅前端视觉切换，不接逻辑） */}
-                          <button
-                            type="button"
-                            className={styles.ghostButton}
-                            aria-label={!showStudentId ? t('profile.fields.studentIdHidden') : t('profile.fields.studentIdVisible')}
-                            title={!showStudentId ? t('profile.fields.studentIdHidden') : t('profile.fields.studentIdVisible')}
-                            tabIndex={-1}
-                            onMouseDown={(e) => e.preventDefault()} // 防止触发父容器 focus-within 高亮
-                            onClick={() => setShowStudentId((v) => !v)}
-                          >
+                          <Tooltip title={!showStudentId ? t('profile.fields.studentIdHidden') : t('profile.fields.studentIdVisible')}>
+                            <button
+                              type="button"
+                              className={styles.ghostButton}
+                              aria-label={!showStudentId ? t('profile.fields.studentIdHidden') : t('profile.fields.studentIdVisible')}
+                              tabIndex={-1}
+                              onMouseDown={(e) => e.preventDefault()} // 防止触发父容器 focus-within 高亮
+                              onClick={() => setShowStudentId((v) => !v)}
+                            >
                             {!showStudentId ? (
                               <svg className={styles.ghostIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94" />
@@ -358,7 +367,8 @@ export default function UserProfilePage() {
                                 <circle cx="12" cy="12" r="3" />
                               </svg>
                             )}
-                          </button>
+                            </button>
+                          </Tooltip>
                         </div>
                         </div>
                         
@@ -383,15 +393,15 @@ export default function UserProfilePage() {
                               placeholder={t('profile.fields.department')}
                               isDisabled={isRefreshing}
                             />
-                            <button
-                              type="button"
-                              className={styles.ghostButton}
-                              aria-label={!showDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}
-                              title={!showDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}
-                              tabIndex={-1}
-                              onMouseDown={(e) => e.preventDefault()}
-                              onClick={() => setShowDepartment((v) => !v)}
-                            >
+                            <Tooltip title={!showDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}>
+                              <button
+                                type="button"
+                                className={styles.ghostButton}
+                                aria-label={!showDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}
+                                tabIndex={-1}
+                                onMouseDown={(e) => e.preventDefault()}
+                                onClick={() => setShowDepartment((v) => !v)}
+                              >
                               {!showDepartment ? (
                                 <svg className={styles.ghostIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94" />
@@ -404,7 +414,8 @@ export default function UserProfilePage() {
                                   <circle cx="12" cy="12" r="3" />
                                 </svg>
                               )}
-                            </button>
+                              </button>
+                            </Tooltip>
                           </div>
                         </div>
 
@@ -428,15 +439,15 @@ export default function UserProfilePage() {
                               placeholder={t('profile.fields.major')}
                               isDisabled={isRefreshing || !departmentInput}
                             />
-                            <button
-                              type="button"
-                              className={styles.ghostButton}
-                              aria-label={!showMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}
-                              title={!showMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}
-                              tabIndex={-1}
-                              onMouseDown={(e) => e.preventDefault()}
-                              onClick={() => setShowMajor((v) => !v)}
-                            >
+                            <Tooltip title={!showMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}>
+                              <button
+                                type="button"
+                                className={styles.ghostButton}
+                                aria-label={!showMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}
+                                tabIndex={-1}
+                                onMouseDown={(e) => e.preventDefault()}
+                                onClick={() => setShowMajor((v) => !v)}
+                              >
                               {!showMajor ? (
                                 <svg className={styles.ghostIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94" />
@@ -449,7 +460,8 @@ export default function UserProfilePage() {
                                   <circle cx="12" cy="12" r="3" />
                                 </svg>
                               )}
-                            </button>
+                              </button>
+                            </Tooltip>
                           </div>
                         </div>
 
@@ -468,20 +480,25 @@ export default function UserProfilePage() {
                             <textarea
                               className={styles.bioInput}
                               value={bioInput}
-                              onChange={(e) => setBioInput(e.target.value)}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                // 限制：50个中文字符或100个英文字母
+                                const lengthUnits = Array.from(val).reduce((sum, ch) => sum + (/[\u4e00-\u9fa5]/.test(ch) ? 2 : 1), 0);
+                                if (lengthUnits <= 100) setBioInput(val);
+                              }}
                               placeholder={t('userProfile.placeholders.noBio')}
                               disabled={isRefreshing}
                               rows={3}
                             />
-                            <button
-                              type="button"
-                              className={styles.ghostButton}
-                              aria-label={!showBio ? t('profile.fields.bioHidden') : t('profile.fields.bioVisible')}
-                              title={!showBio ? t('profile.fields.bioHidden') : t('profile.fields.bioVisible')}
-                              tabIndex={-1}
-                              onMouseDown={(e) => e.preventDefault()}
-                              onClick={() => setShowBio((v) => !v)}
-                            >
+                            <Tooltip title={!showBio ? t('profile.fields.bioHidden') : t('profile.fields.bioVisible')}>
+                              <button
+                                type="button"
+                                className={styles.ghostButton}
+                                aria-label={!showBio ? t('profile.fields.bioHidden') : t('profile.fields.bioVisible')}
+                                tabIndex={-1}
+                                onMouseDown={(e) => e.preventDefault()}
+                                onClick={() => setShowBio((v) => !v)}
+                              >
                               {!showBio ? (
                                 <svg className={styles.ghostIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94" />
@@ -494,7 +511,8 @@ export default function UserProfilePage() {
                                   <circle cx="12" cy="12" r="3" />
                                 </svg>
                               )}
-                            </button>
+                              </button>
+                            </Tooltip>
                           </div>
                         </div>
                     </div>

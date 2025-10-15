@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import styles from '../styles/UserMenu.module.css';
 import { useRouter } from 'next/router';
+import Tooltip from './Tooltip';
 
 interface UserMenuProps {
   onLogout: () => void;
@@ -51,13 +52,13 @@ export default function UserMenu({ onLogout, userProfile }: UserMenuProps) {
               <div className={styles.studentId}>{userProfile.student_id}</div>
             )}
           </div>
-          <button
-            type="button"
-            className={styles.logoutButton}
-            onClick={onLogout}
-            aria-label={t('userMenu.logout', 'Sign out')}
-            title={t('userMenu.logout', 'Sign out')}
-          >
+          <Tooltip title={t('userMenu.logout')}>
+            <button
+              type="button"
+              className={styles.logoutButton}
+              onClick={onLogout}
+              aria-label={t('userMenu.logout')}
+            >
             <svg
               className={styles.logoutIcon}
               viewBox="0 0 24 24"
@@ -71,7 +72,8 @@ export default function UserMenu({ onLogout, userProfile }: UserMenuProps) {
               <polyline points="16,17 21,12 16,7" />
               <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
-          </button>
+            </button>
+          </Tooltip>
         </div>
       )}
       <div className={styles.sectionDivider} />

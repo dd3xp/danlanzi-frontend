@@ -17,6 +17,16 @@ export default function SideBar() {
   useEffect(() => {
     setIsExpanded(globalSidebarExpanded);
     setIsHovered(globalSidebarHovered);
+    
+    // 初始化时设置主内容区域的类名
+    const mainElement = document.querySelector('.app-main');
+    if (mainElement) {
+      if (globalSidebarExpanded) {
+        mainElement.classList.add('sidebar-expanded');
+      } else {
+        mainElement.classList.remove('sidebar-expanded');
+      }
+    }
   }, []);
 
   // 判断当前页面
@@ -34,6 +44,16 @@ export default function SideBar() {
   const toggleSidebar = () => {
     globalSidebarExpanded = !globalSidebarExpanded;
     setIsExpanded(globalSidebarExpanded);
+    
+    // 通知主内容区域侧边栏状态变化
+    const mainElement = document.querySelector('.app-main');
+    if (mainElement) {
+      if (globalSidebarExpanded) {
+        mainElement.classList.add('sidebar-expanded');
+      } else {
+        mainElement.classList.remove('sidebar-expanded');
+      }
+    }
   };
 
   const handleNavItemMouseEnter = () => {
@@ -55,17 +75,30 @@ export default function SideBar() {
       className={`${styles.sidebar} ${isExpanded ? styles.expanded : ''} ${isHovered ? styles.hovered : ''}`} 
       role="navigation"
     >
-      <button
-        className={`${styles.iconButton} ${styles.hamburger}`}
-        aria-label="menu"
-        type="button"
-        onClick={toggleSidebar}
-      >
-        {/* 汉堡图标（无文字） */}
-        <span className={styles.hamburgerLine} />
-        <span className={styles.hamburgerLine} />
-        <span className={styles.hamburgerLine} />
-      </button>
+      <div className={styles.hamburgerContainer}>
+        <button
+          className={`${styles.iconButton} ${styles.hamburger}`}
+          aria-label="menu"
+          type="button"
+          onClick={toggleSidebar}
+        >
+          {/* 汉堡图标（无文字） */}
+          <span className={styles.hamburgerLine} />
+          <span className={styles.hamburgerLine} />
+          <span className={styles.hamburgerLine} />
+        </button>
+        {/* 侧边栏展开或悬停时显示Logo */}
+        {(isExpanded || isHovered) && (
+          <div className={styles.sidebarLogo}>
+            <img 
+              src="/danlanzi.svg" 
+              alt="Logo" 
+              className={styles.logoImage}
+            />
+            <span className={styles.logoText}>{t('sidebar.brandName')}</span>
+          </div>
+        )}
+      </div>
       <button
         className={`${styles.iconButton} ${styles.navItem} ${currentPage === 'home' ? styles.active : ''}`}
         aria-label="homepage"

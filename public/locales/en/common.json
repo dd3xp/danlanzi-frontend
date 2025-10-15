@@ -43,20 +43,23 @@
       "majorVisible": "Major visible",
       "bio": "Bio",
       "bioHidden": "Bio hidden",
-      "bioVisible": "Bio visible"
+      "bioVisible": "Bio visible",
+      "none": "None"
     }
   },
   "userMenu": {
     "ariaLabel": "User menu",
     "profile": "Profile",
     "settings": "Settings",
-    "security": "Security"
+    "security": "Security",
+    "logout": "Sign out"
   },
   "sidebar": {
     "homepage": "Home",
     "courses": "Courses",
     "myCourses": "My Courses",
-    "resources": "Resources"
+    "resources": "Resources",
+    "brandName": "Dan Basket"
   },
   "login": {
     "subtitle": "Sign in to Dan Basket",

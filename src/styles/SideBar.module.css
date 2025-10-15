@@ -3,7 +3,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 82px;
+  width: 70px;
   height: 100vh;
   background: var(--bg);
   border-right: 1px solid #1a1a1a;
@@ -67,7 +67,7 @@
 
 /* 第一个导航按钮与汉堡菜单拉开一点距离 */
 .sidebar > .navItem:first-of-type {
-  margin-top: 16px;
+  margin-top: 2px;
 }
 
 /* 展开后按钮位置写死 */
@@ -79,15 +79,15 @@
 .homepage:hover,
 .navItem:hover {
   border-radius: 0;
-  background: #232425; /* 更浅的悬停背景 */
-  color: #e0e0e0;      /* 提升文字对比度 */
+  background: #232425;
+  color: #e0e0e0;
 }
 
 /* 当前页面激活状态 */
 .navItem.active {
-  background: #2a2b2c; /* 比悬停稍深的背景 */
-  color: #ffffff;      /* 更亮的文字颜色 */
-  border-left: 4px solid #ffffff; /* 左侧白色竖线 */
+  background: #2a2b2c;
+  color: #ffffff;
+  border-left: 4px solid #ffffff;
 }
 
 /* 悬停展开状态（通过JavaScript控制） */
@@ -100,22 +100,13 @@
   width: 200px;
 }
 
-.homepage svg {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  display: block;
-  position: absolute;
-  left: 28px;
-}
-
 .navItem svg {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
   display: block;
   position: absolute;
-  left: 28px;
+  left: 23px;
 }
 
 .homepageText {
@@ -159,12 +150,23 @@
   background: #262728; /* 稍深于hover，仍然较浅 */
 }
 
+/* 汉堡菜单容器 */
+.hamburgerContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  margin-top: 2px;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0 10px;
+}
+
 /* 汉堡图标 */
 .hamburger {
   width: 48px;
   height: 48px;
   border-radius: 8px;
-  margin-bottom: 16px; /* 增加底部间距 */
   background: var(--bg);
   color: #b0b0b0;
   justify-content: center;
@@ -173,8 +175,40 @@
   display: flex;
   align-items: center;
   position: relative;
-  align-self: flex-start;
-  margin-left: 16px; /* 左内边距 16 + 汉堡线左 8 = 24 视觉对齐 */
+  flex-shrink: 0;
+}
+
+/* 侧边栏Logo */
+.sidebarLogo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.logoImage {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.logoText {
+  font-size: 16px;
+  font-weight: 600;
+  color: #b0b0b0;
+  white-space: nowrap;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .hamburgerLine {

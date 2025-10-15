@@ -43,20 +43,23 @@
       "majorVisible": "专业可见",
       "bio": "个人介绍",
       "bioHidden": "个人介绍已隐藏",
-      "bioVisible": "个人介绍可见"
+      "bioVisible": "个人介绍可见",
+      "none": "无"
     }
   },
   "userMenu": {
     "ariaLabel": "用户菜单",
     "profile": "用户资料",
     "settings": "设置",
-    "security": "账号安全"
+    "security": "账号安全",
+    "logout": "退出登录"
   },
   "sidebar": {
     "homepage": "主界面",
     "courses": "课程板块",
     "myCourses": "我的课程",
-    "resources": "资源管理"
+    "resources": "资源管理",
+    "brandName": "旦篮子"
   },
   "login": {
     "subtitle": "登录到旦篮子",

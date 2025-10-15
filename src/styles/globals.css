@@ -28,9 +28,15 @@
   /* 主内容区域（空） */
   .app-main {
     height: 100vh;
-    width: calc(100% - 80px); /* 压缩宽度，为左侧sidebar留出空间 */
-    margin-left: 80px; /* 向右偏移 */
+    width: calc(100% - 82px); /* 压缩宽度，为左侧sidebar留出空间 */
+    margin-left: 82px; /* 向右偏移 */
     background: transparent; /* 继承整体暗色背景 */
     transition: margin-left 0.3s ease, width 0.3s ease;
+  }
+
+  /* 当侧边栏展开时，主内容区域进一步压缩 */
+  .app-main.sidebar-expanded {
+    width: calc(100% - 200px);
+    margin-left: 200px;
   }
   

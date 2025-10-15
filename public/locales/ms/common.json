@@ -43,20 +43,23 @@
       "majorVisible": "Pengkhususan kelihatan",
       "bio": "Bio",
       "bioHidden": "Bio disembunyikan",
-      "bioVisible": "Bio kelihatan"
+      "bioVisible": "Bio kelihatan",
+      "none": "Tiada"
     }
   },
   "userMenu": {
     "ariaLabel": "Menu pengguna",
     "profile": "Profil",
     "settings": "Tetapan",
-    "security": "Keselamatan"
+    "security": "Keselamatan",
+    "logout": "Log keluar"
   },
   "sidebar": {
     "homepage": "Laman Utama",
     "courses": "Kursus",
     "myCourses": "Kursus Saya",
-    "resources": "Sumber"
+    "resources": "Sumber",
+    "brandName": "Dan Basket"
   },
   "login": {
     "subtitle": "Log masuk ke Dan Basket",

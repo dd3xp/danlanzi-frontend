@@ -1,6 +1,5 @@
 import SideBar from '@/components/SideBar';
 import Avatar from '@/components/Avatar';
-import Logo from '@/components/Logo';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -12,7 +11,6 @@ export default function MyCourses() {
     <ProtectedRoute>
       <SideBar />
       <Avatar />
-      <Logo title={t('sidebar.myCourses')} />
       <main className="app-main" />
     </ProtectedRoute>
   );

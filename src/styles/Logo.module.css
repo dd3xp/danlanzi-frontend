@@ -7,6 +7,12 @@
   display: flex;
   align-items: center;
   height: 50px;
+  transition: left 0.3s ease; /* 添加平滑过渡 */
+}
+
+/* 当侧边栏展开时，Logo向右移动 */
+.logoContainer.sidebar-expanded {
+  left: 218px; /* 200px侧边栏宽度 + 18px间距 */
 }
 
 .logo {
