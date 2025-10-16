@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, message } from 'antd';
 import { useTranslation } from 'next-i18next';
 import { getSystemAvatars, setSystemAvatar } from '@/services/userAvatarService';
-import { translateApiMessage } from '@/utils/messageTranslator';
+import { translateApiMessage, translateAvatarName } from '@/utils/translator';
 import styles from '@/styles/SystemAvatarModal.module.css';
 import Image from 'next/image';
 import Tooltip from '@/components/Tooltip';
@@ -90,7 +90,7 @@ export default function SystemAvatarModal({ open, onClose, onSelected }: SystemA
               {systemAvatars.map((avatar) => (
                 <Tooltip 
                   key={avatar.filename}
-                  title={avatar.filename.replace(/\.png$/i, '')}
+                  title={translateAvatarName(avatar.filename, t)}
                 >
                   <div
                     className={`${styles.systemAvatar} ${selectedSystemAvatar === avatar.filename ? styles.selected : ''}`}
@@ -115,7 +115,7 @@ export default function SystemAvatarModal({ open, onClose, onSelected }: SystemA
                   onClick={() => setSelectedSystemAvatar('')}
                   disabled={uploading}
                 >
-                  {t('common.cancel')}
+                  {t('avatar.actions.cancel')}
                 </button>
                 <button
                   type="button"
@@ -127,7 +127,7 @@ export default function SystemAvatarModal({ open, onClose, onSelected }: SystemA
                     <span className={styles.loadingDots}>
                       <span>.</span><span>.</span><span>.</span>
                     </span>
-                  ) : t('common.confirm')}
+                  ) : t('avatar.actions.confirm')}
                 </button>
               </div>
             )}

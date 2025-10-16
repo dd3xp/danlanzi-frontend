@@ -6,6 +6,11 @@
     "actions": {
       "cancel": "Cancel",
       "confirm": "Confirm"
+    },
+    "names": {
+      "australianBeefBurger": "Australian Beef Burger",
+      "yourGrade": "Your Grade",
+      "kim": "Kim"
     }
   },
   "userProfile": {

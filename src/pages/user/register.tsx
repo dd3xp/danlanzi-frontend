@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import styles from '../../styles/Register.module.css';
 import { validateFudanEmail, getEmailValidationError } from '../../utils/emailFormat';
 import { sendVerificationCode, verifyCode, registerUser } from '../../services/authService';
-import { translateBackendMessage } from '../../utils/messageTranslator';
+import { translateBackendMessage } from '../../utils/translator';
 import ErrorMessage from '../../components/ErrorMessage';
 
 export default function Register() {

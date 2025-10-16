@@ -6,6 +6,11 @@
     "actions": {
       "cancel": "取消",
       "confirm": "确定"
+    },
+    "names": {
+      "australianBeefBurger": "澳洲牛肉汉堡",
+      "yourGrade": "你的成绩",
+      "kim": "金同学"
     }
   },
   "userProfile": {

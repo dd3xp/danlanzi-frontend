@@ -132,3 +132,18 @@ export function translateApiMessage(
   
   return translated;
 }
+
+export function translateAvatarName(filename: string, t: TFunction): string {
+  const avatarNameMap: Record<string, string> = {
+    'AustralianBeefBurger.png': 'avatar.names.australianBeefBurger',
+    'YourGrade.png': 'avatar.names.yourGrade',
+    'Kim.png': 'avatar.names.kim'
+  };
+
+  const translationKey = avatarNameMap[filename];
+  if (translationKey) {
+    return t(translationKey, { ns: 'common' });
+  }
+  
+  return filename;
+}

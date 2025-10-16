@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import styles from '../../styles/Login.module.css';
 import { loginUser } from '../../services/authService';
 import { setToken, setUser } from '../../utils/auth';
-import { translateBackendMessage } from '../../utils/messageTranslator';
+import { translateBackendMessage } from '../../utils/translator';
 import ErrorMessage from '../../components/ErrorMessage';
 
 export default function Login() {
@@ -26,7 +26,6 @@ export default function Login() {
     const { message } = router.query;
     if (message === 'registration_success') {
       // 可以在这里显示注册成功的提示
-      console.log('Registration successful');
     }
   }, [router.query]);
 

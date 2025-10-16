@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { getSystemAvatars, uploadAvatar } from '@/services/userAvatarService';
 import styles from '@/styles/AvatarUploadModal.module.css';
 import Cropper from 'react-easy-crop';
-import { translateApiMessage } from '@/utils/messageTranslator';
+import { translateApiMessage } from '@/utils/translator';
 
 // 常量配置
 const UPLOAD_CONFIG = {
