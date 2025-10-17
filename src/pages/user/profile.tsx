@@ -104,13 +104,13 @@ export default function UserProfilePage() {
             {activeTab === 'resources' && (
               <>
                 <h2 className={styles.sectionTitle}>{t('userProfile.sections.resources')}</h2>
-                <p className={styles.muted}>{t('userProfile.placeholders.noResources')}</p>
+                <p className={styles['text-muted']}>{t('userProfile.placeholders.noResources')}</p>
               </>
             )}
             {activeTab === 'messages' && (
               <>
                 <h2 className={styles.sectionTitle}>{t('userProfile.sections.messages')}</h2>
-                <p className={styles.muted}>{t('userProfile.placeholders.noMessages')}</p>
+                <p className={styles['text-muted']}>{t('userProfile.placeholders.noMessages')}</p>
               </>
             )}
           </section>

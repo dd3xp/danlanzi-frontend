@@ -14,7 +14,7 @@
   appearance: none;
   background: transparent;
   border: none;
-  color: var(--text-2);
+  color: var(--text-assist);
   padding: 12px 16px;
   border-bottom: 3px solid transparent; 
   cursor: pointer;
@@ -30,7 +30,7 @@
 
 .active {
   color: var(--text);
-  border-bottom-color: #fff;
+  border-bottom-color: var(--nav-active-border);
 }
 
 .tabPanel {
@@ -79,7 +79,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
+  color: var(--text-assist);
 }
 
 .settingIcon {
@@ -107,7 +107,7 @@
 }
 
 .selectWrapper :global(.ant-select-arrow) {
-  color: var(--text-secondary) !important;
+  color: var(--text-assist) !important;
 }
 
 @media (max-width: 640px) {

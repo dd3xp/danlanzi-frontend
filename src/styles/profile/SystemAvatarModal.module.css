@@ -65,7 +65,7 @@
 .loadingAvatar {
   aspect-ratio: 1;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-bg);
   animation: pulse 1.5s infinite;
 }
 
@@ -96,13 +96,13 @@
 
 .cancelButton,
 .confirmButton {
-  background: #dddddd;
-  color: rgb(17, 17, 17);
+  background: var(--button-bg);
+  color: var(--button-text);
 }
 
 .cancelButton:hover:not(:disabled),
 .confirmButton:hover:not(:disabled) {
-  background: #c2c2c2;
+  background: var(--button-hover-bg);
 }
 
 .cancelButton:active:not(:disabled),
@@ -158,7 +158,7 @@
 }
 
 :global(.ant-modal .ant-modal-close) {
-  color: rgba(255, 255, 255, 0.65) !important;
+  color: var(--text-secondary) !important;
   transition: all 160ms ease !important;
   top: 24px !important;
   right: 24px !important;
@@ -168,7 +168,7 @@
 }
 
 :global(.ant-modal .ant-modal-close:hover) {
-  color: #fff !important;
-  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--text) !important;
+  background: var(--hover-bg) !important;
   transform: scale(1.05) !important;
 }

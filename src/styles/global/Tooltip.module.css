@@ -1,36 +1,36 @@
 /* 自定义 Tooltip 样式 */
 :global(.custom-tooltip .ant-tooltip-inner) {
-  background-color: #1a1a1a;
-  color: #ffffff;
+  background-color: var(--tooltip-bg);
+  color: var(--tooltip-text);
   border-radius: 8px;
   font-size: 14px;
   padding: 8px 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border: 1px solid #333;
+  box-shadow: var(--modal-shadow);
+  border: 1px solid var(--tooltip-border);
 }
 
 :global(.custom-tooltip .ant-tooltip-arrow::before) {
-  background-color: #1a1a1a;
-  border: 1px solid #333;
+  background-color: var(--tooltip-bg);
+  border: 1px solid var(--tooltip-border);
 }
 
 /* 针对不同位置的箭头样式调整 */
 :global(.custom-tooltip.ant-tooltip-placement-top .ant-tooltip-arrow::before) {
-  border-top-color: #333;
-  border-right-color: #333;
+  border-top-color: var(--tooltip-border);
+  border-right-color: var(--tooltip-border);
 }
 
 :global(.custom-tooltip.ant-tooltip-placement-bottom .ant-tooltip-arrow::before) {
-  border-bottom-color: #333;
-  border-left-color: #333;
+  border-bottom-color: var(--tooltip-border);
+  border-left-color: var(--tooltip-border);
 }
 
 :global(.custom-tooltip.ant-tooltip-placement-left .ant-tooltip-arrow::before) {
-  border-left-color: #333;
-  border-bottom-color: #333;
+  border-left-color: var(--tooltip-border);
+  border-bottom-color: var(--tooltip-border);
 }
 
 :global(.custom-tooltip.ant-tooltip-placement-right .ant-tooltip-arrow::before) {
-  border-right-color: #333;
-  border-top-color: #333;
+  border-right-color: var(--tooltip-border);
+  border-top-color: var(--tooltip-border);
 }

@@ -29,13 +29,13 @@
 }
 
 .menuItem:hover {
-  background: #161616;
+  background: var(--hover-bg);
 }
 
 .menuItemIcon {
   width: 16px;
   height: 16px;
-  color: var(--text-secondary);
+  color: var(--text-assist);
 }
 
 .userInfo {
@@ -77,7 +77,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text);
   font-weight: 600;
   font-size: 16px;
 }
@@ -100,7 +100,7 @@
 .studentId {
   font-weight: 400;
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-assist);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -120,12 +120,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
+  color: var(--text-assist);
   transition: all 0.2s ease;
 }
 
 .logoutButton:hover {
-  background: #161616;
+  background: var(--hover-bg);
   color: var(--text);
 }
 

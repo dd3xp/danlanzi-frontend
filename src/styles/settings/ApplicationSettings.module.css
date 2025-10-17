@@ -15,7 +15,7 @@
 
 .settingDescription {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--text-assist);
   margin: 0 0 24px 0;
   line-height: 1.5;
 }
@@ -39,13 +39,13 @@
 }
 
 .fieldControl:hover {
-  border-color: #ffffff;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.12);
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
 }
 
 .fieldControl:focus-within {
-  border-color: #ffffff;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.12);
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
 }
 
 .fieldIcon {
@@ -55,7 +55,7 @@
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  color: var(--text-secondary);
+  color: var(--text-assist);
   flex-shrink: 0;
 }
 

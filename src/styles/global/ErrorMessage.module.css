@@ -1,5 +1,5 @@
 .errorMessage {
-  color: #ef4444;
+  color: var(--error);
   font-size: 12px;
   margin-top: 4px;
   display: flex;

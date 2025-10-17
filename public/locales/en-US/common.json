@@ -73,10 +73,17 @@
       "security": "Account Security"
     },
     "fields": {
-      "language": "Language"
+      "language": "Language",
+      "theme": "Theme"
     },
     "descriptions": {
-      "language": "Choose the language for your Dan Basket interface. This will affect all text and navigation elements."
+      "language": "Choose the language for your Dan Basket interface. This will affect all text and navigation elements.",
+      "theme": "Choose the theme for your interface. This will affect the appearance of the entire application."
+    },
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "auto": "System"
     }
   },
   "sidebar": {

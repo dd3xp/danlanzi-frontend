@@ -41,11 +41,11 @@
 }
 
 .iconButton:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-bg);
 }
 
 .iconButton:active {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--active-bg);
 }
 
 .avatarImage {
@@ -61,8 +61,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #1a1a1a;
-  color: #fff;
+  background: var(--input-bg);
+  color: var(--text);
   font-size: 14px;
   font-weight: 700;
   border-radius: 50%;

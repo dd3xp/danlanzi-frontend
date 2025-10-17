@@ -27,6 +27,6 @@
 .logoTitle {
   margin-left: 10px;
   font-size: 20px;
-  color: #b0b0b0;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
