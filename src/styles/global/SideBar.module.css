@@ -174,10 +174,10 @@
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--text-secondary);
+  background: var(--blue-logo);
   border-radius: 1px;
   position: absolute;
-  left: 14px;
+  left: 13.25px;
   transition: background-color 0.2s ease;
 }
 
