@@ -8,6 +8,7 @@ import { validateFudanEmail, getEmailValidationError } from '../../utils/emailFo
 import { sendVerificationCode, verifyCode, registerUser } from '../../services/authService';
 import { translateBackendMessage } from '../../utils/translator';
 import ErrorMessage from '@/components/global/ErrorMessage';
+import { setStoredTheme, Theme } from '@/utils/themeManager';
 
 export default function Register() {
   const { t } = useTranslation(['common', 'messages']);
@@ -113,8 +114,20 @@ export default function Register() {
     return error;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
+    if (name === 'nickname') {
+      // 计算长度：中文字符算2个单位，其他字符算1个单位
+      const lengthUnits = Array.from(value).reduce((sum, ch) => 
+        sum + (/[\u4e00-\u9fa5]/.test(ch) ? 2 : 1), 0
+      );
+      // 限制总长度不超过20个单位
+      if (lengthUnits > 20) {
+        return;
+      }
+    }
+    
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -308,14 +321,14 @@ export default function Register() {
             <label htmlFor="nickname" className={styles.inputLabel}>
               {t('register.nickname')}
             </label>
-            <input
-              type="text"
+            <textarea
               id="nickname"
               name="nickname"
               value={formData.nickname}
               onChange={handleInputChange}
               className={styles.inputField}
               placeholder={t('register.nicknamePlaceholder')}
+              rows={1}
             />
             <ErrorMessage message={errors.nickname} />
           </div>
@@ -324,14 +337,14 @@ export default function Register() {
             <label htmlFor="password" className={styles.inputLabel}>
               {t('register.password')}
             </label>
-            <input
-              type="password"
+            <textarea
               id="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
               className={styles.inputField}
               placeholder={t('register.passwordPlaceholder')}
+              rows={1}
             />
             <ErrorMessage message={errors.password} />
           </div>
@@ -354,14 +367,14 @@ export default function Register() {
                 </span>
               )}
             </label>
-            <input
-              type="password"
+            <textarea
               id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
               className={styles.inputField}
               placeholder={t('register.confirmPasswordPlaceholder')}
+              rows={1}
             />
             <ErrorMessage message={errors.confirmPassword} />
           </div>
@@ -370,14 +383,14 @@ export default function Register() {
             <label htmlFor="email" className={styles.inputLabel}>
               {t('register.email')}
             </label>
-            <input
-              type="email"
+            <textarea
               id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
               className={styles.inputField}
               placeholder={t('register.emailPlaceholder')}
+              rows={1}
             />
             <ErrorMessage message={errors.email} />
           </div>
@@ -387,14 +400,14 @@ export default function Register() {
               {t('register.verificationCode')}
             </label>
             <div className={styles.codeInputGroup}>
-              <input
-                type="text"
+              <textarea
                 id="verificationCode"
                 name="verificationCode"
                 value={formData.verificationCode}
                 onChange={handleInputChange}
                 className={styles.codeInputField}
                 placeholder={t('register.verificationCodePlaceholder')}
+                rows={1}
               />
               <button
                 type="button"

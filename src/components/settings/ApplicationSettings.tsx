@@ -4,11 +4,12 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import styles from '@/styles/settings/ApplicationSettings.module.css';
 import { updateUserProfile, getUserProfile } from '@/services/userProfileService';
+import { getStoredTheme, setStoredTheme, Theme } from '@/utils/themeManager';
 
 export default function ApplicationSettings() {
   const { t } = useTranslation('common');
   const router = useRouter();
-  const [theme, setTheme] = useState('dark');
+  const [theme, setThemeState] = useState<Theme>(getStoredTheme());
 
   useEffect(() => {
     // 加载用户主题设置
@@ -16,8 +17,8 @@ export default function ApplicationSettings() {
       try {
         const res = await getUserProfile();
         if (res.status === 'success' && res.user?.theme) {
-          setTheme(res.user.theme);
-          document.documentElement.setAttribute('data-theme', res.user.theme);
+          setThemeState(res.user.theme as Theme);
+          setStoredTheme(res.user.theme as Theme);
         }
       } catch (error) {
         console.error('Failed to load user theme:', error);
@@ -48,15 +49,15 @@ export default function ApplicationSettings() {
             <div className={styles.settingSelectWrapper}>
               <Select
                 value={theme}
-                onChange={async (value) => {
+                onChange={async (value: Theme) => {
                   try {
                     const res = await updateUserProfile({
                       theme: value
                     });
                     
                     if (res.status === 'success') {
-                      setTheme(value);
-                      document.documentElement.setAttribute('data-theme', value);
+                      setThemeState(value);
+                      setStoredTheme(value);
                       message.success(t('messages.updateSuccess'));
                     } else {
                       message.error(t('messages.updateFailed'));

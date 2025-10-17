@@ -57,10 +57,10 @@
     --upload-disabled: var(--disabled); /* 上传区域禁用 */
 
     /* 按钮相关 */
-    --button-bg: var(--hover-bg);     /* 按钮背景 */
-    --button-text: var(--text);       /* 按钮文本 */
-    --button-hover-bg: var(--active-bg); /* 按钮悬停背景 */
-    --button-active-bg: var(--active-bg); /* 按钮点击背景 */
+    --button-bg: #dddddd;     /* 按钮背景 - 浅灰 */
+    --button-text: rgb(17, 17, 17);       /* 按钮文本 - 深色 */
+    --button-hover-bg: #c2c2c2; /* 按钮悬停背景 - 更深的灰 */
+    --button-active-bg: #b0b0b0; /* 按钮点击背景 - 最深的灰 */
     --button-disabled-bg: var(--disabled); /* 按钮禁用背景 */
     --button-disabled-text: var(--disabled-text); /* 按钮禁用文本 */
 
@@ -117,10 +117,10 @@
     --card-border: rgba(0, 0, 0, 0.16);  /* 卡片边框 - 16%黑 */
 
     /* 按钮相关 */
-    --button-bg: rgba(0, 0, 0, 0.06);     /* 按钮背景 - 6%黑 */
-    --button-text: rgba(0, 0, 0, 0.88);   /* 按钮文本 - 88%黑 */
-    --button-hover-bg: rgba(0, 0, 0, 0.09); /* 按钮悬停背景 - 9%黑 */
-    --button-active-bg: rgba(0, 0, 0, 0.12); /* 按钮点击背景 - 12%黑 */
+    --button-bg: #1a1a1a;     /* 按钮背景 - 深灰 */
+    --button-text: #ffffff;   /* 按钮文本 - 白色 */
+    --button-hover-bg: #262626; /* 按钮悬停背景 - 更深的灰 */
+    --button-active-bg: #333333; /* 按钮点击背景 - 最深的灰 */
     --button-disabled-bg: rgba(0, 0, 0, 0.04); /* 按钮禁用背景 - 4%黑 */
     --button-disabled-text: rgba(0, 0, 0, 0.25); /* 按钮禁用文本 - 25%黑 */
 
@@ -184,10 +184,10 @@
       --card: #ffffff;                    /* 卡片 - 纯白 */
       --card-border: rgba(0, 0, 0, 0.12);  /* 卡片边框 - 12%黑 */
 
-      --button-bg: rgba(0, 0, 0, 0.06);     /* 按钮背景 - 6%黑 */
-      --button-text: rgba(0, 0, 0, 0.88);   /* 按钮文本 - 88%黑 */
-      --button-hover-bg: rgba(0, 0, 0, 0.09); /* 按钮悬停背景 - 9%黑 */
-      --button-active-bg: rgba(0, 0, 0, 0.12); /* 按钮点击背景 - 12%黑 */
+      --button-bg: #1a1a1a;     /* 按钮背景 - 深灰 */
+      --button-text: #ffffff;   /* 按钮文本 - 白色 */
+      --button-hover-bg: #262626; /* 按钮悬停背景 - 更深的灰 */
+      --button-active-bg: #333333; /* 按钮点击背景 - 最深的灰 */
       --button-disabled-bg: rgba(0, 0, 0, 0.04); /* 按钮禁用背景 - 4%黑 */
       --button-disabled-text: rgba(0, 0, 0, 0.25); /* 按钮禁用文本 - 25%黑 */
 
@@ -251,12 +251,12 @@
       --card: #161718;          /* 页面内容卡片背景（比底略浅） */
       --card-border: #262728;   /* 卡片边框色 */
 
-      --button-bg: var(--hover-bg);     /* 按钮背景 */
-      --button-text: var(--text);       /* 按钮文本 */
-      --button-hover-bg: var(--active-bg); /* 按钮悬停背景 */
-      --button-active-bg: var(--active-bg); /* 按钮点击背景 */
-      --button-disabled-bg: var(--disabled); /* 按钮禁用背景 */
-      --button-disabled-text: var(--disabled-text); /* 按钮禁用文本 */
+      --button-bg: #dddddd;     /* 按钮背景 - 浅灰 */
+      --button-text: rgb(17, 17, 17);       /* 按钮文本 - 深色 */
+      --button-hover-bg: #c2c2c2; /* 按钮悬停背景 - 更深的灰 */
+      --button-active-bg: #b0b0b0; /* 按钮点击背景 - 最深的灰 */
+      --button-disabled-bg: #666666; /* 按钮禁用背景 */
+      --button-disabled-text: #999999; /* 按钮禁用文本 */
 
       /* 其他组件样式继承基础变量 */
       --input-bg: var(--panel);
@@ -360,9 +360,9 @@
   }
 
   .ant-select-item-option-selected {
-    background: var(--hover-bg) !important;
+    background: transparent !important;
     color: var(--text) !important;
-    font-weight: 600 !important;
+    font-weight: normal !important;
   }
 
   .ant-select-item-option-selected .ant-select-item-option-state {

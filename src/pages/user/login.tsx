@@ -9,6 +9,7 @@ import { setToken, setUser } from '../../utils/auth';
 import { translateBackendMessage } from '../../utils/translator';
 import { getUserProfile } from '@/services/userProfileService';
 import ErrorMessage from '@/components/global/ErrorMessage';
+import { setStoredTheme, Theme } from '@/utils/themeManager';
 
 export default function Login() {
   const { t } = useTranslation(['common', 'messages']);
@@ -30,7 +31,7 @@ export default function Login() {
     }
   }, [router.query]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -91,18 +92,26 @@ export default function Login() {
         setToken(loginResult.token);
         setUser(loginResult.user);
         
-        // 获取用户资料，检查语言设置
+        // 获取用户资料，检查语言和主题设置
         const profileRes = await getUserProfile();
-        if (profileRes.status === 'success' && profileRes.user?.language && profileRes.user.language !== router.locale) {
-          // 跳转到主页或用户想要访问的页面，同时设置语言
-          const redirectTo = router.query.redirect as string || '/user';
-          const language = profileRes.user.language || 'zh-CN';
-            const basePath = redirectTo.replace(/^\/[^/]+/, '');
-            router.push(`/user${basePath}`, undefined, { locale: language });
+        if (profileRes.status === 'success') {
+          // 设置主题
+          if (profileRes.user?.theme) {
+            setStoredTheme(profileRes.user.theme as Theme);
+          }
+
+          // 检查语言设置
+          if (profileRes.user?.language && profileRes.user.language !== router.locale) {
+            // 跳转到主页，同时设置语言
+            const language = profileRes.user.language || 'zh-CN';
+            router.push('/user', undefined, { locale: language });
+          } else {
+            // 如果没有语言设置或语言相同，直接跳转到主页
+            router.push('/user');
+          }
         } else {
-          // 如果没有语言设置或语言相同，直接跳转
-          const redirectTo = router.query.redirect as string || '/user';
-          router.push(redirectTo);
+          // 如果获取用户资料失败，直接跳转到主页
+          router.push('/user');
         }
       }
       
@@ -136,14 +145,14 @@ export default function Login() {
             <label htmlFor="email" className={styles.inputLabel}>
               {t('login.username')}
             </label>
-            <input
-              type="email"
+            <textarea
               id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
               className={styles.inputField}
               placeholder={t('login.usernamePlaceholder')}
+              rows={1}
             />
             <ErrorMessage message={errors.email} />
           </div>
@@ -152,14 +161,14 @@ export default function Login() {
             <label htmlFor="password" className={styles.inputLabel}>
               {t('login.password')}
             </label>
-            <input
-              type="password"
+            <textarea
               id="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
               className={styles.inputField}
               placeholder={t('login.passwordPlaceholder')}
+              rows={1}
             />
             <ErrorMessage message={errors.password} />
           </div>
