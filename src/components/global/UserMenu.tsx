@@ -107,20 +107,6 @@ export default function UserMenu({ onLogout, userProfile }: UserMenuProps) {
         {t('userMenu.settings')}
       </button>
 
-      {/* 菜单项：账号安全 */}
-      <button
-        type="button"
-        className={styles.menuItem}
-        role="menuitem"
-        aria-label={t('userMenu.security')}
-        onClick={() => router.push('/user/security')}
-      >
-        <svg className={styles.menuItemIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" />
-          <path d="M9 12l2 2 4-4" />
-        </svg>
-        {t('userMenu.security')}
-      </button>
     </div>
   );
 }

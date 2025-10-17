@@ -60,8 +60,18 @@
     "ariaLabel": "User menu",
     "profile": "Profile",
     "settings": "Settings",
-    "security": "Security",
     "logout": "Sign out"
+  },
+  "settings": {
+    "tabs": {
+      "ariaLabel": "Settings navigation",
+      "application": "Application Settings",
+      "security": "Account Security"
+    },
+    "sections": {
+      "application": "Application Settings",
+      "security": "Account Security"
+    }
   },
   "sidebar": {
     "homepage": "Home",

@@ -63,15 +63,24 @@ export default function SystemAvatarModal({ open, onClose, onSelected }: SystemA
     }
   };
 
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      setSelectedSystemAvatar('');
+    }
+  };
+
   return (
     <Modal
       open={open}
-      onCancel={() => !uploading && onClose()}
-      onOk={() => onClose()}
-      okButtonProps={{ disabled: uploading }}
-      cancelButtonProps={{ disabled: uploading }}
+      onCancel={() => {
+        if (!uploading) {
+          setSelectedSystemAvatar('');
+          onClose();
+        }
+      }}
       title={t('profile.actions.gallery')}
       footer={null}
+      maskClosable={!uploading}
       destroyOnHidden
       width={720}
       style={{ top: '10%' }}
@@ -86,7 +95,7 @@ export default function SystemAvatarModal({ open, onClose, onSelected }: SystemA
           </div>
         ) : (
           <>
-            <div className={styles.systemAvatars}>
+            <div className={styles.systemAvatars} onClick={handleBackgroundClick}>
               {systemAvatars.map((avatar) => (
                 <Tooltip 
                   key={avatar.filename}
@@ -94,7 +103,12 @@ export default function SystemAvatarModal({ open, onClose, onSelected }: SystemA
                 >
                   <div
                     className={`${styles.systemAvatar} ${selectedSystemAvatar === avatar.filename ? styles.selected : ''}`}
-                    onClick={() => !uploading && setSelectedSystemAvatar(avatar.filename)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!uploading) {
+                        setSelectedSystemAvatar(avatar.filename);
+                      }
+                    }}
                   >
                     <Image 
                       src={avatar.url} 
@@ -109,14 +123,6 @@ export default function SystemAvatarModal({ open, onClose, onSelected }: SystemA
             </div>
             {selectedSystemAvatar && (
               <div className={styles.actionButtons}>
-                <button
-                  type="button"
-                  className={styles.cancelButton}
-                  onClick={() => setSelectedSystemAvatar('')}
-                  disabled={uploading}
-                >
-                  {t('avatar.actions.cancel')}
-                </button>
                 <button
                   type="button"
                   className={styles.confirmButton}

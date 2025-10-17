@@ -18,15 +18,20 @@ export default function UserProfilePage() {
   const router = useRouter();
 
   useEffect(() => {
+    let isSubscribed = true;
     const load = async () => {
+      if (!router.isReady) return;
+
       try {
         const userId = typeof router.query.id === 'string' ? router.query.id : undefined;
         const res = await getUserProfile(userId);
+        if (!isSubscribed) return;
+        
         if (res.status === 'success' && res.user) {
           const profile = res.user;
-          
-          // 获取用户头像
           const avatarRes = await getUserAvatar(profile.id);
+          if (!isSubscribed) return;
+          
           if (avatarRes.status === 'success' && avatarRes.avatar_data_url) {
             profile.avatar_data_url = avatarRes.avatar_data_url;
           }
@@ -34,11 +39,17 @@ export default function UserProfilePage() {
           setUser(profile);
         }
       } catch (e) {
-        // 忽略错误，后续可加错误提示
+        console.error('Failed to load user profile:', e);
       }
     };
+    
     load();
-  }, [router.query.id]);
+
+    // 清理函数
+    return () => {
+      isSubscribed = false;
+    };
+  }, [router.isReady, router.query.id]);
 
 
   return (
@@ -82,16 +93,16 @@ export default function UserProfilePage() {
               <ProfileCard user={user} onUserUpdate={setUser} />
             )}
             {activeTab === 'resources' && (
-              <div className={styles.sectionCard}>
+              <>
                 <h2 className={styles.sectionTitle}>{t('userProfile.sections.resources')}</h2>
                 <p className={styles.muted}>{t('userProfile.placeholders.noResources')}</p>
-              </div>
+              </>
             )}
             {activeTab === 'messages' && (
-              <div className={styles.sectionCard}>
+              <>
                 <h2 className={styles.sectionTitle}>{t('userProfile.sections.messages')}</h2>
                 <p className={styles.muted}>{t('userProfile.placeholders.noMessages')}</p>
-              </div>
+              </>
             )}
           </section>
         </div>

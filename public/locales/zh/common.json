@@ -66,8 +66,18 @@
     "ariaLabel": "用户菜单",
     "profile": "用户资料",
     "settings": "设置",
-    "security": "账号安全",
     "logout": "退出登录"
+  },
+  "settings": {
+    "tabs": {
+      "ariaLabel": "设置导航",
+      "application": "应用设置",
+      "security": "账号安全"
+    },
+    "sections": {
+      "application": "应用设置",
+      "security": "账号安全"
+    }
   },
   "sidebar": {
     "homepage": "主界面",

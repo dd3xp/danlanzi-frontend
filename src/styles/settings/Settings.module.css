@@ -1,4 +1,4 @@
-.profileContainer {
+.container {
   max-width: 1180px;
   margin: 0 auto;
   padding: 24px;
@@ -44,6 +44,13 @@
   color: var(--text);
 }
 
-.muted {
-  color: var(--text-secondary);
+@media (max-width: 640px) {
+  .container {
+    padding: 16px;
+  }
+
+  .tab {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
 }
