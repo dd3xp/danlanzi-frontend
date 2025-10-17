@@ -5,8 +5,8 @@ const THEME_KEY = 'dlz-theme';
 export type Theme = 'light' | 'dark' | 'auto';
 
 export const getStoredTheme = (): Theme => {
-  if (typeof window === 'undefined') return 'light';
-  return (localStorage.getItem(THEME_KEY) as Theme) || 'light';
+  if (typeof window === 'undefined') return 'dark';
+  return (localStorage.getItem(THEME_KEY) as Theme) || 'dark';
 };
 
 export const setStoredTheme = (theme: Theme) => {
