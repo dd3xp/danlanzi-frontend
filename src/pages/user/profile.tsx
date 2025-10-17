@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import SideBar from '@/components/SideBar';
 import Avatar from '@/components/Avatar';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import CustomSelect from '@/components/CustomSelect';
+import { Select } from 'antd';
 import Tooltip from '@/components/Tooltip';
 import AvatarUploadModal from '@/components/AvatarUploadModal';
 import SystemAvatarModal from '@/components/SystemAvatarModal';
@@ -408,17 +408,20 @@ export default function UserProfilePage() {
                               <path d="M5 21V7l8-4v18" />
                               <path d="M19 21V11l-6-4" />
                             </svg>
-                            <CustomSelect
-                              value={departmentInput ? departments.find(d => d.value === departmentInput) || null : null}
-                              onChange={(selectedOption) => {
-                                if (selectedOption) {
-                                  handleDepartmentChange(selectedOption.value);
-                                }
-                              }}
-                              options={departments}
-                              placeholder={t('profile.fields.department')}
-                              isDisabled={isRefreshing}
-                            />
+                            <div className={styles.selectWrapper}>
+                              <Select
+                                value={departmentInput || undefined}
+                                onChange={(val) => {
+                                  handleDepartmentChange(val);
+                                }}
+                                options={departments}
+                                placeholder={t('profile.fields.department')}
+                                disabled={isRefreshing}
+                                showSearch={false}
+                                popupMatchSelectWidth
+                                listHeight={200}
+                              />
+                            </div>
                             <Tooltip title={!showDepartment ? t('profile.fields.departmentHidden') : t('profile.fields.departmentVisible')}>
                               <button
                                 type="button"
@@ -454,17 +457,20 @@ export default function UserProfilePage() {
                               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                             </svg>
-                            <CustomSelect
-                              value={majorInput ? getAvailableMajors(t, departmentInput).find(m => m.value === majorInput) || null : null}
-                              onChange={(selectedOption) => {
-                                if (selectedOption) {
-                                  setMajorInput(selectedOption.value);
-                                }
-                              }}
-                              options={availableMajors}
-                              placeholder={t('profile.fields.major')}
-                              isDisabled={isRefreshing || !departmentInput}
-                            />
+                            <div className={styles.selectWrapper}>
+                              <Select
+                                value={majorInput || undefined}
+                                onChange={(val) => {
+                                  setMajorInput(val);
+                                }}
+                                options={availableMajors}
+                                placeholder={t('profile.fields.major')}
+                                disabled={isRefreshing || !departmentInput}
+                                showSearch={false}
+                                popupMatchSelectWidth
+                                listHeight={200}
+                              />
+                            </div>
                             <Tooltip title={!showMajor ? t('profile.fields.majorHidden') : t('profile.fields.majorVisible')}>
                               <button
                                 type="button"
