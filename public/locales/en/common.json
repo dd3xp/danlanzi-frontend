@@ -71,6 +71,12 @@
     "sections": {
       "application": "Application Settings",
       "security": "Account Security"
+    },
+    "fields": {
+      "language": "Language"
+    },
+    "descriptions": {
+      "language": "Choose the language for your Dan Basket interface. This will affect all text and navigation elements."
     }
   },
   "sidebar": {

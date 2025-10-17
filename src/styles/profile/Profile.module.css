@@ -6,7 +6,7 @@
 
 .tabs {
   display: flex;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-light);
   gap: 8px;
 }
 

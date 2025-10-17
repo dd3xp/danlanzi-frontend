@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
 import ProtectedRoute from '@/components/global/ProtectedRoute';
 import SideBar from '@/components/global/SideBar';
 import Avatar from '@/components/global/Avatar';
+import ApplicationSettings from '@/components/settings/ApplicationSettings';
 import styles from '@/styles/settings/Settings.module.css';
 
 interface TabPanelProps {
@@ -31,6 +33,7 @@ function TabPanel(props: TabPanelProps) {
 
 function Settings() {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
 
   const handleTabChange = (index: number) => {
@@ -65,14 +68,7 @@ function Settings() {
           </div>
 
           <section className={styles.tabPanel} role="tabpanel">
-            {activeTab === 0 && (
-              <>
-                <h2 className={styles.sectionTitle}>
-                  {t('settings.sections.application')}
-                </h2>
-                {/* Add application settings content here */}
-              </>
-            )}
+            {activeTab === 0 && <ApplicationSettings />}
             {activeTab === 1 && (
               <>
                 <h2 className={styles.sectionTitle}>

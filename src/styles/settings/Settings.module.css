@@ -6,7 +6,7 @@
 
 .tabs {
   display: flex;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-light);
   gap: 8px;
 }
 
@@ -44,6 +44,72 @@
   color: var(--text);
 }
 
+.settingGroup {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.settingItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px;
+}
+
+.settingLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  min-width: 120px;
+  padding-top: 6px;
+}
+
+.settingControl {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconWrapper {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.settingIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.selectWrapper {
+  flex: 1;
+  max-width: 240px;
+}
+
+.selectWrapper :global(.ant-select) {
+  width: 100%;
+}
+
+.selectWrapper :global(.ant-select-selector) {
+  background: var(--input-bg) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+.selectWrapper :global(.ant-select-selection-item) {
+  color: var(--text) !important;
+}
+
+.selectWrapper :global(.ant-select-arrow) {
+  color: var(--text-secondary) !important;
+}
+
 @media (max-width: 640px) {
   .container {
     padding: 16px;
@@ -52,5 +118,19 @@
   .tab {
     padding: 10px 14px;
     font-size: 14px;
+  }
+
+  .settingItem {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .settingLabel {
+    min-width: unset;
+    padding-top: 0;
+  }
+
+  .selectWrapper {
+    max-width: unset;
   }
 }

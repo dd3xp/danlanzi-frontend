@@ -77,6 +77,12 @@
     "sections": {
       "application": "应用设置",
       "security": "账号安全"
+    },
+    "fields": {
+      "language": "语言"
+    },
+    "descriptions": {
+      "language": "选择旦篮子界面的显示语言。这将影响所有文本和导航元素的显示。"
     }
   },
   "sidebar": {

@@ -3,12 +3,14 @@
     --panel: #0b0b0b;         /* sidebar和头像背景（原来的bg色） */
     --text: #e8e8e8;          /* 浅文本 */
     --text-2: #b0b0b0;        /* 暗文本 */
+    --text-secondary: #b0b0b0;  /* 次要文本 */
     --muted: #9aa0a6;         /* 次要色 */
     --blue: #3b82f6;          /* 主蓝色 */
     --blue-logo: #3b77f8ee;     /* 图标蓝 */
     --blue-600: #2563eb;      /* 深蓝 */
     --blue-700: #1d4ed8;      /* 更深蓝 */
     --border: #1a1a1a;        /* 细边框 */
+    --border-light: rgba(255, 255, 255, 0.15);  /* 亮色细边框 */
     --shadow: 0 10px 30px rgba(0,0,0,0.35);
     --card: #161718;          /* 页面内容卡片背景（比底略浅） */
     --card-border: #262728;   /* 卡片边框色 */
@@ -30,15 +32,73 @@
   /* 主内容区域（空） */
   .app-main {
     height: 100vh;
-    width: calc(100% - 82px);
-    margin-left: 82px;
+    width: calc(100% - 82px - 24px);
+    margin-left: calc(82px + 24px);
     background: transparent;
     transition: margin-left 0.3s ease, width 0.3s ease;
   }
 
   /* 当侧边栏展开时，主内容区域进一步压缩 */
   .app-main.sidebar-expanded {
-    width: calc(100% - 200px);
-    margin-left: 200px;
+    width: calc(100% - 200px - 32px);
+    margin-left: calc(200px + 32px);
+  }
+
+  /* antd Select 下拉菜单全局样式 */
+  .ant-select-dropdown {
+    background: #2a2a2a !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    padding: 8px !important;
+  }
+
+  .ant-select-dropdown .rc-virtual-list {
+    max-height: 200px;
+  }
+
+  .ant-select-dropdown .rc-virtual-list-scrollbar {
+    width: 6px !important;
+  }
+
+  .ant-select-item {
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin: 2px 0;
+  }
+
+  .ant-select-item-option-content {
+    color: #fff;
+  }
+
+  .ant-select-dropdown .ant-select-item,
+  .ant-select-dropdown .ant-select-item-option-content {
+    color: #fff !important;
+  }
+
+  .ant-select-open .ant-select-selection-item,
+  .ant-select-focused .ant-select-selection-item,
+  .ant-select-open .ant-select-selection-placeholder,
+  .ant-select-focused .ant-select-selection-placeholder {
+    color: #fff !important;
+  }
+
+  .ant-select-item-option-active,
+  .ant-select-item-option:hover {
+    background: #3a3a3a !important;
+    color: #fff !important;
+    border-radius: 0 !important;
+  }
+
+  .ant-select-item-option-selected {
+    background: transparent !important;
+    color: #fff !important;
+    font-weight: 400 !important;
+  }
+
+  .ant-select-item-option-selected .ant-select-item-option-state {
+    display: none !important;
   }
   

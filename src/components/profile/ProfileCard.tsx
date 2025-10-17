@@ -321,7 +321,7 @@ export default function ProfileCard({ user, onUserUpdate, isCurrentUser = false 
                   <path d="M5 21V7l8-4v18" />
                   <path d="M19 21V11l-6-4" />
                 </svg>
-                <div className={styles.selectWrapper}>
+                <div className={styles.profileSelectWrapper}>
                   <Select
                     value={departmentInput || undefined}
                     onChange={(val) => {
@@ -370,7 +370,7 @@ export default function ProfileCard({ user, onUserUpdate, isCurrentUser = false 
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                 </svg>
-                <div className={styles.selectWrapper}>
+                <div className={styles.profileSelectWrapper}>
                   <Select
                     value={majorInput || undefined}
                     onChange={(val) => {
