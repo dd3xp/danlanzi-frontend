@@ -24,27 +24,23 @@ export default function UserProfilePage() {
     const load = async () => {
       if (!router.isReady) return;
 
-      try {
-        // 每次路由变化时重置用户数据
-        setUser(null);
-        
-        const userId = typeof router.query.id === 'string' ? router.query.id : undefined;
-        const res = await getUserProfile(userId);
+      // 每次路由变化时重置用户数据
+      setUser(null);
+      
+      const userId = typeof router.query.id === 'string' ? router.query.id : undefined;
+      const res = await getUserProfile(userId);
+      if (!isSubscribed) return;
+      
+      if (res.status === 'success' && res.user) {
+        const profile = res.user;
+        const avatarRes = await getUserAvatar(profile.id);
         if (!isSubscribed) return;
         
-        if (res.status === 'success' && res.user) {
-          const profile = res.user;
-          const avatarRes = await getUserAvatar(profile.id);
-          if (!isSubscribed) return;
-          
-          if (avatarRes.status === 'success' && avatarRes.avatar_data_url) {
-            profile.avatar_data_url = avatarRes.avatar_data_url;
-          }
-          
-          setUser(profile);
+        if (avatarRes.status === 'success' && avatarRes.avatar_data_url) {
+          profile.avatar_data_url = avatarRes.avatar_data_url;
         }
-      } catch (e) {
-        console.error('Failed to load user profile:', e);
+        
+        setUser(profile);
       }
     };
     

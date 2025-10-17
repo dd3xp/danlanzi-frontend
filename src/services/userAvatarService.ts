@@ -19,50 +19,73 @@ async function apiCall<T>(
   options: RequestInit = {},
   requireAuth: boolean = false
 ): Promise<ApiResponse<T>> {
-  try {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      ...(options.headers as Record<string, string>),
-    };
+  const maxRetries = 3;
+  let retryCount = 0;
 
-    // 如果需要认证，添加认证头
-    if (requireAuth) {
-      const authHeaders = getAuthHeaders();
-      Object.assign(headers, authHeaders);
-    }
-
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      headers,
-      ...options,
-    });
-
-    let data;
+  while (retryCount < maxRetries) {
     try {
-      data = await response.json();
-    } catch (jsonError) {
-      // JSON解析失败，返回错误码让前端处理
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...(options.headers as Record<string, string>),
+      };
+
+      // 如果需要认证，添加认证头
+      if (requireAuth) {
+        const authHeaders = getAuthHeaders();
+        Object.assign(headers, authHeaders);
+      }
+
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        headers,
+        ...options,
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        // JSON解析失败，返回错误码让前端处理
+        return {
+          status: 'error',
+          message: 'SERVER_RESPONSE_ERROR',
+          error: 'SERVER_RESPONSE_ERROR'
+        };
+      }
+
+      if (!response.ok) {
+        // 返回错误响应而不是抛出异常
+        return {
+          status: 'error',
+          message: data.message || 'API_REQUEST_FAILED',
+          error: data.message || 'API_REQUEST_FAILED'
+        };
+      }
+
+      return data;
+    } catch (error) {
+      retryCount++;
+      
+      // 如果还有重试次数，等待后重试
+      if (retryCount < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+        continue;
+      }
+      
+      // 所有重试都失败了，返回网络错误
       return {
         status: 'error',
-        message: 'SERVER_RESPONSE_ERROR',
-        error: 'SERVER_RESPONSE_ERROR'
+        message: 'NETWORK_ERROR',
+        error: 'NETWORK_ERROR'
       };
     }
-
-    if (!response.ok) {
-      // 返回错误响应而不是抛出异常
-      return {
-        status: 'error',
-        message: data.message || 'API request failed',
-        error: data.message || 'API request failed'
-      };
-    }
-
-    return data;
-  } catch (error) {
-    console.error('API call failed:', error);
-    // 网络错误等异常情况才抛出
-    throw error;
   }
+
+  // 这里理论上不会执行到，因为循环中已经处理了所有情况
+  return {
+    status: 'error',
+    message: 'UNKNOWN_ERROR',
+    error: 'UNKNOWN_ERROR'
+  };
 }
 
 // 上传头像
@@ -82,32 +105,58 @@ export const uploadAvatar = async (formData: FormData): Promise<ApiResponse<{
   Object.assign(headers, authHeaders);
   // 不设置Content-Type，让浏览器自动设置multipart/form-data
 
-  const response = await fetch(`${API_BASE_URL}/userAvatar/`, {
-    method: 'POST',
-    headers,
-    body: formData,
-  });
+  const maxRetries = 3;
+  let retryCount = 0;
 
-  let data;
-  try {
-    data = await response.json();
-  } catch (jsonError) {
-    return {
-      status: 'error',
-      message: 'SERVER_RESPONSE_ERROR',
-      error: 'SERVER_RESPONSE_ERROR'
-    };
+  while (retryCount < maxRetries) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/userAvatar/`, {
+        method: 'POST',
+        headers,
+        body: formData,
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        return {
+          status: 'error',
+          message: 'SERVER_RESPONSE_ERROR',
+          error: 'SERVER_RESPONSE_ERROR'
+        };
+      }
+
+      if (!response.ok) {
+        return {
+          status: 'error',
+          message: data.message || 'AVATAR_UPLOAD_FAILED',
+          error: data.message || 'AVATAR_UPLOAD_FAILED'
+        };
+      }
+
+      return data;
+    } catch (error) {
+      retryCount++;
+      
+      if (retryCount < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+        continue;
+      }
+      
+      return {
+        status: 'error',
+        message: 'NETWORK_ERROR',
+        error: 'NETWORK_ERROR'
+      };
+    }
   }
 
-  if (!response.ok) {
-    return {
-      status: 'error',
-      message: data.message || 'Avatar upload failed',
-      error: data.message || 'Avatar upload failed'
-    };
-  }
-
-  return data;
+  return {
+    status: 'error',
+    message: 'UNKNOWN_ERROR',
+    error: 'UNKNOWN_ERROR'
+  };
 };
 
 // 系统头像类型定义
@@ -200,29 +249,55 @@ export const setSystemAvatar = async (filename: string): Promise<ApiResponse<{
   const authHeaders = getAuthHeaders();
   Object.assign(headers, authHeaders);
 
-  const response = await fetch(`${API_BASE_URL}/userAvatar/system/${filename}`, {
-    method: 'POST',
-    headers,
-  });
+  const maxRetries = 3;
+  let retryCount = 0;
 
-  let data;
-  try {
-    data = await response.json();
-  } catch (jsonError) {
-    return {
-      status: 'error',
-      message: 'SERVER_RESPONSE_ERROR',
-      error: 'SERVER_RESPONSE_ERROR'
-    };
+  while (retryCount < maxRetries) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/userAvatar/system/${filename}`, {
+        method: 'POST',
+        headers,
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        return {
+          status: 'error',
+          message: 'SERVER_RESPONSE_ERROR',
+          error: 'SERVER_RESPONSE_ERROR'
+        };
+      }
+
+      if (!response.ok) {
+        return {
+          status: 'error',
+          message: data.message || 'SYSTEM_AVATAR_SET_FAILED',
+          error: data.message || 'SYSTEM_AVATAR_SET_FAILED'
+        };
+      }
+
+      return data;
+    } catch (error) {
+      retryCount++;
+      
+      if (retryCount < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+        continue;
+      }
+      
+      return {
+        status: 'error',
+        message: 'NETWORK_ERROR',
+        error: 'NETWORK_ERROR'
+      };
+    }
   }
 
-  if (!response.ok) {
-    return {
-      status: 'error',
-      message: data.message || 'Failed to set system avatar',
-      error: data.message || 'Failed to set system avatar'
-    };
-  }
-
-  return data;
+  return {
+    status: 'error',
+    message: 'UNKNOWN_ERROR',
+    error: 'UNKNOWN_ERROR'
+  };
 };

@@ -109,6 +109,8 @@ export default function SideBar() {
               src="/danlanzi.png" 
               alt="Logo" 
               className={styles.logoImage}
+              loading="eager"
+              fetchPriority="high"
             />
             <span className={styles.logoText}>{t('sidebar.brandName')}</span>
           </div>
