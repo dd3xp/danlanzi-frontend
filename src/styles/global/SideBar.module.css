@@ -174,7 +174,7 @@
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--blue-logo);
+  background: var(--text-secondary);
   border-radius: 1px;
   position: absolute;
   left: 13.25px;
