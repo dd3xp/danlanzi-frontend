@@ -321,7 +321,7 @@ export default function Register() {
         <div className={styles.registerHeader}>
           <div className={styles.logoContainer}>
             <img 
-              src="/danlanzi.svg" 
+              src="/danlanzi.png" 
               alt={t('logoAlt')} 
               className={styles.logo}
             />

@@ -144,7 +144,7 @@ export default function Login() {
         <div className={styles.loginHeader}>
           <div className={styles.logoContainer}>
             <img 
-              src="/danlanzi.svg" 
+              src="/danlanzi.png" 
               alt={t('logoAlt')} 
               className={styles.logo}
             />

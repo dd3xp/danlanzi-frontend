@@ -34,7 +34,7 @@ export default function Logo({ title }: LogoProps) {
   return (
     <div className={`${styles.logoContainer} ${isExpanded ? styles.sidebarExpanded : ''}`}>
       <img 
-        src="/danlanzi.svg" 
+        src="/danlanzi.png" 
         alt={t('logoAlt')} 
         className={styles.logo}
       />

@@ -51,7 +51,7 @@
 
 /* 第一个导航按钮与汉堡菜单拉开一点距离 */
 .sidebar > .navItem:first-of-type {
-  margin-top: 2px;
+  margin-top: 8px;
 }
 
 .navItem:hover {
@@ -113,8 +113,8 @@
 .hamburgerContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
-  margin-top: 2px;
+  margin-bottom: 12px;
+  margin-top: 6px;
   width: 100%;
   padding: 0 10px;
   position: relative;
@@ -161,24 +161,25 @@
   align-items: center;
   gap: 4px;
   position: absolute;
-  left: 12px;
+  left: 16px;
   animation: fadeIn 0.3s ease forwards;
 }
 
 .logoImage {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
+  margin: 0 0;
 }
 
 .logoText {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--blue-logo);
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s ease;
-  margin-left: 2px;
+  margin-left: 8px;
 }
 
 .sidebar.expanded .logoText,

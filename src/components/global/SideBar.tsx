@@ -106,7 +106,7 @@ export default function SideBar() {
         {(isExpanded || isHovered) && (
           <div className={styles.sidebarLogo}>
             <img 
-              src="/danlanzi.svg" 
+              src="/danlanzi.png" 
               alt="Logo" 
               className={styles.logoImage}
             />
