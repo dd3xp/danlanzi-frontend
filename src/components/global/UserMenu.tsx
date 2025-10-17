@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import styles from '../styles/UserMenu.module.css';
+import styles from '@/styles/UserMenu.module.css';
 import { useRouter } from 'next/router';
-import Tooltip from './Tooltip';
+import Tooltip from '@/components/global/Tooltip';
 
 interface UserMenuProps {
   onLogout: () => void;

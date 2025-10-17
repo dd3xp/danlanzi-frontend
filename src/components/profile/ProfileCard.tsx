@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Select } from 'antd';
 import Image from 'next/image';
-import Tooltip from '@/components/Tooltip';
-import AvatarUploadModal from '@/components/AvatarUploadModal';
-import SystemAvatarModal from '@/components/SystemAvatarModal';
+import Tooltip from '@/components/global/Tooltip';
+import AvatarUploadModal from '@/components/profile/AvatarUploadModal';
+import SystemAvatarModal from '@/components/profile/SystemAvatarModal';
 import { useTranslation } from 'next-i18next';
 import styles from '@/styles/Profile.module.css';
 import { updateUserProfile } from '@/services/userProfileService';

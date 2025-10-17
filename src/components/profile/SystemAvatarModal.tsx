@@ -5,7 +5,7 @@ import { getSystemAvatars, setSystemAvatar } from '@/services/userAvatarService'
 import { translateApiMessage, translateAvatarName } from '@/utils/translator';
 import styles from '@/styles/SystemAvatarModal.module.css';
 import Image from 'next/image';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@/components/global/Tooltip';
 
 interface SystemAvatarModalProps {
   open: boolean;

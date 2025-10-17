@@ -1,6 +1,6 @@
-import SideBar from '@/components/SideBar';
-import Avatar from '@/components/Avatar';
-import ProtectedRoute from '@/components/ProtectedRoute';
+import SideBar from '@/components/global/SideBar';
+import Avatar from '@/components/global/Avatar';
+import ProtectedRoute from '@/components/global/ProtectedRoute';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';

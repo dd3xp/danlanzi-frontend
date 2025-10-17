@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import styles from '../styles/Avatar.module.css';
-import UserMenu from './UserMenu';
-import { logout, getToken } from '../utils/auth';
+import styles from '@/styles/Avatar.module.css';
+import UserMenu from '@/components/global/UserMenu';
+import { logout, getToken } from '@/utils/auth';
 import { useRouter } from 'next/router';
-import { getUserProfile } from '../services/userProfileService';
-import { getUserAvatar } from '../services/userAvatarService';
-import { eventBus, EVENTS } from '../utils/eventBus';
+import { getUserProfile } from '@/services/userProfileService';
+import { getUserAvatar } from '@/services/userAvatarService';
+import { eventBus, EVENTS } from '@/utils/eventBus';
 
 export default function Avatar() {
   const { t } = useTranslation('common');

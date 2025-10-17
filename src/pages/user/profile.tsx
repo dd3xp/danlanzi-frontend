@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import SideBar from '@/components/SideBar';
-import Avatar from '@/components/Avatar';
-import ProtectedRoute from '@/components/ProtectedRoute';
-import ProfileCard from '@/components/ProfileCard';
+import SideBar from '@/components/global/SideBar';
+import Avatar from '@/components/global/Avatar';
+import ProtectedRoute from '@/components/global/ProtectedRoute';
+import ProfileCard from '@/components/profile/ProfileCard';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
