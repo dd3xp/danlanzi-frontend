@@ -76,18 +76,33 @@ export default function SideBar() {
       role="navigation"
     >
       <div className={styles.hamburgerContainer}>
-        <button
-          className={`${styles.iconButton} ${styles.hamburger}`}
-          aria-label="menu"
-          type="button"
-          onClick={toggleSidebar}
-        >
-          {/* 汉堡图标（无文字） */}
-          <span className={styles.hamburgerLine} />
-          <span className={styles.hamburgerLine} />
-          <span className={styles.hamburgerLine} />
-        </button>
-        {/* 侧边栏展开或悬停时显示Logo */}
+        {/* 未展开且未悬停时显示汉堡菜单 */}
+        {!isExpanded && !isHovered && (
+          <button
+            className={`${styles.iconButton} ${styles.hamburger}`}
+            aria-label="menu"
+            type="button"
+            onClick={toggleSidebar}
+          >
+            <span className={styles.hamburgerLine} />
+            <span className={styles.hamburgerLine} />
+            <span className={styles.hamburgerLine} />
+          </button>
+        )}
+        {/* 展开状态（不管是否悬停）都显示收回按钮 */}
+        {isExpanded && (
+          <button
+            className={`${styles.iconButton} ${styles.collapseButton}`}
+            aria-label="collapse"
+            type="button"
+            onClick={toggleSidebar}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        )}
+        {/* 展开或悬停时显示Logo */}
         {(isExpanded || isHovered) && (
           <div className={styles.sidebarLogo}>
             <img 
