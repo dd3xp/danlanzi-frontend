@@ -68,12 +68,12 @@
   
   .heroCard {
     position: relative;
-    display: block;
+    display: flex;
+    gap: 52px;
     background: var(--card);
     border: 1px solid var(--card-border);
     border-radius: 16px;
-    padding: 36px 40px;
-    min-height: 450px;
+    padding: 36px 60px;
     overflow: visible;
   }
   
@@ -82,26 +82,29 @@
     min-height: 700px;
   }
   
-  .heroLeft {
-    position: absolute;
-    left: 40px;
-    top: 80px;
+.heroLeft {
+    flex: 0 0 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
   }
-  
+
   .heroAvatarRing {
-    width: 280px;
-    height: 280px;
+    width: 350px;
+    height: 350px;
     border-radius: 50%;
     border: 5px solid var(--blue);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  
+
   .heroAvatarWrap {
     position: relative;
-    width: 260px;
-    height: 260px;
+    width: 330px;
+    height: 330px;
     border-radius: 50%;
     overflow: hidden;
   }
@@ -154,12 +157,12 @@
   .avatarEditIcon { width: 28px; height: 28px; }
   
   .heroBody { 
-    position: absolute;
-    left: 372px;
-    top: 80px;
+    flex: 1;
     min-width: 0;
-    width: calc(100% - 412px);
     max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .handle {
     color: var(--text-secondary);
@@ -250,7 +253,13 @@
   margin: 24px 40px;
   max-width: 600px;
 }
-  .editGroup { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+  .editGroup { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+    max-width: 480px;
+    margin-left: 50px;
+  }
   
   .fieldLabel { color: var(--text-secondary); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
   
@@ -302,9 +311,28 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
-    resize: vertical;
+    resize: none;
     min-height: 60px;
     font-family: inherit;
+  }
+
+  .bioInput::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .bioInput::-webkit-scrollbar-track {
+    margin-right: 12px;
+    background: transparent;
+  }
+
+  .bioInput::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    margin-right: 12px;
+  }
+
+  .bioInput::-webkit-resizer {
+    display: none;
   }
   
   
@@ -312,7 +340,7 @@
   .inlineField {
     position: relative;
     width: 100%;
-    max-width: 600px;
+    max-width: 480px;
   }
   .inlineField .nameInput {
     width: 100%;
@@ -331,11 +359,9 @@
   }
   
   .inlineField .bioInput {
-    width: 100%;
-    padding-right: 40px;
-    padding-left: 3px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    width: calc(100% - 35px);
+    padding: 8px 8px 8px 3px;
+    margin-right: 25px;
   }
   .inlineField .ghostButton {
     position: absolute;

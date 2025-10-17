@@ -2,7 +2,7 @@
 .reactSelectWrapper {
   position: relative;
   width: 100%;
-  padding-right: 50px;
+  padding-right: 25px;
 }
 
 /* antd Select 样式覆盖，保持与项目一致的暗色风格 */
