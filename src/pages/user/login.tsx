@@ -7,6 +7,7 @@ import styles from '@/styles/login/Login.module.css';
 import { loginUser } from '../../services/authService';
 import { setToken, setUser } from '../../utils/auth';
 import { translateBackendMessage } from '../../utils/translator';
+import { getUserProfile } from '@/services/userProfileService';
 import ErrorMessage from '@/components/global/ErrorMessage';
 
 export default function Login() {
@@ -90,9 +91,19 @@ export default function Login() {
         setToken(loginResult.token);
         setUser(loginResult.user);
         
-        // 跳转到主页或用户想要访问的页面
-        const redirectTo = router.query.redirect as string || '/user';
-        router.push(redirectTo);
+        // 获取用户资料，检查语言设置
+        const profileRes = await getUserProfile();
+        if (profileRes.status === 'success' && profileRes.user?.language && profileRes.user.language !== router.locale) {
+          // 跳转到主页或用户想要访问的页面，同时设置语言
+          const redirectTo = router.query.redirect as string || '/user';
+          const language = profileRes.user.language || 'zh-CN';
+            const basePath = redirectTo.replace(/^\/[^/]+/, '');
+            router.push(`/user${basePath}`, undefined, { locale: language });
+        } else {
+          // 如果没有语言设置或语言相同，直接跳转
+          const redirectTo = router.query.redirect as string || '/user';
+          router.push(redirectTo);
+        }
       }
       
     } catch (error) {

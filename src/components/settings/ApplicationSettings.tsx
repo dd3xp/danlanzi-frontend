@@ -1,8 +1,9 @@
 import React from 'react';
-import { Select } from 'antd';
+import { Select, message } from 'antd';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import styles from '@/styles/settings/ApplicationSettings.module.css';
+import { updateUserProfile } from '@/services/userProfileService';
 
 export default function ApplicationSettings() {
   const { t } = useTranslation('common');
@@ -21,21 +22,35 @@ export default function ApplicationSettings() {
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
             </svg>
             <div className={styles.settingSelectWrapper}>
-              <Select
-                value={router.isReady ? router.locale || 'zh' : 'zh'}
-                onChange={(value) => {
+                <Select
+                 value={router.isReady ? router.locale || 'zh-CN' : 'zh-CN'}
+                onChange={async (value) => {
                   if (router.isReady) {
-                    router.push(router.pathname, router.asPath, { locale: value });
+                    try {
+                      const res = await updateUserProfile({
+                        language: value
+                      });
+                      
+                          if (res.status === 'success') {
+                               const basePath = router.asPath.replace(/^\/[^/]+/, '');
+                               router.push(`/user${basePath}`, undefined, { locale: value });
+                          } else {
+                        message.error(t('messages.updateFailed'));
+                      }
+                    } catch (error) {
+                      message.error(t('messages.updateFailed'));
+                    }
                   }
                 }}
                 options={[
-                  { value: 'zh', label: '简体中文' },
-                  { value: 'en', label: 'English' }
+                  { value: 'zh-CN', label: '简体中文' },
+                  { value: 'en-US', label: 'English' }
                 ]}
                 popupMatchSelectWidth
                 disabled={!router.isReady}
                 showSearch={false}
                 listHeight={200}
+                title=""
               />
             </div>
           </div>
