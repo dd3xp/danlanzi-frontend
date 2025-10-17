@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import styles from '@/styles/login/Login.module.css';
 import { loginUser } from '../../services/authService';
-import { setToken, setUser } from '../../utils/auth';
+import { setToken, setUser, getToken } from '../../utils/auth';
 import { translateBackendMessage } from '../../utils/translator';
 import { getUserProfile } from '@/services/userProfileService';
 import ErrorMessage from '@/components/global/ErrorMessage';
@@ -19,9 +19,17 @@ export default function Login() {
     email: '',
     password: ''
   });
-  
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (getToken()) {
+      router.replace('/user');
+    }
+    setIsCheckingAuth(false);
+  }, [router]);
 
   // 检查URL参数中的注册成功消息
   useEffect(() => {
@@ -125,6 +133,10 @@ export default function Login() {
       setIsLoading(false);
     }
   };
+
+  if (isCheckingAuth) {
+    return null;
+  }
 
   return (
     <div className={styles.loginContainer}>

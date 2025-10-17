@@ -5,14 +5,15 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import styles from '@/styles/register/Register.module.css';
 import { validateFudanEmail, getEmailValidationError } from '../../utils/emailFormat';
+import { getToken } from '../../utils/auth';
 import { sendVerificationCode, verifyCode, registerUser } from '../../services/authService';
 import { translateBackendMessage } from '../../utils/translator';
 import ErrorMessage from '@/components/global/ErrorMessage';
-import { setStoredTheme, Theme } from '@/utils/themeManager';
 
 export default function Register() {
   const { t } = useTranslation(['common', 'messages']);
   const router = useRouter();
+  
   const [formData, setFormData] = useState({
     nickname: '',
     email: '',
@@ -22,8 +23,17 @@ export default function Register() {
   });
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [countdown, setCountdown] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSendingCode, setIsSendingCode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (getToken()) {
+      router.replace('/user');
+    }
+    setIsCheckingAuth(false);
+  }, [router]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 页面加载时恢复倒计时状态
@@ -300,6 +310,10 @@ export default function Register() {
       setIsSendingCode(false);
     }
   };
+
+  if (isCheckingAuth) {
+    return null;
+  }
 
   return (
     <div className={styles.registerContainer}>
