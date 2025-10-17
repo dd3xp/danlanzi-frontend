@@ -10,12 +10,14 @@ import styles from '@/styles/profile/Profile.module.css';
 import { getUserProfile } from '@/services/userProfileService';
 import { getUserAvatar } from '@/services/userAvatarService';
 import { useRouter } from 'next/router';
+import { getUser } from '@/utils/auth';
 
 export default function UserProfilePage() {
   const { t } = useTranslation('common');
   const [activeTab, setActiveTab] = useState<'overview' | 'resources' | 'messages'>('overview');
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
+  const currentUser = getUser();
 
   useEffect(() => {
     let isSubscribed = true;
@@ -23,6 +25,9 @@ export default function UserProfilePage() {
       if (!router.isReady) return;
 
       try {
+        // 每次路由变化时重置用户数据
+        setUser(null);
+        
         const userId = typeof router.query.id === 'string' ? router.query.id : undefined;
         const res = await getUserProfile(userId);
         if (!isSubscribed) return;
@@ -49,7 +54,7 @@ export default function UserProfilePage() {
     return () => {
       isSubscribed = false;
     };
-  }, [router.isReady, router.query.id]);
+  }, [router.isReady, router.asPath]);
 
 
   return (
@@ -90,7 +95,11 @@ export default function UserProfilePage() {
 
           <section className={styles.tabPanel} role="tabpanel">
             {activeTab === 'overview' && user && (
-              <ProfileCard user={user} onUserUpdate={setUser} />
+              <ProfileCard 
+                user={user} 
+                onUserUpdate={setUser}
+                isCurrentUser={!router.query.id || (!!currentUser && currentUser.id === user.id)}
+              />
             )}
             {activeTab === 'resources' && (
               <>

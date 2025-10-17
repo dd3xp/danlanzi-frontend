@@ -14,9 +14,10 @@ import { getDepartments, getAvailableMajors } from '@/utils/academicOptions';
 interface ProfileCardProps {
   user: any;
   onUserUpdate: (user: any) => void;
+  isCurrentUser?: boolean;
 }
 
-export default function ProfileCard({ user, onUserUpdate }: ProfileCardProps) {
+export default function ProfileCard({ user, onUserUpdate, isCurrentUser = false }: ProfileCardProps) {
   const { t } = useTranslation('common');
   const { t: tAcademic } = useTranslation('academic');
   const [editing, setEditing] = useState(false);
@@ -66,20 +67,22 @@ export default function ProfileCard({ user, onUserUpdate }: ProfileCardProps) {
   return (
     <div className={styles.heroCard}>
       {!editing ? (
-        <Tooltip title={t('profile.actions.edit')}>
-          <button
-            type="button"
-            className={styles.cardAction}
-            aria-label={t('profile.actions.edit')}
-            onClick={() => setEditing(true)}
-          >
-            {/* edit (pencil) */}
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardActionIcon}>
-              <path d="M12 20h9" />
-              <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-            </svg>
-          </button>
-        </Tooltip>
+        isCurrentUser && (
+          <Tooltip title={t('profile.actions.edit')}>
+            <button
+              type="button"
+              className={styles.cardAction}
+              aria-label={t('profile.actions.edit')}
+              onClick={() => setEditing(true)}
+            >
+              {/* edit (pencil) */}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardActionIcon}>
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+              </svg>
+            </button>
+          </Tooltip>
+        )
       ) : (
         <div className={styles.cardActionGroup}>
           <Tooltip title={t('profile.actions.save')}>
@@ -175,7 +178,7 @@ export default function ProfileCard({ user, onUserUpdate }: ProfileCardProps) {
                 {(user?.nickname?.[0] || 'U').toUpperCase()}
               </div>
             )}
-            {editing && (
+            {editing && isCurrentUser && (
               <div className={styles.avatarEditOverlay}>
                 <Tooltip title={t('profile.actions.upload')}>
                   <button type="button" className={styles.avatarEditAction} aria-label={t('profile.actions.upload')} onClick={handleAvatarUploadClick}>

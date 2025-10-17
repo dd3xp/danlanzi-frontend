@@ -8,6 +8,7 @@ import Tooltip from '@/components/global/Tooltip';
 interface UserMenuProps {
   onLogout: () => void;
   userProfile?: UserProfile | null;
+  onClose?: () => void;
 }
 
 interface UserProfile {
@@ -22,7 +23,7 @@ interface UserProfile {
   updated_at?: string;
 }
 
-export default function UserMenu({ onLogout, userProfile }: UserMenuProps) {
+export default function UserMenu({ onLogout, userProfile, onClose }: UserMenuProps) {
   const { t } = useTranslation('common');
   const router = useRouter();
 
@@ -83,7 +84,10 @@ export default function UserMenu({ onLogout, userProfile }: UserMenuProps) {
         className={styles.menuItem}
         role="menuitem"
         aria-label={t('userMenu.profile')}
-        onClick={() => router.push('/user/profile')}
+        onClick={() => {
+          router.push('/user/profile');
+          onClose?.();
+        }}
       >
         <svg className={styles.menuItemIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="7" r="4" />
@@ -98,7 +102,10 @@ export default function UserMenu({ onLogout, userProfile }: UserMenuProps) {
         className={styles.menuItem}
         role="menuitem"
         aria-label={t('userMenu.settings')}
-        onClick={() => router.push('/user/settings')}
+        onClick={() => {
+          router.push('/user/settings');
+          onClose?.();
+        }}
       >
         <svg className={styles.menuItemIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="3" />

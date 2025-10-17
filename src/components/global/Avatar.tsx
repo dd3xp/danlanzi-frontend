@@ -117,7 +117,11 @@ export default function Avatar() {
         </div>
       </div>
       {open && (
-        <UserMenu onLogout={handleLogout} userProfile={userProfile} />
+        <UserMenu 
+          onLogout={handleLogout} 
+          userProfile={userProfile}
+          onClose={() => setOpen(false)}
+        />
       )}
     </div>
   );
