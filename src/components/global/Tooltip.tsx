@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip as AntTooltip } from 'antd';
-import '@/styles/Tooltip.module.css';
+import '@/styles/global/Tooltip.module.css';
 
 interface TooltipProps {
   title: string;

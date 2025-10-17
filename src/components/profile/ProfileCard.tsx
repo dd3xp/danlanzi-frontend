@@ -5,7 +5,7 @@ import Tooltip from '@/components/global/Tooltip';
 import AvatarUploadModal from '@/components/profile/AvatarUploadModal';
 import SystemAvatarModal from '@/components/profile/SystemAvatarModal';
 import { useTranslation } from 'next-i18next';
-import styles from '@/styles/Profile.module.css';
+import styles from '@/styles/profile/ProfileCard.module.css';
 import { updateUserProfile } from '@/services/userProfileService';
 import { getUserAvatar } from '@/services/userAvatarService';
 import { eventBus, EVENTS } from '@/utils/eventBus';

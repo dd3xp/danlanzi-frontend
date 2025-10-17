@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
-import styles from '@/styles/Logo.module.css';
+import styles from '@/styles/global/Logo.module.css';
 
 type LogoProps = {
   title?: string;

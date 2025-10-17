@@ -3,11 +3,11 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import styles from '../../styles/Login.module.css';
+import styles from '@/styles/login/Login.module.css';
 import { loginUser } from '../../services/authService';
 import { setToken, setUser } from '../../utils/auth';
 import { translateBackendMessage } from '../../utils/translator';
-import ErrorMessage from '../../components/ErrorMessage';
+import ErrorMessage from '@/components/global/ErrorMessage';
 
 export default function Login() {
   const { t } = useTranslation(['common', 'messages']);

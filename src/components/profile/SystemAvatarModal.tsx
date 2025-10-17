@@ -3,7 +3,7 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'next-i18next';
 import { getSystemAvatars, setSystemAvatar } from '@/services/userAvatarService';
 import { translateApiMessage, translateAvatarName } from '@/utils/translator';
-import styles from '@/styles/SystemAvatarModal.module.css';
+import styles from '@/styles/profile/SystemAvatarModal.module.css';
 import Image from 'next/image';
 import Tooltip from '@/components/global/Tooltip';
 

@@ -3,7 +3,7 @@ import { Modal, Upload, message } from 'antd';
 import type { UploadProps } from 'antd';
 import { useTranslation } from 'next-i18next';
 import { getSystemAvatars, uploadAvatar } from '@/services/userAvatarService';
-import styles from '@/styles/AvatarUploadModal.module.css';
+import styles from '@/styles/profile/AvatarUploadModal.module.css';
 import Cropper from 'react-easy-crop';
 import { translateApiMessage } from '@/utils/translator';
 

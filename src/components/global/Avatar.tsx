@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import styles from '@/styles/Avatar.module.css';
+import styles from '@/styles/global/Avatar.module.css';
 import UserMenu from '@/components/global/UserMenu';
 import { logout, getToken } from '@/utils/auth';
 import { useRouter } from 'next/router';

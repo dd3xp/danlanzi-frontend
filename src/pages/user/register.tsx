@@ -3,11 +3,11 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import styles from '../../styles/Register.module.css';
+import styles from '@/styles/register/Register.module.css';
 import { validateFudanEmail, getEmailValidationError } from '../../utils/emailFormat';
 import { sendVerificationCode, verifyCode, registerUser } from '../../services/authService';
 import { translateBackendMessage } from '../../utils/translator';
-import ErrorMessage from '../../components/ErrorMessage';
+import ErrorMessage from '@/components/global/ErrorMessage';
 
 export default function Register() {
   const { t } = useTranslation(['common', 'messages']);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import styles from '@/styles/SideBar.module.css';
+import styles from '@/styles/global/SideBar.module.css';
 
 // 全局状态，在组件外部定义，避免重新挂载时重置
 let globalSidebarExpanded = false;

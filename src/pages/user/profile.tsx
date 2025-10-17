@@ -6,7 +6,7 @@ import ProfileCard from '@/components/profile/ProfileCard';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import styles from '@/styles/Profile.module.css';
+import styles from '@/styles/profile/Profile.module.css';
 import { getUserProfile } from '@/services/userProfileService';
 import { getUserAvatar } from '@/services/userAvatarService';
 import { useRouter } from 'next/router';
