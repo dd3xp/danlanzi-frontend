@@ -9,55 +9,80 @@ import { getUserProfile } from '@/services/userProfileService';
 import { getUserAvatar } from '@/services/userAvatarService';
 import { eventBus, EVENTS } from '@/utils/eventBus';
 
+// 全局状态，在组件外部定义，避免重新挂载时重置
+let globalUserProfile: any = null;
+
 export default function Avatar() {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState(globalUserProfile);
   const containerRef = useRef<HTMLDivElement | null>(null);
-
-  // 获取用户信息和头像
-  const fetchUserData = async () => {
-    try {
-      const token = getToken();
-      if (!token) {
-        setIsLoading(false);
-        return;
-      }
-
-      // 获取用户资料
-      const profileResponse = await getUserProfile();
-      if (profileResponse.status === 'success' && profileResponse.user) {
-        const profile = profileResponse.user;
-        
-        // 获取用户头像
-        const avatarResponse = await getUserAvatar(profile.id);
-        if (avatarResponse.status === 'success' && avatarResponse.avatar_data_url) {
-          // 合并头像数据到用户资料中
-          setUserProfile({
-            ...profile,
-            avatar_data_url: avatarResponse.avatar_data_url
-          });
-        } else {
-          setUserProfile(profile);
-        }
-      }
-    } catch (error) {
-      console.error('Failed to fetch user data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // 初始加载
   useEffect(() => {
-    fetchUserData();
+    const fetchData = async () => {
+      try {
+        const token = getToken();
+        if (!token) return;
+
+        // 获取用户资料
+        const profileResponse = await getUserProfile();
+        if (profileResponse.status === 'success' && profileResponse.user) {
+          const profile = profileResponse.user;
+          
+          // 获取用户头像
+          const avatarResponse = await getUserAvatar(profile.id);
+          if (avatarResponse.status === 'success' && avatarResponse.avatar_data_url) {
+            // 合并头像数据到用户资料中
+            globalUserProfile = {
+              ...profile,
+              avatar_data_url: avatarResponse.avatar_data_url
+            };
+          } else {
+            globalUserProfile = profile;
+          }
+          setUserProfile(globalUserProfile);
+        }
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
+    };
+
+    // 先同步全局状态，这样如果有数据就立即显示
+    setUserProfile(globalUserProfile);
+    
+    // 如果没有全局数据，才去获取
+    if (!globalUserProfile) {
+      fetchData();
+    }
   }, []);
 
   // 监听头像更新事件
   useEffect(() => {
-    const unsubscribe = eventBus.subscribe(EVENTS.AVATAR_UPDATED, fetchUserData);
+    const updateAvatar = async () => {
+      try {
+        const profileResponse = await getUserProfile();
+        if (profileResponse.status === 'success' && profileResponse.user) {
+          const profile = profileResponse.user;
+          const avatarResponse = await getUserAvatar(profile.id);
+          if (avatarResponse.status === 'success' && avatarResponse.avatar_data_url) {
+            globalUserProfile = {
+              ...profile,
+              avatar_data_url: avatarResponse.avatar_data_url
+            };
+          } else {
+            globalUserProfile = profile;
+          }
+          // 更新完全局变量后，立即更新组件状态
+          setUserProfile(globalUserProfile);
+        }
+      } catch (error) {
+        console.error('Failed to update avatar:', error);
+      }
+    };
+
+    const unsubscribe = eventBus.subscribe(EVENTS.AVATAR_UPDATED, updateAvatar);
     return () => unsubscribe();
   }, []);
 
@@ -78,16 +103,14 @@ export default function Avatar() {
 
   const handleLogout = () => {
     logout();
+    // 清除全局状态
+    globalUserProfile = null;
+    setUserProfile(null);
     setOpen(false);
     router.push('/user/login');
   };
 
-  // 如果正在加载，不显示头像
-  if (isLoading) {
-    return null;
-  }
-
-  // 获取显示内容：优先头像，其次昵称首字母
+  // 获取显示内容：优先头像，其次昵称首字母，最后显示占位符
   const avatarDataUrl = userProfile?.avatar_data_url;
   const displayChar = userProfile?.nickname?.trim()?.charAt(0)?.toUpperCase() || '';
 
