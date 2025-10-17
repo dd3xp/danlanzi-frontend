@@ -2,6 +2,6 @@
 // 不要直接把老的改掉，不然我会忘
 
 const backendUrl = 'http://localhost:3001'; // 本地后端地址
-// const backendUrl = 'https://your_domain_name.com'; // 线上后端地址
+// const backendUrl = 'http://35.223.131.254:3000'; // 线上后端地址
 
 export default backendUrl;
