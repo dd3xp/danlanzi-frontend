@@ -1,74 +1,111 @@
 :root {
-    /* 遮罩层相关 */
-    --overlay-bg: rgba(0, 0, 0, 0.55);      /* 遮罩层背景 */
-    --overlay-border: rgba(255, 255, 255, 0.35); /* 遮罩层边框 */
-    --overlay-hover: rgba(255, 255, 255, 0.15);  /* 遮罩层悬停 */
-    --scrollbar-thumb: rgba(255, 255, 255, 0.2); /* 滚动条滑块 */
+    /* 基础颜色 - 只使用硬编码值 */
+    --black: #0b0b0b;          /* 最深黑色 */
+    --dark-1: #141516;         /* 深色-1 */
+    --dark-2: #161718;         /* 深色-2 */
+    --dark-3: #1a1a1a;         /* 深色-3 */
+    --dark-4: #232425;         /* 深色-4 */
+    --dark-5: #262728;         /* 深色-5 */
+    --dark-6: #2a2b2c;         /* 深色-6 */
     
-    /* 状态颜色 */
-    --error: #ef4444;            /* 错误状态 */
-    --success: #10b981;          /* 成功状态 */
-    --disabled: #666666;         /* 禁用状态 */
-    --disabled-text: #999999;    /* 禁用文本 */
+    --gray-1: #666666;         /* 灰色-1 */
+    --gray-2: #999999;         /* 灰色-2 */
+    --gray-3: #b0b0b0;         /* 灰色-3 */
+    --gray-4: #9aa0a6;         /* 灰色-4 */
+    --gray-5: #e0e0e0;         /* 灰色-5 */
+    --gray-6: #e8e8e8;         /* 灰色-6 */
+    
+    --white: #ffffff;          /* 纯白 */
+    
+    --blue-1: #3b82f6;        /* 蓝色-1 */
+    --blue-2: #3b77f8ee;      /* 蓝色-2 */
+    --blue-3: #2563eb;        /* 蓝色-3 */
+    --blue-4: #1d4ed8;        /* 蓝色-4 */
+    
+    --success-color: #10b981;  /* 成功色 */
+    --error-color: #ef4444;    /* 错误色 */
 
-    /* 交互状态 */
-    --hover-bg: #232425;         /* 按钮悬停背景 */
-    --active-bg: #262728;        /* 按钮点击背景 */
-    --nav-active-bg: #2a2b2c;    /* 导航激活背景 */
-    --nav-active-border: #ffffff; /* 导航激活边框 */
-    --nav-hover-text: #e0e0e0;   /* 导航悬停文字 */
+    /* 透明度颜色 */
+    --alpha-dark-1: rgba(0, 0, 0, 0.55);      /* 55%黑 */
+    --alpha-dark-2: rgba(0, 0, 0, 0.35);      /* 35%黑 */
+    --alpha-light-1: rgba(255, 255, 255, 0.35); /* 35%白 */
+    --alpha-light-2: rgba(255, 255, 255, 0.15); /* 15%白 */
+    --alpha-light-3: rgba(255, 255, 255, 0.2);  /* 20%白 */
 
-    /* 基础颜色 */
-    --bg: #141516;            /* 页面与sidebar背景：稍微调浅 */
-    --panel: #0b0b0b;         /* sidebar和头像背景（原来的bg色） */
-    --text: #e8e8e8;          /* 浅文本 */
-    --text-secondary: #b0b0b0;        /* 暗文本 */
-    --text-assist: #b0b0b0;  /* 次要文本 */
-    --text-muted: #9aa0a6;         /* 次要色 */
-    --blue: #3b82f6;          /* 主蓝色 */
-    --blue-logo: #3b77f8ee;     /* 图标蓝 */
-    --blue-600: #2563eb;      /* 深蓝 */
-    --blue-700: #1d4ed8;      /* 更深蓝 */
-    --border: #1a1a1a;        /* 细边框 */
-    --border-light: rgba(255, 255, 255, 0.15);  /* 亮色细边框 */
-    --shadow: 0 10px 30px rgba(0,0,0,0.35);
-    --card: #161718;          /* 页面内容卡片背景（比底略浅） */
-    --card-border: #262728;   /* 卡片边框色 */
+    /* 遮罩层相关 */
+    --overlay-bg: var(--alpha-dark-1);
+    --overlay-border: var(--alpha-light-1);
+    --overlay-hover: var(--alpha-light-2);
+    --scrollbar-thumb: var(--alpha-light-3);
+    
+    /* 状态相关 */
+    --error: var(--error-color);
+    --success: var(--success-color);
+    --disabled: var(--gray-1);
+    --disabled-text: var(--gray-2);
+
+    /* 交互相关 */
+    --hover-bg: var(--dark-4);
+    --active-bg: var(--dark-5);
+    --nav-active-bg: var(--dark-6);
+    --nav-active-border: var(--white);
+    --nav-hover-text: var(--gray-5);
+
+    /* 布局相关 */
+    --bg: var(--dark-1);
+    --panel: var(--black);
+    --card: var(--dark-2);
+    --card-border: var(--dark-5);
+    --border: var(--dark-3);
+    --border-light: var(--alpha-light-2);
+    --shadow: 0 10px 30px var(--alpha-dark-2);
+
+    /* 文字相关 */
+    --text: var(--gray-6);
+    --text-secondary: var(--gray-3);
+    --text-assist: var(--gray-3);
+    --text-muted: var(--gray-4);
+
+    /* 品牌色相关 */
+    --blue: var(--blue-1);
+    --blue-logo: var(--blue-2);
+    --blue-600: var(--blue-3);
+    --blue-700: var(--blue-4);
 
     /* 输入框相关 */
-    --input-bg: var(--panel);    /* 输入框背景 */
-    --input-border: var(--border); /* 输入框边框 */
-    --input-text: var(--text);   /* 输入框文本 */
-    --input-placeholder: var(--text-secondary); /* 输入框占位符 */
+    --input-bg: var(--black);    /* 输入框背景 */
+    --input-border: var(--dark-3); /* 输入框边框 */
+    --input-text: var(--gray-6);   /* 输入框文本 */
+    --input-placeholder: var(--gray-3); /* 输入框占位符 */
 
     /* 提示框相关 */
-    --tooltip-bg: var(--panel);  /* 提示框背景 */
-    --tooltip-border: var(--border); /* 提示框边框 */
-    --tooltip-text: var(--text); /* 提示框文本 */
+    --tooltip-bg: var(--black);  /* 提示框背景 */
+    --tooltip-border: var(--dark-3); /* 提示框边框 */
+    --tooltip-text: var(--gray-6); /* 提示框文本 */
 
     /* 模态框相关 */
-    --modal-bg: var(--panel);    /* 模态框背景 */
-    --modal-border: var(--border); /* 模态框边框 */
-    --modal-shadow: var(--shadow); /* 模态框阴影 */
+    --modal-bg: var(--black);    /* 模态框背景 */
+    --modal-border: var(--dark-3); /* 模态框边框 */
+    --modal-shadow: 0 10px 30px var(--alpha-dark-2); /* 模态框阴影 */
 
     /* 上传相关 */
-    --upload-hover: var(--hover-bg);  /* 上传区域悬停 */
-    --upload-active: var(--active-bg); /* 上传区域激活 */
-    --upload-disabled: var(--disabled); /* 上传区域禁用 */
+    --upload-hover: var(--dark-4);  /* 上传区域悬停 */
+    --upload-active: var(--dark-5); /* 上传区域激活 */
+    --upload-disabled: var(--gray-1); /* 上传区域禁用 */
 
     /* 按钮相关 */
-    --button-bg: #dddddd;     /* 按钮背景 - 浅灰 */
-    --button-text: rgb(17, 17, 17);       /* 按钮文本 - 深色 */
-    --button-hover-bg: #c2c2c2; /* 按钮悬停背景 - 更深的灰 */
-    --button-active-bg: #b0b0b0; /* 按钮点击背景 - 最深的灰 */
-    --button-disabled-bg: var(--disabled); /* 按钮禁用背景 */
-    --button-disabled-text: var(--disabled-text); /* 按钮禁用文本 */
+    --button-bg: var(--gray-5);          /* 按钮背景 - 浅灰 */
+    --button-text: var(--dark-1);        /* 按钮文本 - 深色 */
+    --button-hover-bg: var(--gray-3);    /* 按钮悬停背景 - 更深的灰 */
+    --button-active-bg: var(--gray-3);   /* 按钮点击背景 - 最深的灰 */
+    --button-disabled-bg: var(--gray-1);      /* 按钮禁用背景 */
+    --button-disabled-text: var(--gray-2); /* 按钮禁用文本 */
 
     /* Select 组件样式 */
-    --select-bg: var(--panel);
-    --select-hover: var(--hover-bg);
-    --select-text: var(--text);
-    --select-shadow: var(--shadow);
+    --select-bg: var(--black);
+    --select-hover: var(--dark-4);
+    --select-text: var(--gray-6);
+    --select-shadow: 0 10px 30px var(--alpha-dark-2);
     --select-radius: 12px;
     --select-item-radius: 8px;
     --select-padding: 8px;
@@ -78,210 +115,342 @@
     --select-scrollbar-width: 6px;
   }
 
-  /* 浅色主题 */
-  :root[data-theme='light'] {
+  @media (prefers-color-scheme: dark) {
+    :root[data-theme='auto'] {
+      /* 继承深色主题的所有变量 */
+      /* 基础颜色 - 只使用硬编码值 */
+    --black: #0b0b0b;          /* 最深黑色 */
+    --dark-1: #141516;         /* 深色-1 */
+    --dark-2: #161718;         /* 深色-2 */
+    --dark-3: #1a1a1a;         /* 深色-3 */
+    --dark-4: #232425;         /* 深色-4 */
+    --dark-5: #262728;         /* 深色-5 */
+    --dark-6: #2a2b2c;         /* 深色-6 */
+    
+    --gray-1: #666666;         /* 灰色-1 */
+    --gray-2: #999999;         /* 灰色-2 */
+    --gray-3: #b0b0b0;         /* 灰色-3 */
+    --gray-4: #9aa0a6;         /* 灰色-4 */
+    --gray-5: #e0e0e0;         /* 灰色-5 */
+    --gray-6: #e8e8e8;         /* 灰色-6 */
+    
+    --white: #ffffff;          /* 纯白 */
+    
+    --blue-1: #3b82f6;        /* 蓝色-1 */
+    --blue-2: #3b77f8ee;      /* 蓝色-2 */
+    --blue-3: #2563eb;        /* 蓝色-3 */
+    --blue-4: #1d4ed8;        /* 蓝色-4 */
+    
+    --success-color: #10b981;  /* 成功色 */
+    --error-color: #ef4444;    /* 错误色 */
+
+    /* 透明度颜色 */
+    --alpha-dark-1: rgba(0, 0, 0, 0.55);      /* 55%黑 */
+    --alpha-dark-2: rgba(0, 0, 0, 0.35);      /* 35%黑 */
+    --alpha-light-1: rgba(255, 255, 255, 0.35); /* 35%白 */
+    --alpha-light-2: rgba(255, 255, 255, 0.15); /* 15%白 */
+    --alpha-light-3: rgba(255, 255, 255, 0.2);  /* 20%白 */
+
     /* 遮罩层相关 */
-    --overlay-bg: rgba(0, 0, 0, 0.25);      /* 遮罩层背景 - 25%黑 */
-    --overlay-border: rgba(0, 0, 0, 0.15);   /* 遮罩层边框 - 15%黑 */
-    --overlay-hover: rgba(0, 0, 0, 0.08);    /* 遮罩层悬停 - 8%黑 */
-    --scrollbar-thumb: rgba(0, 0, 0, 0.2);   /* 滚动条滑块 - 20%黑 */
+    --overlay-bg: var(--alpha-dark-1);
+    --overlay-border: var(--alpha-light-1);
+    --overlay-hover: var(--alpha-light-2);
+    --scrollbar-thumb: var(--alpha-light-3);
+    
+    /* 状态相关 */
+    --error: var(--error-color);
+    --success: var(--success-color);
+    --disabled: var(--gray-1);
+    --disabled-text: var(--gray-2);
 
-    /* 状态颜色 */
-    --error: #dc2626;            /* 错误状态 - 深红色 */
-    --success: #059669;          /* 成功状态 - 深绿色 */
-    --disabled: rgba(0, 0, 0, 0.25); /* 禁用状态 - 25%黑 */
-    --disabled-text: rgba(0, 0, 0, 0.45); /* 禁用文本 - 45%黑 */
+    /* 交互相关 */
+    --hover-bg: var(--dark-4);
+    --active-bg: var(--dark-5);
+    --nav-active-bg: var(--dark-6);
+    --nav-active-border: var(--white);
+    --nav-hover-text: var(--gray-5);
 
-    /* 交互状态 */
-    --hover-bg: rgba(0, 0, 0, 0.08);    /* 悬停背景 - 8%黑 */
-    --active-bg: rgba(0, 0, 0, 0.12);   /* 点击背景 - 12%黑 */
-    --nav-active-bg: rgba(0, 0, 0, 0.03); /* 导航激活背景 - 3%黑 */
-    --nav-active-border: rgba(0, 0, 0, 0.88); /* 导航激活边框 - 88%黑 */
-    --nav-hover-text: rgba(0, 0, 0, 0.88);    /* 导航悬停文字 - 88%黑 */
+    /* 布局相关 */
+    --bg: var(--dark-1);
+    --panel: var(--black);
+    --card: var(--dark-2);
+    --card-border: var(--dark-5);
+    --border: var(--dark-3);
+    --border-light: var(--alpha-light-2);
+    --shadow: 0 10px 30px var(--alpha-dark-2);
 
-    /* 基础颜色 */
-    --bg: #f8f8f8;                      /* 背景 - 非常浅的灰 */
-    --panel: #ffffff;                   /* 面板 - 纯白 */
-    --text: rgba(0, 0, 0, 0.9);        /* 主文本 - 90%黑 */
-    --text-secondary: rgba(0, 0, 0, 0.8);      /* 次要文本 - 80%黑 */
-    --text-assist: rgba(0, 0, 0, 0.7);        /* 辅助文本 - 70%黑 */
-    --text-muted: rgba(0, 0, 0, 0.6);       /* 弱化文本 - 60%黑 */
-    --blue: #1677ff;             /* 主题蓝 */
-    --blue-600: #0958d9;         /* 深蓝 */
-    --blue-alpha: rgba(22, 119, 255, 0.2); /* 蓝色透明 */
-    --blue-logo: #3b77f8ee;        /* Logo蓝 */
-    --border: rgba(0, 0, 0, 0.15);      /* 边框 - 15%黑 */
-    --border-light: rgba(0, 0, 0, 0.08); /* 浅边框 - 8%黑 */
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* 阴影 - 8%黑 */
-    --card: #ffffff;                    /* 卡片 - 纯白 */
-    --card-border: rgba(0, 0, 0, 0.16);  /* 卡片边框 - 16%黑 */
+    /* 文字相关 */
+    --text: var(--gray-6);
+    --text-secondary: var(--gray-3);
+    --text-assist: var(--gray-3);
+    --text-muted: var(--gray-4);
+
+    /* 品牌色相关 */
+    --blue: var(--blue-1);
+    --blue-logo: var(--blue-2);
+    --blue-600: var(--blue-3);
+    --blue-700: var(--blue-4);
+
+    /* 输入框相关 */
+    --input-bg: var(--black);    /* 输入框背景 */
+    --input-border: var(--dark-3); /* 输入框边框 */
+    --input-text: var(--gray-6);   /* 输入框文本 */
+    --input-placeholder: var(--gray-3); /* 输入框占位符 */
+
+    /* 提示框相关 */
+    --tooltip-bg: var(--black);  /* 提示框背景 */
+    --tooltip-border: var(--dark-3); /* 提示框边框 */
+    --tooltip-text: var(--gray-6); /* 提示框文本 */
+
+    /* 模态框相关 */
+    --modal-bg: var(--black);    /* 模态框背景 */
+    --modal-border: var(--dark-3); /* 模态框边框 */
+    --modal-shadow: 0 10px 30px var(--alpha-dark-2); /* 模态框阴影 */
+
+    /* 上传相关 */
+    --upload-hover: var(--dark-4);  /* 上传区域悬停 */
+    --upload-active: var(--dark-5); /* 上传区域激活 */
+    --upload-disabled: var(--gray-1); /* 上传区域禁用 */
 
     /* 按钮相关 */
-    --button-bg: #1a1a1a;     /* 按钮背景 - 深灰 */
-    --button-text: #ffffff;   /* 按钮文本 - 白色 */
-    --button-hover-bg: #262626; /* 按钮悬停背景 - 更深的灰 */
-    --button-active-bg: #333333; /* 按钮点击背景 - 最深的灰 */
-    --button-disabled-bg: rgba(0, 0, 0, 0.04); /* 按钮禁用背景 - 4%黑 */
-    --button-disabled-text: rgba(0, 0, 0, 0.25); /* 按钮禁用文本 - 25%黑 */
+    --button-bg: var(--gray-5);          /* 按钮背景 - 浅灰 */
+    --button-text: var(--dark-1);        /* 按钮文本 - 深色 */
+    --button-hover-bg: var(--gray-3);    /* 按钮悬停背景 - 更深的灰 */
+    --button-active-bg: var(--gray-3);   /* 按钮点击背景 - 最深的灰 */
+    --button-disabled-bg: var(--gray-1);      /* 按钮禁用背景 */
+    --button-disabled-text: var(--gray-2); /* 按钮禁用文本 */
 
-    /* 其他组件样式继承基础变量 */
-    --input-bg: var(--panel);
-    --input-border: var(--border);
-    --input-text: var(--text);
-    --input-placeholder: var(--text-secondary);
+    /* Select 组件样式 */
+    --select-bg: var(--black);
+    --select-hover: var(--dark-4);
+    --select-text: var(--gray-6);
+    --select-shadow: 0 10px 30px var(--alpha-dark-2);
+    --select-radius: 12px;
+    --select-item-radius: 8px;
+    --select-padding: 8px;
+    --select-item-padding: 12px 20px;
+    --select-item-margin: 2px 0;
+    --select-font-size: 16px;
+    --select-scrollbar-width: 6px;
+    }
+  }
 
-    --tooltip-bg: var(--panel);
-    --tooltip-border: var(--border);
-    --tooltip-text: var(--text);
+  /* 浅色主题 */
+  :root[data-theme='light'] {
+    /* 基础颜色 - 只使用硬编码值 */
+    --white: #ffffff;          /* 纯白 */
+    --light-bg: #f8f8f8;      /* 浅灰背景 */
+    
+    --alpha-1: rgba(0, 0, 0, 0.03);  /* 3%黑 */
+    --alpha-2: rgba(0, 0, 0, 0.08);  /* 8%黑 */
+    --alpha-3: rgba(0, 0, 0, 0.12);  /* 12%黑 */
+    --alpha-4: rgba(0, 0, 0, 0.15);  /* 15%黑 */
+    --alpha-5: rgba(0, 0, 0, 0.16);  /* 16%黑 */
+    --alpha-6: rgba(0, 0, 0, 0.25);  /* 25%黑 */
+    --alpha-7: rgba(0, 0, 0, 0.45);  /* 45%黑 */
+    --alpha-8: rgba(0, 0, 0, 0.6);   /* 60%黑 */
+    --alpha-9: rgba(0, 0, 0, 0.7);   /* 70%黑 */
+    --alpha-10: rgba(0, 0, 0, 0.8);  /* 80%黑 */
+    --alpha-11: rgba(0, 0, 0, 0.88); /* 88%黑 */
+    --alpha-12: rgba(0, 0, 0, 0.9);  /* 90%黑 */
+    
+    --dark-1: #1a1a1a;        /* 深色-1 */
+    --dark-2: #262626;        /* 深色-2 */
+    --dark-3: #333333;        /* 深色-3 */
+    
+    --blue-1: #1677ff;        /* 蓝色-1 */
+    --blue-2: #0958d9;        /* 蓝色-2 */
+    --blue-3: #3b77f8ee;      /* 蓝色-3 */
+    --blue-alpha: rgba(22, 119, 255, 0.2);  /* 蓝色透明 */
+    
+    --success-color: #059669;  /* 成功色 */
+    --error-color: #dc2626;    /* 错误色 */
 
-    --modal-bg: var(--panel);
-    --modal-border: var(--border);
-    --modal-shadow: var(--shadow);
+    /* 遮罩层相关 */
+    --overlay-bg: var(--alpha-6);
+    --overlay-border: var(--alpha-4);
+    --overlay-hover: var(--alpha-2);
+    --scrollbar-thumb: var(--alpha-5);
 
-    --upload-hover: var(--hover-bg);
-    --upload-active: var(--active-bg);
-    --upload-disabled: var(--disabled);
+    /* 状态相关 */
+    --error: var(--error-color);
+    --success: var(--success-color);
+    --disabled: var(--alpha-6);
+    --disabled-text: var(--alpha-7);
 
-    --select-bg: var(--panel);
-    --select-hover: var(--hover-bg);
-    --select-text: var(--text);
-    --select-shadow: var(--shadow);
+    /* 交互相关 */
+    --hover-bg: var(--alpha-2);
+    --active-bg: var(--alpha-3);
+    --nav-active-bg: var(--alpha-1);
+    --nav-active-border: var(--alpha-11);
+    --nav-hover-text: var(--alpha-11);
+
+    /* 布局相关 */
+    --bg: var(--light-bg);
+    --panel: var(--white);
+    --card: var(--white);
+    --card-border: var(--alpha-5);
+    --border: var(--alpha-4);
+    --border-light: var(--alpha-2);
+    --shadow: 0 10px 30px var(--alpha-2);
+
+    /* 文字相关 */
+    --text: var(--alpha-12);
+    --text-secondary: var(--alpha-10);
+    --text-assist: var(--alpha-9);
+    --text-muted: var(--alpha-8);
+
+    /* 品牌色相关 */
+    --blue: var(--blue-1);
+    --blue-600: var(--blue-2);
+    --blue-logo: var(--blue-3);
+
+    /* 按钮相关 */
+    --button-bg: var(--dark-1);          /* 按钮背景 - 深灰 */
+    --button-text: var(--white);         /* 按钮文本 - 白色 */
+    --button-hover-bg: var(--dark-2);    /* 按钮悬停背景 - 更深的灰 */
+    --button-active-bg: var(--dark-3);   /* 按钮点击背景 - 最深的灰 */
+    --button-disabled-bg: var(--alpha-1); /* 按钮禁用背景 */
+    --button-disabled-text: var(--alpha-6); /* 按钮禁用文本 */
+
+    /* 输入框相关 */
+    --input-bg: var(--white);
+    --input-border: var(--alpha-4);
+    --input-text: var(--alpha-12);
+    --input-placeholder: var(--alpha-10);
+
+    /* 提示框相关 */
+    --tooltip-bg: var(--white);
+    --tooltip-border: var(--alpha-4);
+    --tooltip-text: var(--alpha-12);
+
+    /* 模态框相关 */
+    --modal-bg: var(--white);
+    --modal-border: var(--alpha-4);
+    --modal-shadow: 0 10px 30px var(--alpha-2);
+
+    /* 上传相关 */
+    --upload-hover: var(--alpha-2);
+    --upload-active: var(--alpha-3);
+    --upload-disabled: var(--alpha-6);
+
+    /* Select 组件样式 */
+    --select-bg: var(--white);
+    --select-hover: var(--alpha-2);
+    --select-text: var(--alpha-12);
+    --select-shadow: 0 10px 30px var(--alpha-2);
   }
 
   /* 自动主题 */
   @media (prefers-color-scheme: light) {
     :root[data-theme='auto'] {
-      /* 继承浅色主题的所有变量 */
-      --overlay-bg: rgba(0, 0, 0, 0.25);      /* 遮罩层背景 - 25%黑 */
-      --overlay-border: rgba(0, 0, 0, 0.15);   /* 遮罩层边框 - 15%黑 */
-      --overlay-hover: rgba(0, 0, 0, 0.08);    /* 遮罩层悬停 - 8%黑 */
-      --scrollbar-thumb: rgba(0, 0, 0, 0.2);   /* 滚动条滑块 - 20%黑 */
+    /* 继承浅色主题的所有变量 */
+    /* 基础颜色 - 只使用硬编码值 */
+    --white: #ffffff;          /* 纯白 */
+    --light-bg: #f8f8f8;      /* 浅灰背景 */
+    
+    --alpha-1: rgba(0, 0, 0, 0.03);  /* 3%黑 */
+    --alpha-2: rgba(0, 0, 0, 0.08);  /* 8%黑 */
+    --alpha-3: rgba(0, 0, 0, 0.12);  /* 12%黑 */
+    --alpha-4: rgba(0, 0, 0, 0.15);  /* 15%黑 */
+    --alpha-5: rgba(0, 0, 0, 0.16);  /* 16%黑 */
+    --alpha-6: rgba(0, 0, 0, 0.25);  /* 25%黑 */
+    --alpha-7: rgba(0, 0, 0, 0.45);  /* 45%黑 */
+    --alpha-8: rgba(0, 0, 0, 0.6);   /* 60%黑 */
+    --alpha-9: rgba(0, 0, 0, 0.7);   /* 70%黑 */
+    --alpha-10: rgba(0, 0, 0, 0.8);  /* 80%黑 */
+    --alpha-11: rgba(0, 0, 0, 0.88); /* 88%黑 */
+    --alpha-12: rgba(0, 0, 0, 0.9);  /* 90%黑 */
+    
+    --dark-1: #1a1a1a;        /* 深色-1 */
+    --dark-2: #262626;        /* 深色-2 */
+    --dark-3: #333333;        /* 深色-3 */
+    
+    --blue-1: #1677ff;        /* 蓝色-1 */
+    --blue-2: #0958d9;        /* 蓝色-2 */
+    --blue-3: #3b77f8ee;      /* 蓝色-3 */
+    --blue-alpha: rgba(22, 119, 255, 0.2);  /* 蓝色透明 */
+    
+    --success-color: #059669;  /* 成功色 */
+    --error-color: #dc2626;    /* 错误色 */
 
-      --error: #dc2626;            /* 错误状态 - 深红色 */
-      --success: #059669;          /* 成功状态 - 深绿色 */
-      --disabled: rgba(0, 0, 0, 0.25); /* 禁用状态 - 25%黑 */
-      --disabled-text: rgba(0, 0, 0, 0.45); /* 禁用文本 - 45%黑 */
+    /* 遮罩层相关 */
+    --overlay-bg: var(--alpha-6);
+    --overlay-border: var(--alpha-4);
+    --overlay-hover: var(--alpha-2);
+    --scrollbar-thumb: var(--alpha-5);
 
-      --hover-bg: rgba(0, 0, 0, 0.08);    /* 悬停背景 - 8%黑 */
-      --active-bg: rgba(0, 0, 0, 0.12);   /* 点击背景 - 12%黑 */
-      --nav-active-bg: rgba(0, 0, 0, 0.03); /* 导航激活背景 - 3%黑 */
-      --nav-active-border: rgba(0, 0, 0, 0.88); /* 导航激活边框 - 88%黑 */
-      --nav-hover-text: rgba(0, 0, 0, 0.88);    /* 导航悬停文字 - 88%黑 */
+    /* 状态相关 */
+    --error: var(--error-color);
+    --success: var(--success-color);
+    --disabled: var(--alpha-6);
+    --disabled-text: var(--alpha-7);
 
-      --bg: #f8f8f8;                      /* 背景 - 非常浅的灰 */
-      --panel: #ffffff;                   /* 面板 - 纯白 */
-      --text: rgba(0, 0, 0, 0.90);        /* 主文本 - 90%黑 */
-      --text-secondary: rgba(0, 0, 0, 0.7);      /* 次要文本 - 70%黑 */
-      --text-assist: rgba(0, 0, 0, 0.6); /* 辅助文本 - 60%黑 */
-      --text-muted: rgba(0, 0, 0, 0.5);       /* 弱化文本 - 50%黑 */
-      --blue: #1677ff;             /* 主题蓝 */
-      --blue-600: #0958d9;         /* 深蓝 */
-      --blue-alpha: rgba(22, 119, 255, 0.2); /* 蓝色透明 */
-      --blue-logo: #1677ff;        /* Logo蓝 */
-      --border: rgba(0, 0, 0, 0.15);      /* 边框 - 15%黑 */
-      --border-light: rgba(0, 0, 0, 0.08); /* 浅边框 - 8%黑 */
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* 阴影 - 8%黑 */
-      --card: #ffffff;                    /* 卡片 - 纯白 */
-      --card-border: rgba(0, 0, 0, 0.12);  /* 卡片边框 - 12%黑 */
+    /* 交互相关 */
+    --hover-bg: var(--alpha-2);
+    --active-bg: var(--alpha-3);
+    --nav-active-bg: var(--alpha-1);
+    --nav-active-border: var(--alpha-11);
+    --nav-hover-text: var(--alpha-11);
 
-      --button-bg: #1a1a1a;     /* 按钮背景 - 深灰 */
-      --button-text: #ffffff;   /* 按钮文本 - 白色 */
-      --button-hover-bg: #262626; /* 按钮悬停背景 - 更深的灰 */
-      --button-active-bg: #333333; /* 按钮点击背景 - 最深的灰 */
-      --button-disabled-bg: rgba(0, 0, 0, 0.04); /* 按钮禁用背景 - 4%黑 */
-      --button-disabled-text: rgba(0, 0, 0, 0.25); /* 按钮禁用文本 - 25%黑 */
+    /* 布局相关 */
+    --bg: var(--light-bg);
+    --panel: var(--white);
+    --card: var(--white);
+    --card-border: var(--alpha-5);
+    --border: var(--alpha-4);
+    --border-light: var(--alpha-2);
+    --shadow: 0 10px 30px var(--alpha-2);
 
-      /* 其他组件样式继承基础变量 */
-      --input-bg: var(--panel);
-      --input-border: var(--border);
-      --input-text: var(--text);
-      --input-placeholder: var(--text-secondary);
+    /* 文字相关 */
+    --text: var(--alpha-12);
+    --text-secondary: var(--alpha-10);
+    --text-assist: var(--alpha-9);
+    --text-muted: var(--alpha-8);
 
-      --tooltip-bg: var(--panel);
-      --tooltip-border: var(--border);
-      --tooltip-text: var(--text);
+    /* 品牌色相关 */
+    --blue: var(--blue-1);
+    --blue-600: var(--blue-2);
+    --blue-logo: var(--blue-3);
 
-      --modal-bg: var(--panel);
-      --modal-border: var(--border);
-      --modal-shadow: var(--shadow);
+    /* 按钮相关 */
+    --button-bg: var(--dark-1);          /* 按钮背景 - 深灰 */
+    --button-text: var(--white);         /* 按钮文本 - 白色 */
+    --button-hover-bg: var(--dark-2);    /* 按钮悬停背景 - 更深的灰 */
+    --button-active-bg: var(--dark-3);   /* 按钮点击背景 - 最深的灰 */
+    --button-disabled-bg: var(--alpha-1); /* 按钮禁用背景 */
+    --button-disabled-text: var(--alpha-6); /* 按钮禁用文本 */
 
-      --upload-hover: var(--hover-bg);
-      --upload-active: var(--active-bg);
-      --upload-disabled: var(--disabled);
+    /* 输入框相关 */
+    --input-bg: var(--white);
+    --input-border: var(--alpha-4);
+    --input-text: var(--alpha-12);
+    --input-placeholder: var(--alpha-10);
 
-      --select-bg: var(--panel);
-      --select-hover: var(--hover-bg);
-      --select-text: var(--text);
-      --select-shadow: var(--shadow);
+    /* 提示框相关 */
+    --tooltip-bg: var(--white);
+    --tooltip-border: var(--alpha-4);
+    --tooltip-text: var(--alpha-12);
+
+    /* 模态框相关 */
+    --modal-bg: var(--white);
+    --modal-border: var(--alpha-4);
+    --modal-shadow: 0 10px 30px var(--alpha-2);
+
+    /* 上传相关 */
+    --upload-hover: var(--alpha-2);
+    --upload-active: var(--alpha-3);
+    --upload-disabled: var(--alpha-6);
+
+    /* Select 组件样式 */
+    --select-bg: var(--white);
+    --select-hover: var(--alpha-2);
+    --select-text: var(--alpha-12);
+    --select-shadow: 0 10px 30px var(--alpha-2);
     }
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root[data-theme='auto'] {
-      /* 继承深色主题的所有变量 */
-      --overlay-bg: rgba(0, 0, 0, 0.55);      /* 遮罩层背景 */
-      --overlay-border: rgba(255, 255, 255, 0.35); /* 遮罩层边框 */
-      --overlay-hover: rgba(255, 255, 255, 0.15);  /* 遮罩层悬停 */
-      --scrollbar-thumb: rgba(255, 255, 255, 0.2); /* 滚动条滑块 */
-      
-      --error: #ef4444;            /* 错误状态 */
-      --success: #10b981;          /* 成功状态 */
-      --disabled: #666666;         /* 禁用状态 */
-      --disabled-text: #999999;    /* 禁用文本 */
 
-      --hover-bg: #232425;         /* 按钮悬停背景 */
-      --active-bg: #262728;        /* 按钮点击背景 */
-      --nav-active-bg: #2a2b2c;    /* 导航激活背景 */
-      --nav-active-border: #ffffff; /* 导航激活边框 */
-      --nav-hover-text: #e0e0e0;   /* 导航悬停文字 */
-
-      --bg: #141516;            /* 页面与sidebar背景：稍微调浅 */
-      --panel: #0b0b0b;         /* sidebar和头像背景（原来的bg色） */
-      --text: #e8e8e8;          /* 浅文本 */
-      --text-secondary: #b0b0b0;        /* 暗文本 */
-      --text-assist: #b0b0b0;  /* 次要文本 */
-      --text-muted: #9aa0a6;         /* 次要色 */
-      --blue: #3b82f6;          /* 主蓝色 */
-      --blue-600: #2563eb;      /* 深蓝 */
-      --blue-alpha: rgba(59, 130, 246, 0.2); /* 蓝色透明 */
-      --blue-logo: #3b77f8ee;     /* 图标蓝 */
-      --border: #1a1a1a;        /* 细边框 */
-      --border-light: rgba(255, 255, 255, 0.15);  /* 亮色细边框 */
-      --shadow: 0 10px 30px rgba(0,0,0,0.35);
-      --card: #161718;          /* 页面内容卡片背景（比底略浅） */
-      --card-border: #262728;   /* 卡片边框色 */
-
-      --button-bg: #dddddd;     /* 按钮背景 - 浅灰 */
-      --button-text: rgb(17, 17, 17);       /* 按钮文本 - 深色 */
-      --button-hover-bg: #c2c2c2; /* 按钮悬停背景 - 更深的灰 */
-      --button-active-bg: #b0b0b0; /* 按钮点击背景 - 最深的灰 */
-      --button-disabled-bg: #666666; /* 按钮禁用背景 */
-      --button-disabled-text: #999999; /* 按钮禁用文本 */
-
-      /* 其他组件样式继承基础变量 */
-      --input-bg: var(--panel);
-      --input-border: var(--border);
-      --input-text: var(--text);
-      --input-placeholder: var(--text-secondary);
-
-      --tooltip-bg: var(--panel);
-      --tooltip-border: var(--border);
-      --tooltip-text: var(--text);
-
-      --modal-bg: var(--panel);
-      --modal-border: var(--border);
-      --modal-shadow: var(--shadow);
-
-      --upload-hover: var(--hover-bg);
-      --upload-active: var(--active-bg);
-      --upload-disabled: var(--disabled);
-
-      --select-bg: var(--panel);
-      --select-hover: var(--hover-bg);
-      --select-text: var(--text);
-      --select-shadow: var(--shadow);
-    }
-  }
   
   * { box-sizing: border-box; }
   html, body, #__next {

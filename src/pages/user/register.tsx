@@ -152,6 +152,12 @@ export default function Register() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   // 检查确认密码是否匹配
   const isPasswordMatch = () => {
     return formData.confirmPassword && formData.password && formData.confirmPassword === formData.password;
@@ -340,6 +346,7 @@ export default function Register() {
               name="nickname"
               value={formData.nickname}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className={styles.inputField}
               placeholder={t('register.nicknamePlaceholder')}
               rows={1}
@@ -356,6 +363,7 @@ export default function Register() {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className={styles.inputField}
               placeholder={t('register.passwordPlaceholder')}
               rows={1}
@@ -386,6 +394,7 @@ export default function Register() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className={styles.inputField}
               placeholder={t('register.confirmPasswordPlaceholder')}
               rows={1}
@@ -402,6 +411,7 @@ export default function Register() {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className={styles.inputField}
               placeholder={t('register.emailPlaceholder')}
               rows={1}
@@ -419,6 +429,7 @@ export default function Register() {
                 name="verificationCode"
                 value={formData.verificationCode}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 className={styles.codeInputField}
                 placeholder={t('register.verificationCodePlaceholder')}
                 rows={1}

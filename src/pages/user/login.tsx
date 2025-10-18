@@ -55,6 +55,12 @@ export default function Login() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
     
@@ -162,6 +168,7 @@ export default function Login() {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className={styles.inputField}
               placeholder={t('login.usernamePlaceholder')}
               rows={1}
@@ -178,6 +185,7 @@ export default function Login() {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className={styles.inputField}
               placeholder={t('login.passwordPlaceholder')}
               rows={1}
