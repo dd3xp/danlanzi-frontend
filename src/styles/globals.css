@@ -238,8 +238,8 @@
   /* 浅色主题 */
   :root[data-theme='light'] {
     /* 基础颜色 - 只使用硬编码值 */
-    --white: #ffffff;          /* 纯白 */
-    --light-bg: #f8f8f8;      /* 浅灰背景 */
+    --white-1: #fafafa;          /* 稍微有一点灰的白 */
+    --white-2: #f6f6f6;      /* 稍微有二点灰的白 */
     
     --alpha-1: rgba(0, 0, 0, 0.03);  /* 3%黑 */
     --alpha-2: rgba(0, 0, 0, 0.08);  /* 8%黑 */
@@ -286,9 +286,9 @@
     --nav-hover-text: var(--alpha-11);
 
     /* 布局相关 */
-    --bg: var(--light-bg);
-    --panel: var(--white);
-    --card: var(--white);
+    --bg: var(--white-2);
+    --panel: var(--white-1);
+    --card: var(--white-1);
     --card-border: var(--alpha-5);
     --border: var(--alpha-4);
     --border-light: var(--alpha-2);
@@ -314,18 +314,18 @@
     --button-disabled-text: var(--alpha-6); /* 按钮禁用文本 */
 
     /* 输入框相关 */
-    --input-bg: var(--white);
+    --input-bg: var(--white-1);
     --input-border: var(--alpha-4);
     --input-text: var(--alpha-12);
     --input-placeholder: var(--alpha-10);
 
     /* 提示框相关 */
-    --tooltip-bg: var(--white);
+    --tooltip-bg: var(--white-1);
     --tooltip-border: var(--alpha-4);
     --tooltip-text: var(--alpha-12);
 
     /* 模态框相关 */
-    --modal-bg: var(--white);
+    --modal-bg: var(--white-1);
     --modal-border: var(--alpha-4);
     --modal-shadow: 0 10px 30px var(--alpha-2);
 
@@ -335,7 +335,7 @@
     --upload-disabled: var(--alpha-6);
 
     /* Select 组件样式 */
-    --select-bg: var(--white);
+    --select-bg: var(--white-1);
     --select-hover: var(--alpha-2);
     --select-text: var(--alpha-12);
     --select-shadow: 0 10px 30px var(--alpha-2);
@@ -346,8 +346,8 @@
     :root[data-theme='auto'] {
     /* 继承浅色主题的所有变量 */
     /* 基础颜色 - 只使用硬编码值 */
-    --white: #ffffff;          /* 纯白 */
-    --light-bg: #f8f8f8;      /* 浅灰背景 */
+    --white-1: #fafafa;          /* 稍微有一点灰的白 */
+    --white-2: #f6f6f6;      /* 稍微有二点灰的白 */
     
     --alpha-1: rgba(0, 0, 0, 0.03);  /* 3%黑 */
     --alpha-2: rgba(0, 0, 0, 0.08);  /* 8%黑 */
@@ -394,9 +394,9 @@
     --nav-hover-text: var(--alpha-11);
 
     /* 布局相关 */
-    --bg: var(--light-bg);
-    --panel: var(--white);
-    --card: var(--white);
+    --bg: var(--white-2);
+    --panel: var(--white-1);
+    --card: var(--white-1);
     --card-border: var(--alpha-5);
     --border: var(--alpha-4);
     --border-light: var(--alpha-2);
@@ -422,18 +422,18 @@
     --button-disabled-text: var(--alpha-6); /* 按钮禁用文本 */
 
     /* 输入框相关 */
-    --input-bg: var(--white);
+    --input-bg: var(--white-1);
     --input-border: var(--alpha-4);
     --input-text: var(--alpha-12);
     --input-placeholder: var(--alpha-10);
 
     /* 提示框相关 */
-    --tooltip-bg: var(--white);
+    --tooltip-bg: var(--white-1);
     --tooltip-border: var(--alpha-4);
     --tooltip-text: var(--alpha-12);
 
     /* 模态框相关 */
-    --modal-bg: var(--white);
+    --modal-bg: var(--white-1);
     --modal-border: var(--alpha-4);
     --modal-shadow: 0 10px 30px var(--alpha-2);
 
@@ -443,7 +443,7 @@
     --upload-disabled: var(--alpha-6);
 
     /* Select 组件样式 */
-    --select-bg: var(--white);
+    --select-bg: var(--white-1);
     --select-hover: var(--alpha-2);
     --select-text: var(--alpha-12);
     --select-shadow: 0 10px 30px var(--alpha-2);
