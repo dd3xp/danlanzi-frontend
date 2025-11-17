@@ -1,92 +1,34 @@
 // 头像相关API服务
-import { getAuthHeaders } from '../utils/auth';
+import { getAuthHeaders, logout } from '../utils/auth';
+import { apiCall, ApiResponse } from '../utils/apiClient';
 import backendUrl from './backendUrl';
 
 const API_BASE_URL = `${backendUrl}/api`;
 
-// 通用API响应类型
-interface ApiResponse<T = any> {
-  status: 'success' | 'error';
-  message: string;
-  data?: T;
-  error?: string;
-  errors?: any[];
-}
-
-// 通用API调用函数
-async function apiCall<T>(
-  endpoint: string,
-  options: RequestInit = {},
-  requireAuth: boolean = false
-): Promise<ApiResponse<T>> {
-  const maxRetries = 3;
-  let retryCount = 0;
-
-  while (retryCount < maxRetries) {
-    try {
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-        ...(options.headers as Record<string, string>),
-      };
-
-      // 如果需要认证，添加认证头
-      if (requireAuth) {
-        const authHeaders = getAuthHeaders();
-        Object.assign(headers, authHeaders);
-      }
-
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        headers,
-        ...options,
-      });
-
-      let data;
-      try {
-        data = await response.json();
-      } catch (jsonError) {
-        // JSON解析失败，返回错误码让前端处理
-        return {
-          status: 'error',
-          message: 'SERVER_RESPONSE_ERROR',
-          error: 'SERVER_RESPONSE_ERROR'
-        };
-      }
-
-      if (!response.ok) {
-        // 返回错误响应而不是抛出异常
-        return {
-          status: 'error',
-          message: data.message || 'API_REQUEST_FAILED',
-          error: data.message || 'API_REQUEST_FAILED'
-        };
-      }
-
-      return data;
-    } catch (error) {
-      retryCount++;
-      
-      // 如果还有重试次数，等待后重试
-      if (retryCount < maxRetries) {
-        await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
-        continue;
-      }
-      
-      // 所有重试都失败了，返回网络错误
-      return {
-        status: 'error',
-        message: 'NETWORK_ERROR',
-        error: 'NETWORK_ERROR'
-      };
+// 处理token过期的辅助函数
+const handleTokenExpiry = () => {
+  logout();
+  if (typeof window !== 'undefined') {
+    const currentPath = window.location.pathname;
+    if (currentPath !== '/user/login' && currentPath !== '/user/register') {
+      window.location.href = `/user/login?redirect=${encodeURIComponent(currentPath)}`;
+    } else {
+      window.location.href = '/user/login';
     }
   }
+};
 
-  // 这里理论上不会执行到，因为循环中已经处理了所有情况
-  return {
-    status: 'error',
-    message: 'UNKNOWN_ERROR',
-    error: 'UNKNOWN_ERROR'
-  };
-}
+// 检查响应是否为token过期错误（不消费response body）
+const checkTokenExpiry = (response: Response): boolean => {
+  if (response.status === 403 || response.status === 401) {
+    // 对于403/401状态码，直接处理为可能的token错误
+    // 注意：这里不读取response body，因为body可能已经被消费
+    // 实际的错误代码会在apiCall中处理
+    handleTokenExpiry();
+    return true;
+  }
+  return false;
+};
 
 // 上传头像
 export const uploadAvatar = async (formData: FormData): Promise<ApiResponse<{
@@ -120,11 +62,46 @@ export const uploadAvatar = async (formData: FormData): Promise<ApiResponse<{
       try {
         data = await response.json();
       } catch (jsonError) {
+        // 检查token过期（在解析JSON失败时）
+        if (response.status === 403 || response.status === 401) {
+          checkTokenExpiry(response);
+          return {
+            status: 'error',
+            message: 'TOKEN_EXPIRED',
+            error: 'TOKEN_EXPIRED'
+          };
+        }
         return {
           status: 'error',
           message: 'SERVER_RESPONSE_ERROR',
           error: 'SERVER_RESPONSE_ERROR'
         };
+      }
+
+      // 检查token过期（在解析JSON之后）
+      if (response.status === 403 || response.status === 401) {
+        const errorCode = data?.code || '';
+        const errorMessage = data?.message || '';
+        
+        if (
+          errorCode === 'TOKEN_EXPIRED' ||
+          errorCode === 'TOKEN_INVALID' ||
+          errorCode === 'TOKEN_MISSING' ||
+          errorCode === 'TOKEN_ERROR' ||
+          errorCode === 'AUTH_REQUIRED' ||
+          errorMessage.includes('Invalid or expired token') ||
+          errorMessage.includes('Token has expired') ||
+          errorMessage.includes('Invalid token') ||
+          errorMessage.includes('Access token required')
+        ) {
+          checkTokenExpiry(response);
+          return {
+            status: 'error',
+            message: data.message || 'TOKEN_EXPIRED',
+            error: data.message || 'TOKEN_EXPIRED',
+            code: errorCode
+          };
+        }
       }
 
       if (!response.ok) {
@@ -263,11 +240,46 @@ export const setSystemAvatar = async (filename: string): Promise<ApiResponse<{
       try {
         data = await response.json();
       } catch (jsonError) {
+        // 检查token过期（在解析JSON失败时）
+        if (response.status === 403 || response.status === 401) {
+          checkTokenExpiry(response);
+          return {
+            status: 'error',
+            message: 'TOKEN_EXPIRED',
+            error: 'TOKEN_EXPIRED'
+          };
+        }
         return {
           status: 'error',
           message: 'SERVER_RESPONSE_ERROR',
           error: 'SERVER_RESPONSE_ERROR'
         };
+      }
+
+      // 检查token过期（在解析JSON之后）
+      if (response.status === 403 || response.status === 401) {
+        const errorCode = data?.code || '';
+        const errorMessage = data?.message || '';
+        
+        if (
+          errorCode === 'TOKEN_EXPIRED' ||
+          errorCode === 'TOKEN_INVALID' ||
+          errorCode === 'TOKEN_MISSING' ||
+          errorCode === 'TOKEN_ERROR' ||
+          errorCode === 'AUTH_REQUIRED' ||
+          errorMessage.includes('Invalid or expired token') ||
+          errorMessage.includes('Token has expired') ||
+          errorMessage.includes('Invalid token') ||
+          errorMessage.includes('Access token required')
+        ) {
+          checkTokenExpiry(response);
+          return {
+            status: 'error',
+            message: data.message || 'TOKEN_EXPIRED',
+            error: data.message || 'TOKEN_EXPIRED',
+            code: errorCode
+          };
+        }
       }
 
       if (!response.ok) {

@@ -10,7 +10,15 @@
       "invalidCredentials": "邮箱或密码错误",
       "registrationFailed": "注册失败",
       "loginFailed": "登录失败",
-      "emailAlreadyRegistered": "该邮箱已被注册"
+      "emailAlreadyRegistered": "该邮箱已被注册",
+      "accessTokenRequired": "需要访问令牌",
+      "invalidOrExpiredToken": "无效或过期的令牌",
+      "tokenExpired": "令牌已过期，请重新登录",
+      "invalidToken": "无效的令牌",
+      "tokenError": "令牌错误",
+      "tokenMissing": "缺少访问令牌",
+      "authRequired": "需要身份验证",
+      "adminRequired": "需要管理员权限"
     },
     "success": {
       "registrationSuccessful": "注册成功",

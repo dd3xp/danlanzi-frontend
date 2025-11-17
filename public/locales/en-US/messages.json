@@ -10,7 +10,15 @@
       "invalidCredentials": "Invalid email or password",
       "registrationFailed": "Registration failed",
       "loginFailed": "Login failed",
-      "emailAlreadyRegistered": "Email already registered"
+      "emailAlreadyRegistered": "Email already registered",
+      "accessTokenRequired": "Access token required",
+      "invalidOrExpiredToken": "Invalid or expired token",
+      "tokenExpired": "Token has expired, please login again",
+      "invalidToken": "Invalid token",
+      "tokenError": "Token error",
+      "tokenMissing": "Token missing",
+      "authRequired": "Authentication required",
+      "adminRequired": "Admin privileges required"
     },
     "success": {
       "registrationSuccessful": "Registration successful",

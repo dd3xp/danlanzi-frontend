@@ -107,7 +107,17 @@ export function translateBackendMessage(
     
     // 认证相关消息
     'Access token required': 'auth.errors.accessTokenRequired',
-    'Invalid or expired token': 'auth.errors.invalidOrExpiredToken'
+    'Invalid or expired token': 'auth.errors.invalidOrExpiredToken',
+    'Token has expired': 'auth.errors.tokenExpired',
+    'Invalid token': 'auth.errors.invalidToken',
+    
+    // 新的错误代码（后端返回的code字段）
+    'TOKEN_MISSING': 'auth.errors.tokenMissing',
+    'TOKEN_EXPIRED': 'auth.errors.tokenExpired',
+    'TOKEN_INVALID': 'auth.errors.invalidToken',
+    'TOKEN_ERROR': 'auth.errors.tokenError',
+    'AUTH_REQUIRED': 'auth.errors.authRequired',
+    'ADMIN_REQUIRED': 'auth.errors.adminRequired'
   };
 
   const translationKey = messageMap[message];
