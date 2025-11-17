@@ -93,6 +93,26 @@
     "resources": "Resources",
     "brandName": "Dan Basket"
   },
+  "allCourses": {
+    "title": "All Courses",
+    "subtitle": "Browse all available course catalogs",
+    "search": {
+      "placeholder": "Search course code or name...",
+      "deleteHistory": "Delete history"
+    },
+    "tabs": {
+      "ariaLabel": "Course categories",
+      "code": "Course Code",
+      "dept": "Department"
+    },
+    "states": {
+      "loading": "Loading...",
+      "noCourses": "No courses available",
+      "networkError": "Network error",
+      "loadFailed": "Failed to load courses"
+    },
+    "uncategorized": "Uncategorized"
+  },
   "login": {
     "subtitle": "Sign in to Dan Basket",
     "username": "Email",

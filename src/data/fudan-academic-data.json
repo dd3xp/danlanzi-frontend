@@ -1,0 +1,1051 @@
+{
+  "departments": [
+    {
+      "id": "chinese_literature",
+      "name_zh": "中国语言文学系",
+      "name_en": "Department of Chinese Language and Literature",
+      "type": "department",
+      "majors": [
+        {
+          "code": "050101",
+          "name_zh": "汉语言文学",
+          "name_en": "Chinese Language and Literature"
+        },
+        {
+          "code": "050102",
+          "name_zh": "汉语言",
+          "name_en": "Chinese Language"
+        },
+        {
+          "code": "050102",
+          "name_zh": "汉语言（古文字学方向）",
+          "name_en": "Chinese Language (Paleography Direction)"
+        }
+      ]
+    },
+    {
+      "id": "international_cultural_exchange",
+      "name_zh": "国际文化交流学院",
+      "name_en": "International Cultural Exchange School",
+      "type": "college",
+      "majors": [
+        {
+          "code": "050102",
+          "name_zh": "汉语言（对外语言文化方向）",
+          "name_en": "Chinese Language (Teaching Chinese as a Foreign Language and Culture Direction)"
+        },
+        {
+          "code": "050102",
+          "name_zh": "汉语言（对外商务汉语方向）",
+          "name_en": "Chinese Language (Business Chinese for International Students Direction)"
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "name_zh": "历史学系",
+      "name_en": "Department of History",
+      "type": "department",
+      "majors": [
+        {
+          "code": "060101",
+          "name_zh": "历史学",
+          "name_en": "History"
+        },
+        {
+          "code": "120901",
+          "name_zh": "旅游管理",
+          "name_en": "Tourism Management"
+        }
+      ]
+    },
+    {
+      "id": "cultural_heritage_museology",
+      "name_zh": "文物与博物馆学系",
+      "name_en": "Department of Cultural Heritage and Museology",
+      "type": "department",
+      "majors": [
+        {
+          "code": "060104",
+          "name_zh": "文物与博物馆学",
+          "name_en": "Cultural Heritage and Museology"
+        },
+        {
+          "code": "060104",
+          "name_zh": "文物与博物馆学（科技考古方向）",
+          "name_en": "Cultural Heritage and Museology (Archaeological Science Direction)"
+        }
+      ]
+    },
+    {
+      "id": "philosophy",
+      "name_zh": "哲学学院",
+      "name_en": "School of Philosophy",
+      "type": "college",
+      "sub_departments": [
+        {
+          "id": "philosophy_dept",
+          "name_zh": "哲学系",
+          "name_en": "Philosophy Department",
+          "majors": [
+            {
+              "code": "010101",
+              "name_zh": "哲学",
+              "name_en": "Philosophy"
+            },
+            {
+              "code": "010101",
+              "name_zh": "哲学（国学方向）",
+              "name_en": "Philosophy (Chinese Classical Studies Direction)"
+            },
+            {
+              "code": "010101",
+              "name_zh": "哲学（科学哲学与逻辑学方向）",
+              "name_en": "Philosophy (Philosophy of Science and Logic Direction)"
+            },
+            {
+              "code": "010101",
+              "name_zh": "哲学（艺术哲学方向）",
+              "name_en": "Philosophy (Philosophy of Art Direction)"
+            }
+          ]
+        },
+        {
+          "id": "religious_studies",
+          "name_zh": "宗教系",
+          "name_en": "Religious Studies Department",
+          "majors": [
+            {
+              "code": "010103K",
+              "name_zh": "宗教学",
+              "name_en": "Religious Studies"
+            }
+          ]
+        }
+      ],
+      "majors": [
+        {
+          "code": "030205T",
+          "name_zh": "政治学、经济学与哲学",
+          "name_en": "Politics, Economics and Philosophy"
+        }
+      ]
+    },
+    {
+      "id": "foreign_languages",
+      "name_zh": "外国语言文学学院",
+      "name_en": "College of Foreign Languages and Literature",
+      "type": "college",
+      "sub_departments": [
+        {
+          "id": "english",
+          "name_zh": "英语系",
+          "name_en": "English Department",
+          "majors": [
+            {
+              "code": "050201",
+              "name_zh": "英语",
+              "name_en": "English"
+            }
+          ]
+        },
+        {
+          "id": "translation",
+          "name_zh": "翻译系",
+          "name_en": "Translation and Interpreting Department",
+          "majors": [
+            {
+              "code": "050261",
+              "name_zh": "翻译",
+              "name_en": "Translation"
+            }
+          ]
+        },
+        {
+          "id": "russian",
+          "name_zh": "俄语系",
+          "name_en": "Russian Department",
+          "majors": [
+            {
+              "code": "050202",
+              "name_zh": "俄语",
+              "name_en": "Russian"
+            }
+          ]
+        },
+        {
+          "id": "german",
+          "name_zh": "德语系",
+          "name_en": "German Department",
+          "majors": [
+            {
+              "code": "050203",
+              "name_zh": "德语",
+              "name_en": "German"
+            }
+          ]
+        },
+        {
+          "id": "french",
+          "name_zh": "法语系",
+          "name_en": "French Department",
+          "majors": [
+            {
+              "code": "050204",
+              "name_zh": "法语",
+              "name_en": "French"
+            }
+          ]
+        },
+        {
+          "id": "japanese",
+          "name_zh": "日语系",
+          "name_en": "Japanese Department",
+          "majors": [
+            {
+              "code": "050207",
+              "name_zh": "日语",
+              "name_en": "Japanese"
+            }
+          ]
+        },
+        {
+          "id": "korean",
+          "name_zh": "韩语系",
+          "name_en": "Korean Department",
+          "majors": [
+            {
+              "code": "050209",
+              "name_zh": "朝鲜语",
+              "name_en": "Korean"
+            }
+          ]
+        },
+        {
+          "id": "spanish",
+          "name_zh": "西班牙语系",
+          "name_en": "Spanish Department",
+          "majors": [
+            {
+              "code": "050205",
+              "name_zh": "西班牙语",
+              "name_en": "Spanish"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "journalism",
+      "name_zh": "新闻学院",
+      "name_en": "School of Journalism",
+      "type": "college",
+      "sub_departments": [
+        {
+          "id": "journalism_dept",
+          "name_zh": "新闻学系",
+          "name_en": "Journalism Department",
+          "majors": [
+            {
+              "code": "050301",
+              "name_zh": "新闻学",
+              "name_en": "Journalism"
+            },
+            {
+              "code": "050301",
+              "name_zh": "新闻学（望道新闻卓越班）",
+              "name_en": "Journalism (Wangdao Journalism Excellence Program)"
+            }
+          ]
+        },
+        {
+          "id": "broadcasting",
+          "name_zh": "广播电视学系",
+          "name_en": "Radio and Television Department",
+          "majors": [
+            {
+              "code": "050302",
+              "name_zh": "广播电视学",
+              "name_en": "Broadcasting and Television"
+            }
+          ]
+        },
+        {
+          "id": "advertising",
+          "name_zh": "广告学系",
+          "name_en": "Advertising Department",
+          "majors": [
+            {
+              "code": "050303",
+              "name_zh": "广告学",
+              "name_en": "Advertising"
+            }
+          ]
+        },
+        {
+          "id": "communication",
+          "name_zh": "传播学系",
+          "name_en": "Communication Department",
+          "majors": [
+            {
+              "code": "050304",
+              "name_zh": "传播学",
+              "name_en": "Communication"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "international_relations",
+      "name_zh": "国际关系与公共事务学院",
+      "name_en": "School of International Relations & Public Affairs",
+      "type": "college",
+      "sub_departments": [
+        {
+          "id": "international_politics",
+          "name_zh": "国际政治系",
+          "name_en": "International Politics Department",
+          "majors": [
+            {
+              "code": "030202",
+              "name_zh": "国际政治",
+              "name_en": "International Politics"
+            }
+          ]
+        },
+        {
+          "id": "political_science",
+          "name_zh": "政治学系",
+          "name_en": "Political Science Department",
+          "majors": [
+            {
+              "code": "030201",
+              "name_zh": "政治学与行政学",
+              "name_en": "Political Science and Public Administration"
+            }
+          ]
+        },
+        {
+          "id": "public_administration",
+          "name_zh": "公共行政系",
+          "name_en": "Public Administration Department",
+          "majors": [
+            {
+              "code": "120402",
+              "name_zh": "行政管理",
+              "name_en": "Public Administration"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "law",
+      "name_zh": "法学院",
+      "name_en": "Law School",
+      "type": "college",
+      "majors": [
+        {
+          "code": "030101K",
+          "name_zh": "法学",
+          "name_en": "Law"
+        },
+        {
+          "code": "030101K",
+          "name_zh": "法学（涉外法治拔尖人才班）",
+          "name_en": "Law (Top-notch Program for Foreign-related Rule of Law)"
+        }
+      ]
+    },
+    {
+      "id": "marxism",
+      "name_zh": "马克思主义学院",
+      "name_en": "School of Marxism",
+      "type": "college",
+      "majors": [
+        {
+          "code": "030504T",
+          "name_zh": "马克思主义理论",
+          "name_en": "Marxist Theory"
+        }
+      ]
+    },
+    {
+      "id": "physical_education",
+      "name_zh": "体育教学部",
+      "name_en": "Faculty of Physical Education",
+      "type": "college",
+      "majors": [
+        {
+          "code": "040202K",
+          "name_zh": "运动训练",
+          "name_en": "Sports Training"
+        }
+      ]
+    },
+    {
+      "id": "social_development",
+      "name_zh": "社会发展与公共政策学院",
+      "name_en": "School of Social Development and Public Policy",
+      "type": "college",
+      "sub_departments": [
+        {
+          "id": "sociology",
+          "name_zh": "社会学系",
+          "name_en": "Sociology Department",
+          "majors": [
+            {
+              "code": "030301",
+              "name_zh": "社会学",
+              "name_en": "Sociology"
+            }
+          ]
+        },
+        {
+          "id": "social_work",
+          "name_zh": "社会工作系",
+          "name_en": "Social Work Department",
+          "majors": [
+            {
+              "code": "030302",
+              "name_zh": "社会工作",
+              "name_en": "Social Work"
+            }
+          ]
+        },
+        {
+          "id": "psychology",
+          "name_zh": "心理学系",
+          "name_en": "Psychology Department",
+          "majors": [
+            {
+              "code": "071101",
+              "name_zh": "心理学",
+              "name_en": "Psychology"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "economics",
+      "name_zh": "经济学院",
+      "name_en": "School of Economics",
+      "type": "college",
+      "sub_departments": [
+        {
+          "id": "economics_dept",
+          "name_zh": "经济学系",
+          "name_en": "Economics Department",
+          "majors": [
+            {
+              "code": "020101",
+              "name_zh": "经济学",
+              "name_en": "Economics"
+            },
+            {
+              "code": "020101",
+              "name_zh": "经济学（数理经济方向）",
+              "name_en": "Economics (Mathematical Economics Direction)"
+            },
+            {
+              "code": "020101",
+              "name_zh": "经济学（国际项目）",
+              "name_en": "Economics (International Program)"
+            }
+          ]
+        },
+        {
+          "id": "world_economy",
+          "name_zh": "世界经济系",
+          "name_en": "World Economy Department",
+          "majors": [
+            {
+              "code": "020401",
+              "name_zh": "国际经济与贸易",
+              "name_en": "International Economics and Trade"
+            }
+          ]
+        },
+        {
+          "id": "public_economics",
+          "name_zh": "公共经济系",
+          "name_en": "Public Economics Department",
+          "majors": [
+            {
+              "code": "020201K",
+              "name_zh": "财政学",
+              "name_en": "Public Finance"
+            }
+          ]
+        },
+        {
+          "id": "international_finance",
+          "name_zh": "国际金融系",
+          "name_en": "International Finance Department",
+          "majors": [
+            {
+              "code": "020301K",
+              "name_zh": "金融学",
+              "name_en": "Finance"
+            }
+          ]
+        },
+        {
+          "id": "insurance",
+          "name_zh": "保险系",
+          "name_en": "Insurance Department",
+          "majors": [
+            {
+              "code": "020303",
+              "name_zh": "保险学",
+              "name_en": "Insurance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "international_finance_college",
+      "name_zh": "国际金融学院",
+      "name_en": "School of Finance",
+      "type": "college",
+      "majors": [
+        {
+          "code": "020310T",
+          "name_zh": "金融科技",
+          "name_en": "Financial Technology"
+        }
+      ]
+    },
+    {
+      "id": "management",
+      "name_zh": "管理学院",
+      "name_en": "School of Management",
+      "type": "college",
+      "sub_departments": [
+        {
+          "id": "management_science",
+          "name_zh": "管理科学系",
+          "name_en": "Management Science Department",
+          "majors": [
+            {
+              "code": "120101",
+              "name_zh": "管理科学",
+              "name_en": "Management Science"
+            }
+          ]
+        },
+        {
+          "id": "information_management",
+          "name_zh": "信息管理与信息系统系",
+          "name_en": "Information Management and Information Systems Department",
+          "majors": [
+            {
+              "code": "120102",
+              "name_zh": "信息管理与信息系统",
+              "name_en": "Information Management and Information Systems"
+            }
+          ]
+        },
+        {
+          "id": "business_administration",
+          "name_zh": "企业管理系",
+          "name_en": "Business Administration Department",
+          "majors": [
+            {
+              "code": "120201K",
+              "name_zh": "工商管理",
+              "name_en": "Business Administration"
+            }
+          ]
+        },
+        {
+          "id": "marketing",
+          "name_zh": "市场营销系",
+          "name_en": "Marketing Department",
+          "majors": [
+            {
+              "code": "120202",
+              "name_zh": "市场营销",
+              "name_en": "Marketing"
+            }
+          ]
+        },
+        {
+          "id": "finance",
+          "name_zh": "财务学系",
+          "name_en": "Finance Department",
+          "majors": [
+            {
+              "code": "120204",
+              "name_zh": "财务管理",
+              "name_en": "Financial Management"
+            }
+          ]
+        },
+        {
+          "id": "accounting",
+          "name_zh": "会计学系",
+          "name_en": "Accounting Department",
+          "majors": [
+            {
+              "code": "120203K",
+              "name_zh": "会计学",
+              "name_en": "Accounting"
+            }
+          ]
+        },
+        {
+          "id": "statistics",
+          "name_zh": "统计学系",
+          "name_en": "Statistics Department",
+          "majors": [
+            {
+              "code": "071201",
+              "name_zh": "统计学",
+              "name_en": "Statistics"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mathematical_sciences",
+      "name_zh": "数学科学学院",
+      "name_en": "School of Mathematical Sciences",
+      "type": "college",
+      "majors": [
+        {
+          "code": "070101",
+          "name_zh": "数学与应用数学",
+          "name_en": "Mathematics and Applied Mathematics"
+        },
+        {
+          "code": "070102",
+          "name_zh": "信息与计算科学",
+          "name_en": "Information and Computing Science"
+        }
+      ]
+    },
+    {
+      "id": "physics",
+      "name_zh": "物理学系",
+      "name_en": "Department of Physics",
+      "type": "department",
+      "majors": [
+        {
+          "code": "070201",
+          "name_zh": "物理学",
+          "name_en": "Physics"
+        }
+      ]
+    },
+    {
+      "id": "nuclear_science",
+      "name_zh": "核科学与技术系",
+      "name_en": "Department of Nuclear Science and Technology",
+      "type": "department",
+      "majors": [
+        {
+          "code": "082201",
+          "name_zh": "核工程与核技术",
+          "name_en": "Nuclear Engineering and Technology"
+        }
+      ]
+    },
+    {
+      "id": "chemistry",
+      "name_zh": "化学系",
+      "name_en": "Department of Chemistry",
+      "type": "department",
+      "majors": [
+        {
+          "code": "070301",
+          "name_zh": "化学",
+          "name_en": "Chemistry"
+        },
+        {
+          "code": "070302",
+          "name_zh": "应用化学",
+          "name_en": "Applied Chemistry"
+        },
+        {
+          "code": "070305T",
+          "name_zh": "能源化学",
+          "name_en": "Energy Chemistry"
+        }
+      ]
+    },
+    {
+      "id": "life_sciences",
+      "name_zh": "生命科学学院",
+      "name_en": "School of Life Sciences",
+      "type": "college",
+      "sub_departments": [
+        {
+          "id": "life_sciences_dept",
+          "name_zh": "遗传学与遗传工程系/生物化学与生物物理学系/微生物学与免疫学系/计算生物学系/生理学与神经生物学系/人类遗传学与人类学系/细胞与发育生物学系/生态与进化生物学系",
+          "name_en": "Departments of Genetics & Genetic Engineering / Biochemistry & Biophysics / Microbiology & Immunology / Computational Biology / Physiology & Neurobiology / Human Genetics & Anthropology / Cell & Developmental Biology / Ecology & Evolutionary Biology",
+          "majors": [
+            {
+              "code": "071001",
+              "name_zh": "生物科学",
+              "name_en": "Biological Sciences"
+            },
+            {
+              "code": "071002",
+              "name_zh": "生物技术",
+              "name_en": "Biotechnology"
+            }
+          ]
+        }
+      ],
+      "majors": [
+        {
+          "code": "071002",
+          "name_zh": "生物技术",
+          "name_en": "Biotechnology"
+        },
+        {
+          "code": "082601",
+          "name_zh": "生物医学工程",
+          "name_en": "Biomedical Engineering"
+        }
+      ]
+    },
+    {
+      "id": "biotechnology",
+      "name_zh": "生物技术学院",
+      "name_en": "School of Life Sciences",
+      "type": "college",
+      "majors": [
+        {
+          "code": "071002",
+          "name_zh": "生物技术",
+          "name_en": "Biotechnology"
+        },
+        {
+          "code": "082601",
+          "name_zh": "生物医学工程",
+          "name_en": "Biomedical Engineering"
+        }
+      ]
+    },
+    {
+      "id": "macromolecular",
+      "name_zh": "高分子科学系",
+      "name_en": "Department of Macromolecular Science",
+      "type": "department",
+      "majors": [
+        {
+          "code": "080407",
+          "name_zh": "高分子材料与工程",
+          "name_en": "Macromolecular Materials and Engineering"
+        }
+      ]
+    },
+    {
+      "id": "environmental",
+      "name_zh": "环境科学与工程系",
+      "name_en": "Department of Environmental Science and Engineering",
+      "type": "department",
+      "majors": [
+        {
+          "code": "082503",
+          "name_zh": "环境科学",
+          "name_en": "Environmental Science"
+        }
+      ]
+    },
+    {
+      "id": "atmospheric_oceanic",
+      "name_zh": "大气与海洋科学系",
+      "name_en": "Department of Atmospheric and Oceanic Sciences",
+      "type": "department",
+      "majors": [
+        {
+          "code": "070601",
+          "name_zh": "大气科学",
+          "name_en": "Atmospheric Sciences"
+        }
+      ]
+    },
+    {
+      "id": "data_science",
+      "name_zh": "大数据学院",
+      "name_en": "School of Data Science",
+      "type": "college",
+      "majors": [
+        {
+          "code": "080910T",
+          "name_zh": "数据科学与大数据技术",
+          "name_en": "Data Science and Big Data Technology"
+        }
+      ]
+    },
+    {
+      "id": "integrated_circuits",
+      "name_zh": "集成电路与微纳电子创新学院",
+      "name_en": "College of Integrated Circuits & Micro-Nano Electronics",
+      "type": "college",
+      "majors": [
+        {
+          "code": "080704",
+          "name_zh": "微电子科学与工程",
+          "name_en": "Microelectronics Science and Engineering"
+        },
+        {
+          "code": "083204TK",
+          "name_zh": "集成电路科学与工程",
+          "name_en": "Integrated Circuit Science and Engineering"
+        }
+      ]
+    },
+    {
+      "id": "computer_science_ai",
+      "name_zh": "计算与智能创新学院",
+      "name_en": "College of Computer Science and Artificial Intelligence",
+      "type": "college",
+      "majors": [
+        {
+          "code": "080717T",
+          "name_zh": "人工智能",
+          "name_en": "Artificial Intelligence"
+        },
+        {
+          "code": "080901",
+          "name_zh": "计算机科学与技术",
+          "name_en": "Computer Science and Technology"
+        },
+        {
+          "code": "080904K",
+          "name_zh": "信息安全",
+          "name_en": "Information Security"
+        },
+        {
+          "code": "120106TK",
+          "name_zh": "保密管理",
+          "name_en": "Confidentiality Management"
+        },
+        {
+          "code": "080914TK",
+          "name_zh": "保密技术",
+          "name_en": "Confidentiality Technology"
+        },
+        {
+          "code": "080902",
+          "name_zh": "软件工程",
+          "name_en": "Software Engineering"
+        }
+      ]
+    },
+    {
+      "id": "intelligent_robotics",
+      "name_zh": "智能机器人与先进制造创新学院",
+      "name_en": "College of Intelligent Robotics and Advanced Manufacturing",
+      "type": "college",
+      "majors": [
+        {
+          "code": "080907T",
+          "name_zh": "智能科学与技术",
+          "name_en": "Intelligent Science and Technology"
+        },
+        {
+          "code": "080101",
+          "name_zh": "理论与应用力学",
+          "name_en": "Theoretical and Applied Mechanics"
+        },
+        {
+          "code": "082002",
+          "name_zh": "飞行器设计与工程",
+          "name_en": "Aircraft Design and Engineering"
+        }
+      ]
+    },
+    {
+      "id": "biomedical_engineering",
+      "name_zh": "生物医学工程与技术创新学院",
+      "name_en": "College of Biomedical Engineering",
+      "type": "college",
+      "majors": [
+        {
+          "code": "082601",
+          "name_zh": "生物医学工程",
+          "name_en": "Biomedical Engineering"
+        }
+      ]
+    },
+    {
+      "id": "future_information",
+      "name_zh": "未来信息创新学院",
+      "name_en": "Future Information Innovation College",
+      "type": "college",
+      "majors": [
+        {
+          "code": "080714T",
+          "name_zh": "电子信息科学与技术",
+          "name_en": "Electronic Information Science and Technology"
+        },
+        {
+          "code": "080705",
+          "name_zh": "光电信息科学与工程",
+          "name_en": "Optoelectronic Information Science and Engineering"
+        },
+        {
+          "code": "080703",
+          "name_zh": "通信工程",
+          "name_en": "Communication Engineering"
+        },
+        {
+          "code": "080601",
+          "name_zh": "电气工程及其自动化",
+          "name_en": "Electrical Engineering and Automation"
+        }
+      ]
+    },
+    {
+      "id": "smart_materials",
+      "name_zh": "智能材料与未来能源创新学院",
+      "name_en": "College of Smart Materials and Future Energy",
+      "type": "college",
+      "majors": [
+        {
+          "code": "080402",
+          "name_zh": "材料物理",
+          "name_en": "Materials Physics"
+        },
+        {
+          "code": "080403",
+          "name_zh": "材料化学",
+          "name_en": "Materials Chemistry"
+        },
+        {
+          "code": "080702",
+          "name_zh": "电子科学与技术",
+          "name_en": "Electronic Science and Technology"
+        },
+        {
+          "code": "080407",
+          "name_zh": "高分子材料与工程",
+          "name_en": "Macromolecular Materials and Engineering"
+        },
+        {
+          "code": "070305T",
+          "name_zh": "能源化学",
+          "name_en": "Energy Chemistry"
+        }
+      ]
+    },
+    {
+      "id": "basic_medicine",
+      "name_zh": "基础医学院",
+      "name_en": "School of Basic Medical Sciences",
+      "type": "college",
+      "majors": [
+        {
+          "code": "100101K",
+          "name_zh": "基础医学",
+          "name_en": "Basic Medicine"
+        },
+        {
+          "code": "100901K",
+          "name_zh": "法医学",
+          "name_en": "Forensic Medicine"
+        }
+      ]
+    },
+    {
+      "id": "clinical_medicine",
+      "name_zh": "临床医学院",
+      "name_en": "Shanghai Medical College",
+      "type": "college",
+      "majors": [
+        {
+          "code": "100201K",
+          "name_zh": "临床医学（八年制）",
+          "name_en": "Clinical Medicine (8-year program)"
+        },
+        {
+          "code": "100201K",
+          "name_zh": "临床医学（六年制）",
+          "name_en": "Clinical Medicine (6-year program)"
+        },
+        {
+          "code": "100201K",
+          "name_zh": "临床医学（五年制）",
+          "name_en": "Clinical Medicine (5-year program)"
+        },
+        {
+          "code": "100201K",
+          "name_zh": "临床医学（五年制）（儿科卓越班）",
+          "name_en": "Clinical Medicine (5-year program) (Pediatrics Excellence Program)"
+        }
+      ]
+    },
+    {
+      "id": "public_health",
+      "name_zh": "公共卫生学院",
+      "name_en": "School of Public Health",
+      "type": "college",
+      "majors": [
+        {
+          "code": "100401K",
+          "name_zh": "预防医学",
+          "name_en": "Preventive Medicine"
+        },
+        {
+          "code": "120401",
+          "name_zh": "公共事业管理",
+          "name_en": "Public Affairs Management"
+        }
+      ]
+    },
+    {
+      "id": "pharmacy",
+      "name_zh": "药学院",
+      "name_en": "School of Pharmaceutical Sciences",
+      "type": "college",
+      "majors": [
+        {
+          "code": "100701",
+          "name_zh": "药学",
+          "name_en": "Pharmacy"
+        },
+        {
+          "code": "100701",
+          "name_zh": "药学（临床药学方向）",
+          "name_en": "Pharmacy (Clinical Pharmacy Direction)"
+        }
+      ]
+    },
+    {
+      "id": "nursing",
+      "name_zh": "护理学院",
+      "name_en": "School of Nursing",
+      "type": "college",
+      "majors": [
+        {
+          "code": "101101K",
+          "name_zh": "护理学",
+          "name_en": "Nursing"
+        }
+      ]
+    },
+    {
+      "id": "stomatology",
+      "name_zh": "口腔医学院",
+      "name_en": "Shanghai Medical College",
+      "type": "college",
+      "majors": [
+        {
+          "code": "100301K",
+          "name_zh": "口腔医学",
+          "name_en": "Stomatology"
+        }
+      ]
+    }
+  ]
+}
+

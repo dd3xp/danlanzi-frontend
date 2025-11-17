@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Select } from 'antd';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Tooltip from '@/components/global/Tooltip';
 import AvatarUploadModal from '@/components/profile/AvatarUploadModal';
 import SystemAvatarModal from '@/components/profile/SystemAvatarModal';
@@ -19,7 +20,6 @@ interface ProfileCardProps {
 
 export default function ProfileCard({ user, onUserUpdate, isCurrentUser = false }: ProfileCardProps) {
   const { t } = useTranslation('common');
-  const { t: tAcademic } = useTranslation('academic');
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState(user?.nickname || '');
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -55,8 +55,10 @@ export default function ProfileCard({ user, onUserUpdate, isCurrentUser = false 
   };
 
   // 从 academicOptions 获取选项数据
-  const departments = getDepartments(t);
-  const availableMajors = getAvailableMajors(t, departmentInput);
+  const router = useRouter();
+  const locale = router.locale || 'zh';
+  const departments = getDepartments(locale, t);
+  const availableMajors = getAvailableMajors(locale, t, departmentInput);
 
   // 院系变化时重置专业选择
   const handleDepartmentChange = (newDepartment: string) => {
@@ -231,7 +233,7 @@ export default function ProfileCard({ user, onUserUpdate, isCurrentUser = false 
               {majorInput && showMajor && (
                 <div className={styles.infoItem}>
                   <div className={`${styles.infoIcon} ${styles.major}`}></div>
-                  <span className={styles.infoText}>{getAvailableMajors(t, departmentInput).find(m => m.value === majorInput)?.label || majorInput}</span>
+                  <span className={styles.infoText}>{getAvailableMajors(locale, t, departmentInput).find(m => m.value === majorInput)?.label || majorInput}</span>
                 </div>
               )}
               {bioInput && showBio && (

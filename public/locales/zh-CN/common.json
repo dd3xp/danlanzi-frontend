@@ -99,6 +99,26 @@
     "resources": "资源管理",
     "brandName": "旦篮子"
   },
+  "allCourses": {
+    "title": "所有课程",
+    "subtitle": "浏览所有可用的课程目录",
+    "search": {
+      "placeholder": "搜索课程代码或名称...",
+      "deleteHistory": "删除历史记录"
+    },
+    "tabs": {
+      "ariaLabel": "课程分类",
+      "code": "课程代码",
+      "dept": "开课院系"
+    },
+    "states": {
+      "loading": "加载中...",
+      "noCourses": "暂无课程",
+      "networkError": "网络错误",
+      "loadFailed": "加载失败"
+    },
+    "uncategorized": "未分类"
+  },
   "login": {
     "subtitle": "登录到旦篮子",
     "username": "邮箱",
