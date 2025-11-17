@@ -5,17 +5,19 @@ import ProtectedRoute from '@/components/global/ProtectedRoute';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import Tooltip from '@/components/global/Tooltip';
+import AddResourceModal from '@/components/resources/AddResourceModal';
 import styles from '@/styles/all-courses/AllCourses.module.css';
 import { getCourses, Course } from '@/services/courseService';
 
-type TabType = 'code' | 'dept';
+type TabType = 'name' | 'dept';
 
 const SEARCH_HISTORY_KEY = 'course_search_history';
 const MAX_HISTORY_ITEMS = 10;
 
 export default function AllCourses() {
   const { t } = useTranslation('common');
-  const [activeTab, setActiveTab] = useState<TabType>('code');
+  const [activeTab, setActiveTab] = useState<TabType>('name');
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,6 +25,7 @@ export default function AllCourses() {
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [addResourceModalOpen, setAddResourceModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
@@ -136,9 +139,9 @@ export default function AllCourses() {
     }
   }, [showHistory]);
 
-  // 按课程代码排序
-  const coursesByCode = [...courses].sort((a, b) => {
-    return a.code.localeCompare(b.code);
+  // 按课程名称排序
+  const coursesByName = [...courses].sort((a, b) => {
+    return a.name.localeCompare(b.name);
   });
 
   // 按开课院系分组并排序
@@ -151,15 +154,15 @@ export default function AllCourses() {
     return acc;
   }, {} as Record<string, Course[]>);
 
-  // 对每个院系的课程按代码排序
+  // 对每个院系的课程按名称排序
   Object.keys(coursesByDept).forEach(dept => {
-    coursesByDept[dept].sort((a, b) => a.code.localeCompare(b.code));
+    coursesByDept[dept].sort((a, b) => a.name.localeCompare(b.name));
   });
 
   // 按院系名称排序
   const sortedDepts = Object.keys(coursesByDept).sort();
 
-  const renderCoursesByCode = () => {
+  const renderCoursesByName = () => {
     if (loading) {
       return (
         <div className={styles.loadingState}>
@@ -182,7 +185,7 @@ export default function AllCourses() {
       );
     }
 
-    if (coursesByCode.length === 0) {
+    if (coursesByName.length === 0) {
       return (
         <div className={styles.emptyState}>
           <p className={styles.emptyStateText}>{t('allCourses.states.noCourses')}</p>
@@ -192,9 +195,11 @@ export default function AllCourses() {
 
     return (
       <div className={styles.courseList}>
-        {coursesByCode.map((course) => (
+        {coursesByName.map((course) => (
           <div key={course.id} className={styles.courseCard}>
-            <div className={styles.courseCode}>{course.code}</div>
+            {course.code && (
+              <div className={styles.courseCode}>{course.code}</div>
+            )}
             <div className={styles.courseName}>{course.name}</div>
             {course.dept && (
               <div className={styles.courseDept}>{course.dept}</div>
@@ -256,7 +261,9 @@ export default function AllCourses() {
             <div className={styles.courseList}>
               {coursesByDept[dept].map((course) => (
                 <div key={course.id} className={styles.courseCard}>
-                  <div className={styles.courseCode}>{course.code}</div>
+                  {course.code && (
+                    <div className={styles.courseCode}>{course.code}</div>
+                  )}
                   <div className={styles.courseName}>{course.name}</div>
                   {course.description && (
                     <div className={styles.courseDescription}>{course.description}</div>
@@ -277,29 +284,51 @@ export default function AllCourses() {
       <main className="app-main">
         <div className={styles.container}>
           <div className={styles.searchContainer} ref={searchContainerRef}>
-            <form className={styles.searchBox} onSubmit={handleSearchSubmit}>
-              <input
-                ref={searchInputRef}
-                type="text"
-                className={styles.searchInput}
-                placeholder={t('allCourses.search.placeholder')}
-                value={searchQuery}
-                onChange={handleSearchChange}
-                onFocus={() => setShowHistory(true)}
-              />
-              <svg
-                className={styles.searchIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.35-4.35" />
-              </svg>
-            </form>
+            <div className={styles.searchWrapper}>
+              <form className={styles.searchBox} onSubmit={handleSearchSubmit}>
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  className={styles.searchInput}
+                  placeholder={t('allCourses.search.placeholder')}
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={() => setShowHistory(true)}
+                />
+                <svg
+                  className={styles.searchIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>
+              </form>
+              <Tooltip title={t('allCourses.resource.addResource')}>
+                <button
+                  type="button"
+                  className={styles.addButton}
+                  onClick={() => setAddResourceModalOpen(true)}
+                  aria-label={t('allCourses.resource.addResource')}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                </button>
+              </Tooltip>
+            </div>
             
             {showHistory && searchHistory.length > 0 && (
               <div className={styles.searchHistory}>
@@ -360,11 +389,11 @@ export default function AllCourses() {
             <button
               type="button"
               role="tab"
-              aria-selected={activeTab === 'code'}
-              className={`${styles.tab} ${activeTab === 'code' ? styles.active : ''}`}
-              onClick={() => setActiveTab('code')}
+              aria-selected={activeTab === 'name'}
+              className={`${styles.tab} ${activeTab === 'name' ? styles.active : ''}`}
+              onClick={() => setActiveTab('name')}
             >
-              {t('allCourses.tabs.code')}
+              {t('allCourses.tabs.name')}
             </button>
             <button
               type="button"
@@ -378,11 +407,18 @@ export default function AllCourses() {
           </div>
 
           <section className={styles.tabPanel} role="tabpanel">
-            {activeTab === 'code' && renderCoursesByCode()}
+            {activeTab === 'name' && renderCoursesByName()}
             {activeTab === 'dept' && renderCoursesByDept()}
           </section>
         </div>
       </main>
+      <AddResourceModal
+        open={addResourceModalOpen}
+        onClose={() => setAddResourceModalOpen(false)}
+        onSuccess={() => {
+          // 可以在这里刷新数据或显示成功消息
+        }}
+      />
     </ProtectedRoute>
   );
 }

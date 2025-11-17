@@ -12,9 +12,16 @@
   max-width: 500px;
 }
 
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
 .searchBox {
   position: relative;
-  width: 100%;
+  flex: 1;
 }
 
 .searchInput {
@@ -134,6 +141,73 @@
   text-align: center;
   color: var(--text-muted);
   font-size: 14px;
+}
+
+.addButton {
+  width: 42px;
+  height: 42px;
+  border-radius: 20px;
+  background: var(--button-bg);
+  border: none;
+  color: var(--button-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 200ms ease, transform 200ms ease;
+  flex-shrink: 0;
+}
+
+.addButton:hover {
+  background: var(--button-hover-bg);
+  transform: scale(1.05);
+}
+
+.addButton:active {
+  transform: scale(0.95);
+}
+
+.addButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.courseOptions {
+  margin-top: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.courseOption {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.courseOption:last-child {
+  border-bottom: none;
+}
+
+.courseOption:hover {
+  background: var(--hover-bg);
+}
+
+.courseOption.selected {
+  background: var(--blue-light, rgba(59, 130, 246, 0.1));
+}
+
+.courseCode {
+  font-weight: 600;
+  color: var(--blue);
+  margin-right: 8px;
+}
+
+.courseName {
+  color: var(--text);
 }
 
 .header {

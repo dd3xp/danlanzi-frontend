@@ -11,6 +11,7 @@ import { updateUserProfile } from '@/services/userProfileService';
 import { getUserAvatar } from '@/services/userAvatarService';
 import { eventBus, EVENTS } from '@/utils/eventBus';
 import { getDepartments, getAvailableMajors } from '@/utils/academicOptions';
+import { showToast } from '@/components/global/Toast';
 
 interface ProfileCardProps {
   user: any;
@@ -124,6 +125,8 @@ export default function ProfileCard({ user, onUserUpdate, isCurrentUser = false 
                     setShowDepartment(profile?.show_department ?? true);
                     setShowMajor(profile?.show_major ?? true);
                     setShowBio(profile?.show_bio ?? true);
+                    
+                    showToast(t('profile.updateSuccess'), 'success');
                   }
                 } catch (e) {
                   // 忽略错误，后续可加错误提示

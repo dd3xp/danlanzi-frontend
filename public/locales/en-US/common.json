@@ -31,7 +31,8 @@
       "noMessages": "No messages yet"
     }
   },
-  "profile": {
+    "profile": {
+      "updateSuccess": "Profile updated successfully",
     "actions": {
       "edit": "Edit profile",
       "save": "Save",
@@ -100,9 +101,48 @@
       "placeholder": "Search course code or name...",
       "deleteHistory": "Delete history"
     },
+    "resource": {
+      "addResource": "Add Resource",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "courseName": "Course Name",
+      "courseNamePlaceholder": "Enter course name",
+      "courseNameHint": "If the course doesn't exist, it will be created automatically",
+      "courseNameRequired": "Please enter course name",
+      "courseCode": "Course Code",
+      "courseCodePlaceholder": "Enter course code (optional)",
+      "optional": "Optional",
+      "createCourseFailed": "Failed to create course",
+      "department": "Department",
+      "departmentPlaceholder": "Select department",
+      "departmentRequired": "Please select department",
+      "term": "Term",
+      "termPlaceholder": "Enter term (e.g., 2025 Spring)",
+      "descriptionRequired": "Please enter description",
+      "resourceName": "Resource Name",
+      "resourceNamePlaceholder": "Enter resource name",
+      "resourceNameRequired": "Please enter resource name",
+      "instructors": "Instructors",
+      "instructorPlaceholder": "Enter instructor name",
+      "addInstructor": "Add Instructor",
+      "noInstructor": "Not specified",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter resource description",
+      "file": "Upload File",
+      "uploadFile": "Select File",
+      "fileRequired": "Please upload a file",
+      "fileInvalid": "Invalid file format",
+      "fileTooLarge": "File size cannot exceed 20MB",
+      "fileHint": "All formats supported, max 20MB",
+      "tags": "Tags",
+      "tagPlaceholder": "Enter tag",
+      "addTag": "Add Tag",
+      "uploadSuccess": "Resource uploaded successfully",
+      "uploadFailed": "Failed to upload resource"
+    },
     "tabs": {
       "ariaLabel": "Course categories",
-      "code": "Course Code",
+      "name": "Course Name",
       "dept": "Department"
     },
     "states": {

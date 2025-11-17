@@ -10,6 +10,7 @@ import { translateBackendMessage } from '../../utils/translator';
 import { getUserProfile } from '@/services/userProfileService';
 import ErrorMessage from '@/components/global/ErrorMessage';
 import { setStoredTheme, Theme } from '@/utils/themeManager';
+import { showToast } from '@/components/global/Toast';
 
 export default function Login() {
   const { t } = useTranslation(['common', 'messages']);
@@ -35,9 +36,9 @@ export default function Login() {
   useEffect(() => {
     const { message } = router.query;
     if (message === 'registration_success') {
-      // 可以在这里显示注册成功的提示
+      showToast(t('auth.success.registrationSuccessful', { ns: 'messages' }), 'success');
     }
-  }, [router.query]);
+  }, [router.query, t]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -105,6 +106,8 @@ export default function Login() {
       if (loginResult.status === 'success' && loginResult.user && loginResult.token) {
         setToken(loginResult.token);
         setUser(loginResult.user);
+        
+        showToast(t('auth.success.loginSuccessful', { ns: 'messages' }), 'success');
         
         // 获取用户资料，检查语言和主题设置
         const profileRes = await getUserProfile();

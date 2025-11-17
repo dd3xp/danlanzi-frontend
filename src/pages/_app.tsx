@@ -5,10 +5,22 @@ import { appWithTranslation } from 'next-i18next';
 import { Inter } from 'next/font/google';
 import { initializeTheme } from '@/utils/themeManager';
 import { getToken } from '@/utils/auth';
+import { ToastContainer, useToast } from '@/components/global/Toast';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function AppContent({ Component, pageProps }: AppProps) {
+  const { toasts, removeToast } = useToast();
+
+  return (
+    <>
+      <Component {...pageProps} />
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
+    </>
+  );
+}
+
+function MyApp(props: AppProps) {
   useEffect(() => {
     const isAuthenticated = !!getToken();
     initializeTheme(isAuthenticated);
@@ -16,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <div className={inter.variable}>
-      <Component {...pageProps} />
+      <AppContent {...props} />
     </div>
   );
 }

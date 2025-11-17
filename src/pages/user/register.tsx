@@ -226,6 +226,7 @@ export default function Register() {
 
         // 注册成功，跳转到登录页面
         router.push('/user/login?message=registration_success');
+        // 注意：Toast 会在登录页面显示，因为注册后立即跳转
         
       } catch (error) {
         console.error('网络错误:', error);

@@ -118,3 +118,16 @@ export const getCourseStats = async (): Promise<ApiResponse<{
   }, false);
 };
 
+// 创建课程目录
+export const createCourse = async (params: {
+  code: string;
+  name: string;
+  dept?: string;
+  description?: string;
+}): Promise<ApiResponse<{ course: Course }>> => {
+  return apiCall<{ course: Course }>(`/course/courses`, {
+    method: 'POST',
+    body: JSON.stringify(params),
+  }, true);
+};
+

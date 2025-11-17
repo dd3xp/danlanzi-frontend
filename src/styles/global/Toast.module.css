@@ -1,0 +1,94 @@
+.container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  min-width: 280px;
+  max-width: 400px;
+  pointer-events: auto;
+  animation: slideIn 0.3s ease-out;
+  transition: all 0.3s ease;
+}
+
+.toast.exiting {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast.success {
+  border-left: 3px solid var(--success);
+}
+
+.toast.success .icon {
+  color: var(--success);
+}
+
+.toast.error {
+  border-left: 3px solid var(--error);
+}
+
+.toast.error .icon {
+  color: var(--error);
+}
+
+.toast.info {
+  border-left: 3px solid var(--blue);
+}
+
+.toast.info .icon {
+  color: var(--blue);
+}
+
+.message {
+  flex: 1;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+

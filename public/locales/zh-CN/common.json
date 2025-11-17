@@ -31,7 +31,8 @@
       "noMessages": "暂无留言"
     }
   },
-  "profile": {
+    "profile": {
+      "updateSuccess": "资料更新成功",
     "actions": {
       "edit": "编辑资料",
       "save": "保存",
@@ -106,9 +107,48 @@
       "placeholder": "搜索课程代码或名称...",
       "deleteHistory": "删除历史记录"
     },
+    "resource": {
+      "addResource": "添加资源",
+      "submit": "提交",
+      "cancel": "取消",
+      "courseName": "课程名称",
+      "courseNamePlaceholder": "请输入课程名称",
+      "courseNameHint": "如果课程不存在，将自动创建",
+      "courseNameRequired": "请输入课程名称",
+      "courseCode": "课程代码",
+      "courseCodePlaceholder": "请输入课程代码（可选）",
+      "optional": "可选",
+      "createCourseFailed": "创建课程失败",
+      "department": "开课院系",
+      "departmentPlaceholder": "请选择开课院系",
+      "departmentRequired": "请选择开课院系",
+      "term": "开课学期",
+      "termPlaceholder": "请输入开课学期（如：2025春）",
+      "descriptionRequired": "请输入资源描述",
+      "resourceName": "资源名称",
+      "resourceNamePlaceholder": "请输入资源名称",
+      "resourceNameRequired": "请输入资源名称",
+      "instructors": "任课老师",
+      "instructorPlaceholder": "请输入任课老师姓名",
+      "addInstructor": "添加老师",
+      "noInstructor": "未指定",
+      "description": "资源描述",
+      "descriptionPlaceholder": "请输入资源描述",
+      "file": "上传附件",
+      "uploadFile": "选择文件",
+      "fileRequired": "请上传文件",
+      "fileInvalid": "文件格式无效",
+      "fileTooLarge": "文件大小不能超过 20MB",
+      "fileHint": "支持任意格式，最大 20MB",
+      "tags": "标签",
+      "tagPlaceholder": "请输入标签",
+      "addTag": "添加标签",
+      "uploadSuccess": "资源上传成功",
+      "uploadFailed": "资源上传失败"
+    },
     "tabs": {
       "ariaLabel": "课程分类",
-      "code": "课程代码",
+      "name": "课程名称",
       "dept": "开课院系"
     },
     "states": {
