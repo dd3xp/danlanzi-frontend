@@ -34,8 +34,7 @@ export default function SideBar() {
     const path = router.pathname;
     if (path === '/user' || path === '/user/') return 'home';
     if (path === '/user/all-courses') return 'courses';
-    if (path === '/user/my-courses') return 'my-courses';
-    if (path === '/user/my-resources') return 'resources';
+    if (path === '/user/my-resources') return 'my-resources';
     return null;
   };
 
@@ -151,23 +150,8 @@ export default function SideBar() {
       </button>
 
       <button
-        className={`${styles.iconButton} ${styles.navItem} ${currentPage === 'my-courses' ? styles.active : ''}`}
-        aria-label="my-courses"
-        type="button"
-        onClick={() => navigateToPage('/user/my-courses')}
-        onMouseEnter={handleNavItemMouseEnter}
-        onMouseLeave={handleNavItemMouseLeave}
-      >
-        {/* 我的课程图标：书签 */}
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 3H15C16.1046 3 17 3.89543 17 5V21L10.5 17.5L4 21V5C4 3.89543 4.89543 3 6 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        <span className={styles.navText}>{t('sidebar.myCourses')}</span>
-      </button>
-
-      <button
-        className={`${styles.iconButton} ${styles.navItem} ${currentPage === 'resources' ? styles.active : ''}`}
-        aria-label="resources"
+        className={`${styles.iconButton} ${styles.navItem} ${currentPage === 'my-resources' ? styles.active : ''}`}
+        aria-label="my-resources"
         type="button"
         onClick={() => navigateToPage('/user/my-resources')}
         onMouseEnter={handleNavItemMouseEnter}
@@ -175,9 +159,9 @@ export default function SideBar() {
       >
         {/* 资源管理图标：文件夹 */}
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 7H9L11 9H21C21.5523 9 22 9.44772 22 10V19C22 19.5523 21.5523 20 21 20H3C2.44772 20 2 19.5523 2 19V8C2 7.44772 2.44772 7 3 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M3 7V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V9C21 7.89543 20.1046 7 19 7H12L10 5H5C3.89543 5 3 5.89543 3 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-        <span className={styles.navText}>{t('sidebar.resources')}</span>
+        <span className={styles.navText}>{t('sidebar.myResources')}</span>
       </button>
     </aside>
   );

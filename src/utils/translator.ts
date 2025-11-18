@@ -32,6 +32,16 @@ export function translateBackendMessage(
     
     // 认证相关消息
     'Invalid email or password': 'auth.errors.invalidCredentials',
+    'Invalid student ID or password': 'auth.errors.invalidCredentials',
+    'Student ID not found': 'forgotPassword.errors.studentIdNotFound',
+    'Security email not set': 'forgotPassword.errors.securityEmailNotSet',
+    'User not found or security email mismatch': 'forgotPassword.errors.userNotFound',
+    'Password must be at least 6 characters': 'forgotPassword.errors.passwordMinLength',
+    'All fields are required': 'forgotPassword.errors.allFieldsRequired',
+    'Student ID is required': 'forgotPassword.errors.studentIdRequired',
+    'Password reset successfully': 'forgotPassword.success.resetSuccessful',
+    'Failed to reset password': 'forgotPassword.errors.resetFailed',
+    'Failed to get security email': 'forgotPassword.errors.getSecurityEmailFailed',
     'Registration failed': 'auth.errors.registrationFailed',
     'Login failed': 'auth.errors.loginFailed',
     'Email already registered': 'auth.errors.emailAlreadyRegistered',
@@ -117,7 +127,38 @@ export function translateBackendMessage(
     'TOKEN_INVALID': 'auth.errors.invalidToken',
     'TOKEN_ERROR': 'auth.errors.tokenError',
     'AUTH_REQUIRED': 'auth.errors.authRequired',
-    'ADMIN_REQUIRED': 'auth.errors.adminRequired'
+    'ADMIN_REQUIRED': 'auth.errors.adminRequired',
+    
+    // 资源相关消息
+    'Resource created successfully': 'resource.success.created',
+    'Failed to create resource': 'resource.errors.createFailed',
+    'Resources retrieved successfully': 'resource.success.retrieved',
+    'Failed to retrieve resources': 'resource.errors.retrieveFailed',
+    'Authentication required to view favorited resources': 'resource.errors.authRequiredForFavorites',
+    '无效的资源ID': 'resource.errors.invalidId',
+    '资源不存在': 'resource.errors.notFound',
+    '已收藏': 'resource.success.alreadyFavorited',
+    '收藏成功': 'resource.success.favorited',
+    '收藏失败': 'resource.errors.favoriteFailed',
+    '已取消收藏': 'resource.success.unfavorited',
+    '取消收藏失败': 'resource.errors.unfavoriteFailed',
+    '点赞成功': 'resource.success.liked',
+    '点赞失败': 'resource.errors.likeFailed',
+    '已取消点赞': 'resource.success.unliked',
+    '取消点赞失败': 'resource.errors.unlikeFailed',
+    '只有文件类型资源可下载': 'resource.errors.onlyFileTypeDownloadable',
+    '文件不存在': 'resource.errors.fileNotFound',
+    '下载失败': 'resource.errors.downloadFailed',
+    '无权限删除此资源': 'resource.errors.noPermissionToDelete',
+    '资源删除成功': 'resource.success.deleted',
+    '删除失败': 'resource.errors.deleteFailed',
+    '文件大小不能超过 20MB': 'resource.errors.fileSizeExceeded',
+    '文件上传失败: ': 'resource.errors.uploadFailed',
+    'type 必须是 file/link/note': 'resource.errors.invalidType',
+    'title 必填': 'resource.errors.titleRequired',
+    'visibility 必须是 public/course/private': 'resource.errors.invalidVisibility',
+    '请通过字段名 file 上传文件': 'resource.errors.invalidFileFieldName',
+    'link 类型需要提供 url_or_path': 'resource.errors.urlOrPathRequired'
   };
 
   const translationKey = messageMap[message];

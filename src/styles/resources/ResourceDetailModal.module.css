@@ -19,6 +19,67 @@
   color: var(--text) !important;
   font-weight: 700 !important;
   font-size: 20px !important;
+  width: 100%;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.titleText {
+  min-width: 0;
+}
+
+.uploaderInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background-color 200ms ease;
+  flex-shrink: 0;
+}
+
+.uploaderInfo:hover {
+  background-color: var(--hover-bg);
+}
+
+.uploaderAvatar {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.uploaderAvatarFallback {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--tag-other-bg);
+  color: var(--tag-other-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.avatarImage {
+  object-fit: cover;
+}
+
+.uploaderName {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .modal :global(.ant-modal-close) {

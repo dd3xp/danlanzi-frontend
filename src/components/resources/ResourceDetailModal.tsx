@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { Resource } from '@/services/resourceService';
 import { getAuthHeaders } from '@/utils/auth';
 import backendUrl from '@/services/backendUrl';
+import { getUserAvatar } from '@/services/userAvatarService';
 import styles from '@/styles/resources/ResourceDetailModal.module.css';
 
 interface ResourceDetailModalProps {
@@ -15,6 +18,35 @@ interface ResourceDetailModalProps {
 
 export default function ResourceDetailModal({ open, onClose, resource, courseName }: ResourceDetailModalProps) {
   const { t } = useTranslation('common');
+  const router = useRouter();
+  const [uploaderAvatar, setUploaderAvatar] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (open && resource?.uploader?.id) {
+      loadUploaderAvatar();
+    } else {
+      setUploaderAvatar(null);
+    }
+  }, [open, resource?.uploader?.id]);
+
+  const loadUploaderAvatar = async () => {
+    if (!resource?.uploader?.id) return;
+    
+    try {
+      const response = await getUserAvatar(resource.uploader.id);
+      if (response.status === 'success' && response.avatar_data_url) {
+        setUploaderAvatar(response.avatar_data_url);
+      }
+    } catch (error) {
+      console.error('Failed to load uploader avatar:', error);
+    }
+  };
+
+  const handleUploaderClick = () => {
+    if (resource?.uploader?.id) {
+      router.push(`/user/profile?id=${resource.uploader.id}`);
+    }
+  };
 
   if (!resource) {
     return null;
@@ -154,12 +186,38 @@ export default function ResourceDetailModal({ open, onClose, resource, courseNam
     }
   };
 
+  const uploader = resource.uploader;
+  const displayChar = uploader?.nickname?.trim()?.charAt(0)?.toUpperCase() || '';
+
   return (
     <Modal
       open={open}
       onCancel={onClose}
       footer={null}
-      title={resource.title}
+      title={
+        <div className={styles.titleContainer}>
+          <span className={styles.titleText}>{resource.title}</span>
+          {uploader && (
+            <div className={styles.uploaderInfo} onClick={handleUploaderClick}>
+              {uploaderAvatar ? (
+                <div className={styles.uploaderAvatar}>
+                  <Image
+                    src={uploaderAvatar}
+                    alt={uploader.nickname}
+                    fill
+                    className={styles.avatarImage}
+                  />
+                </div>
+              ) : (
+                <div className={styles.uploaderAvatarFallback}>
+                  {displayChar}
+                </div>
+              )}
+              <span className={styles.uploaderName}>{uploader.nickname}</span>
+            </div>
+          )}
+        </div>
+      }
       width={700}
       className={styles.modal}
     >

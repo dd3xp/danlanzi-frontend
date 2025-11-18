@@ -17,9 +17,10 @@ export default function Login() {
   const router = useRouter();
   
   const [formData, setFormData] = useState({
-    email: '',
+    student_id: '',
     password: ''
   });
+  const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,8 +66,8 @@ export default function Login() {
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
     
-    if (!formData.email.trim()) {
-      newErrors.email = t('login.errors.emailRequired');
+    if (!formData.student_id.trim()) {
+      newErrors.student_id = t('login.errors.studentIdRequired');
     }
     
     if (!formData.password) {
@@ -88,7 +89,7 @@ export default function Login() {
     
     try {
       const loginResult = await loginUser({
-        email: formData.email,
+        student_id: formData.student_id,
         password: formData.password
       });
       
@@ -104,8 +105,8 @@ export default function Login() {
       
       // 登录成功，存储token和用户信息
       if (loginResult.status === 'success' && loginResult.user && loginResult.token) {
-        setToken(loginResult.token);
-        setUser(loginResult.user);
+        setToken(loginResult.token, rememberMe);
+        setUser(loginResult.user, rememberMe);
         
         showToast(t('auth.success.loginSuccessful', { ns: 'messages' }), 'success');
         
@@ -163,20 +164,20 @@ export default function Login() {
 
         <form className={styles.loginForm} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
-            <label htmlFor="email" className={styles.inputLabel}>
+            <label htmlFor="student_id" className={styles.inputLabel}>
               {t('login.username')}
             </label>
             <textarea
-              id="email"
-              name="email"
-              value={formData.email}
+              id="student_id"
+              name="student_id"
+              value={formData.student_id}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               className={styles.inputField}
               placeholder={t('login.usernamePlaceholder')}
               rows={1}
             />
-            <ErrorMessage message={errors.email} />
+            <ErrorMessage message={errors.student_id} />
           </div>
 
           <div className={styles.inputGroup}>
@@ -198,10 +199,15 @@ export default function Login() {
 
           <div className={styles.optionsGroup}>
             <label className={styles.checkboxLabel}>
-              <input type="checkbox" className={styles.checkbox} />
+              <input 
+                type="checkbox" 
+                className={styles.checkbox}
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
               <span className={styles.checkboxText}>{t('login.rememberMe')}</span>
             </label>
-            <a href="#" className={styles.forgotLink}>
+            <a href="/user/forgot-password" className={styles.forgotLink}>
               {t('login.forgotPassword')}
             </a>
           </div>

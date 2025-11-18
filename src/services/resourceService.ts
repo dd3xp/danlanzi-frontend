@@ -37,6 +37,11 @@ export interface Resource {
   tags?: string[];
   created_at: string;
   updated_at?: string;
+  uploader?: {
+    id: number;
+    nickname: string;
+    avatar_path?: string;
+  };
   courseLinks?: Array<{
     id: number;
     resource_id: number;
@@ -76,6 +81,8 @@ export const getResources = async (params?: {
   course_id?: number;
   offering_id?: number;
   search?: string;
+  uploader_id?: string | number; // 'current' 或用户ID
+  favorite?: boolean; // 是否只获取收藏的资源
 }): Promise<ApiResponse<ResourcesResponse>> => {
   const queryParams = new URLSearchParams();
   if (params?.page) queryParams.append('page', params.page.toString());
@@ -83,6 +90,8 @@ export const getResources = async (params?: {
   if (params?.course_id) queryParams.append('course_id', params.course_id.toString());
   if (params?.offering_id) queryParams.append('offering_id', params.offering_id.toString());
   if (params?.search) queryParams.append('search', params.search);
+  if (params?.uploader_id) queryParams.append('uploader_id', params.uploader_id.toString());
+  if (params?.favorite) queryParams.append('favorite', 'true');
 
   const queryString = queryParams.toString();
   const endpoint = `/resources/${queryString ? `?${queryString}` : ''}`;

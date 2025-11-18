@@ -1,0 +1,296 @@
+.settingGroup {
+  padding: 24px 0;
+}
+
+.settingSection {
+  margin-bottom: 32px;
+}
+
+.settingTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px 0;
+}
+
+.settingDescription {
+  font-size: 14px;
+  color: var(--text-assist);
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+.currentEmailSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.emailDisplay {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+.emailIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-assist);
+  flex-shrink: 0;
+}
+
+.emailInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.emailLabel {
+  font-size: 12px;
+  color: var(--text-assist);
+}
+
+.emailValue {
+  font-size: 15px;
+  color: var(--text);
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.changeButton {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  flex-shrink: 0;
+}
+
+.changeButton:hover {
+  background: var(--button-hover-bg);
+}
+
+.changeButton:active {
+  transform: translateY(1px);
+}
+
+.editIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--button-text);
+}
+
+.changeEmailSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 500px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.emailInput,
+.codeInput {
+  width: 100%;
+  min-height: 48px;
+  max-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--input-bg) !important;
+  background-color: var(--input-bg) !important;
+  color: var(--input-text) !important;
+  font-size: 16px;
+  line-height: 24px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  caret-color: var(--text);
+  resize: none;
+  font-family: inherit;
+  display: block;
+  overflow: hidden;
+}
+
+.emailInput:-webkit-autofill,
+.emailInput:-webkit-autofill:hover,
+.emailInput:-webkit-autofill:focus,
+.emailInput:-webkit-autofill:active,
+.codeInput:-webkit-autofill,
+.codeInput:-webkit-autofill:hover,
+.codeInput:-webkit-autofill:focus,
+.codeInput:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--input-text) !important;
+  background-color: var(--input-bg) !important;
+  border-radius: 12px !important;
+}
+
+.emailInput:focus,
+.codeInput:focus {
+  outline: none;
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
+}
+
+.emailInput::placeholder,
+.codeInput::placeholder {
+  color: var(--text-muted);
+}
+
+.codeInputGroup {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.codeInput {
+  flex: 1;
+}
+
+.sendCodeButton {
+  height: 48px;
+  padding: 0 16px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.sendCodeButton:hover:not(:disabled) {
+  background: var(--button-hover-bg);
+}
+
+.sendCodeButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.sendCodeButton:disabled {
+  background: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.cancelButton,
+.submitButton {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  border: none;
+}
+
+.cancelButton {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+.cancelButton:hover {
+  background: var(--button-hover-bg);
+}
+
+.cancelButton:active {
+  transform: translateY(1px);
+}
+
+.submitButton {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+.submitButton:hover:not(:disabled) {
+  background: var(--button-hover-bg);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.submitButton:disabled {
+  background: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  .currentEmailSection {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .emailDisplay {
+    max-width: none;
+  }
+
+  .changeButton {
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .codeInputGroup {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sendCodeButton {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .cancelButton,
+  .submitButton {
+    width: 100%;
+  }
+}

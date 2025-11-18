@@ -85,12 +85,34 @@
       "light": "Light",
       "dark": "Dark",
       "auto": "System"
+    },
+    "security": {
+      "title": "Security Email",
+      "description": "Security email is used for account security verification and important notifications.",
+      "currentEmail": "Current Security Email",
+      "noEmail": "Not set",
+      "changeEmail": "Change Security Email",
+      "newEmail": "New Security Email",
+      "newEmailPlaceholder": "Please enter a new security email address",
+      "verificationCode": "Verification Code",
+      "codePlaceholder": "Please enter 6-digit verification code",
+      "sendCode": "Send Code",
+      "sending": "Sending...",
+      "submitting": "Submitting...",
+      "cancel": "Cancel",
+      "confirm": "Confirm Change",
+      "emailInvalid": "Please enter a valid email address",
+      "codeInvalid": "Please enter a valid 6-digit verification code",
+      "codeSent": "Verification code sent, please check your email",
+      "sendCodeFailed": "Failed to send verification code",
+      "updateSuccess": "Security email updated successfully",
+      "updateFailed": "Failed to update security email"
     }
   },
   "sidebar": {
     "homepage": "Home",
     "courses": "Courses",
-    "myCourses": "My Courses",
+    "myResources": "My Resources",
     "resources": "Resources",
     "brandName": "Dan Basket"
   },
@@ -167,10 +189,28 @@
     },
     "uncategorized": "Uncategorized"
   },
+  "myResources": {
+    "title": "My Resources",
+    "subtitle": "Manage your favorited and uploaded resources",
+    "search": {
+      "placeholder": "Search resource name, tags, course, instructor...",
+      "deleteHistory": "Delete history"
+    },
+    "tabs": {
+      "favorited": "Favorited",
+      "uploaded": "Uploaded"
+    },
+    "states": {
+      "loading": "Loading...",
+      "loadFailed": "Failed to load",
+      "noFavorited": "No favorited resources",
+      "noUploaded": "No uploaded resources"
+    }
+  },
   "login": {
     "subtitle": "Sign in to Dan Basket",
-    "username": "Email",
-    "usernamePlaceholder": "Enter your email address",
+    "username": "Student ID",
+    "usernamePlaceholder": "Enter your student ID",
     "password": "Password",
     "passwordPlaceholder": "Enter your password",
     "rememberMe": "Remember me",
@@ -182,11 +222,61 @@
       "logging": "Logging in..."
     },
     "errors": {
-      "emailRequired": "Please enter your email address",
+      "studentIdRequired": "Please enter your student ID",
       "passwordRequired": "Please enter your password"
     },
     "success": {
       "loginSuccess": "Login successful"
+    }
+  },
+  "forgotPassword": {
+    "subtitle": "Reset Password",
+    "studentId": "Student ID",
+    "studentIdPlaceholder": "Enter your student ID",
+    "securityEmail": "Security Email",
+    "securityEmailHint": "Verification code will be sent to this security email",
+    "verificationCode": "Verification Code",
+    "verificationCodePlaceholder": "Enter verification code",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Enter new password again",
+    "next": "Next",
+    "sendCode": "Send Code",
+    "sending": "Sending...",
+    "resetButton": "Reset Password",
+    "backToLogin": "Back to Login",
+    "rememberPassword": "Remember your password?",
+    "loading": {
+      "getting": "Getting...",
+      "resetting": "Resetting..."
+    },
+    "errors": {
+      "studentIdRequired": "Please enter your student ID",
+      "studentIdNotFound": "Student ID not found",
+      "securityEmailNotSet": "Security email not set",
+      "userNotFound": "User not found or security email mismatch",
+      "verificationCodeRequired": "Please enter verification code",
+      "verificationCodeLength": "Verification code must be 6 digits",
+      "invalidCode": "Invalid or expired verification code",
+      "passwordRequired": "Please enter new password",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "confirmPasswordRequired": "Please confirm password",
+      "passwordMismatch": "Passwords do not match",
+      "sendCodeFailed": "Failed to send verification code",
+      "resetFailed": "Failed to reset password",
+      "allFieldsRequired": "All fields are required",
+      "getSecurityEmailFailed": "Failed to get security email",
+      "networkError": "Network error, please try again later"
+    },
+    "success": {
+      "securityEmailSent": "Security email retrieved",
+      "codeSent": "Verification code sent, please check your email",
+      "resetSuccessful": "Password reset successful, redirecting to login page"
+    },
+    "verificationEmail": {
+      "subject": "Password Reset Verification Code",
+      "text": "Your password reset verification code is: "
     }
   },
   "register": {

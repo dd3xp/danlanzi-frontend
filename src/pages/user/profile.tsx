@@ -7,10 +7,14 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import styles from '@/styles/profile/Profile.module.css';
+import resourceStyles from '@/styles/all-courses/AllCourses.module.css';
 import { getUserProfile } from '@/services/userProfileService';
 import { getUserAvatar } from '@/services/userAvatarService';
 import { useRouter } from 'next/router';
 import { getUser } from '@/utils/auth';
+import { getResources, Resource, favoriteResource, unfavoriteResource } from '@/services/resourceService';
+import ResourceDetailModal from '@/components/resources/ResourceDetailModal';
+import Tooltip from '@/components/global/Tooltip';
 
 export default function UserProfilePage() {
   const { t } = useTranslation('common');
@@ -18,6 +22,12 @@ export default function UserProfilePage() {
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const currentUser = getUser();
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [resourcesLoading, setResourcesLoading] = useState(false);
+  const [resourcesError, setResourcesError] = useState<string | null>(null);
+  const [favoritedResources, setFavoritedResources] = useState<Set<number>>(new Set());
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
+  const [resourceDetailModalOpen, setResourceDetailModalOpen] = useState(false);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -51,6 +61,220 @@ export default function UserProfilePage() {
       isSubscribed = false;
     };
   }, [router.isReady, router.asPath]);
+
+  // 加载用户发布的资源
+  const loadUserResources = async (userId: number) => {
+    setResourcesLoading(true);
+    setResourcesError(null);
+    
+    try {
+      const response = await getResources({
+        uploader_id: userId,
+        limit: 100
+      });
+      
+      if (response.status === 'success' && response.data) {
+        setResources(response.data.resources);
+        
+        // 初始化收藏状态
+        const favoritedSet = new Set<number>();
+        response.data.resources.forEach(resource => {
+          if (resource.isFavorited) {
+            favoritedSet.add(resource.id);
+          }
+        });
+        setFavoritedResources(favoritedSet);
+      } else {
+        setResourcesError(response.message || t('userProfile.placeholders.noResources'));
+      }
+    } catch (err: any) {
+      console.error('Load user resources failed:', err);
+      setResourcesError(err.message || t('userProfile.placeholders.noResources'));
+    } finally {
+      setResourcesLoading(false);
+    }
+  };
+
+  // 当切换到resources tab或用户ID变化时加载资源
+  useEffect(() => {
+    if (activeTab === 'resources' && user?.id) {
+      loadUserResources(user.id);
+    }
+  }, [activeTab, user?.id]);
+
+  // 处理收藏/取消收藏
+  const handleFavorite = async (e: React.MouseEvent, resourceId: number) => {
+    e.stopPropagation();
+    
+    const isFavorited = favoritedResources.has(resourceId);
+    
+    try {
+      const response = isFavorited
+        ? await unfavoriteResource(resourceId)
+        : await favoriteResource(resourceId);
+      
+      if (response.status === 'success') {
+        const newFavorited = new Set(favoritedResources);
+        if (isFavorited) {
+          newFavorited.delete(resourceId);
+        } else {
+          newFavorited.add(resourceId);
+        }
+        setFavoritedResources(newFavorited);
+        
+        // 更新资源列表中的收藏状态
+        const updateResourceFavorite = (resource: Resource) => {
+          if (resource.id === resourceId) {
+            return { ...resource, isFavorited: !isFavorited };
+          }
+          return resource;
+        };
+        
+        setResources(prev => prev.map(updateResourceFavorite));
+      }
+    } catch (err) {
+      console.error('Favorite toggle failed:', err);
+    }
+  };
+
+  // 处理查看详情
+  const handleViewDetail = (resource: Resource) => {
+    setSelectedResource(resource);
+    setResourceDetailModalOpen(true);
+  };
+
+  // 渲染资源卡片
+  const renderResourceCard = (resource: Resource) => {
+    const isFavorited = favoritedResources.has(resource.id);
+    
+    // 解析tags
+    const parseTags = () => {
+      const term: string[] = [];
+      const courseCode: string[] = [];
+      const instructors: string[] = [];
+      const others: string[] = [];
+      
+      if (resource.courseLinks && resource.courseLinks.length > 0) {
+        resource.courseLinks.forEach(link => {
+          if (link.offering) {
+            if (link.offering.term) {
+              term.push(link.offering.term);
+            }
+            if (link.offering.instructor) {
+              const instructorArray = Array.isArray(link.offering.instructor)
+                ? link.offering.instructor
+                : [link.offering.instructor];
+              instructors.push(...instructorArray);
+            }
+            if (link.offering.course) {
+              if (link.offering.course.name) {
+                courseCode.push(link.offering.course.name);
+              }
+            }
+          }
+        });
+      }
+      
+      if (resource.tags && Array.isArray(resource.tags)) {
+        resource.tags.forEach(tag => {
+          if (typeof tag === 'string') {
+            if (tag.startsWith('开课学期:') || tag.startsWith('Term:')) {
+              const termValue = tag.split(':')[1]?.trim();
+              if (termValue && !term.includes(termValue)) {
+                term.push(termValue);
+              }
+            } else if (tag.startsWith('课程代码:') || tag.startsWith('Course Code:')) {
+              const codeValue = tag.split(':')[1]?.trim();
+              if (codeValue && !courseCode.includes(codeValue)) {
+                courseCode.push(codeValue);
+              }
+            } else if (tag.startsWith('开课老师:') || tag.startsWith('Instructor:')) {
+              const instructorValue = tag.split(':')[1]?.trim();
+              if (instructorValue && !instructors.includes(instructorValue)) {
+                instructors.push(instructorValue);
+              }
+            } else {
+              others.push(tag);
+            }
+          }
+        });
+      }
+      
+      return { term, courseCode, instructors, others };
+    };
+    
+    const { term, courseCode, instructors, others } = parseTags();
+    
+    return (
+      <div key={resource.id} className={resourceStyles.resourceCard}>
+        <div className={resourceStyles.resourceCardContent}>
+          <div className={resourceStyles.resourceTitle}>{resource.title}</div>
+          <div className={resourceStyles.tagsContainer}>
+            {term.map((t, idx) => (
+              <span key={`term-${idx}`} className={`${resourceStyles.tag} ${resourceStyles.tagTerm}`}>
+                {t}
+              </span>
+            ))}
+            {courseCode.map((code, idx) => (
+              <span key={`code-${idx}`} className={`${resourceStyles.tag} ${resourceStyles.tagCourseCode}`}>
+                {code}
+              </span>
+            ))}
+            {instructors.map((inst, idx) => (
+              <span key={`inst-${idx}`} className={`${resourceStyles.tag} ${resourceStyles.tagInstructor}`}>
+                {inst}
+              </span>
+            ))}
+            {others.map((other, idx) => (
+              <span key={`other-${idx}`} className={`${resourceStyles.tag} ${resourceStyles.tagOther}`}>
+                {other}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className={resourceStyles.cardActions}>
+          <Tooltip title={isFavorited ? t('allCourses.resource.unfavorite') : t('allCourses.resource.favorite')}>
+            <button
+              type="button"
+              className={resourceStyles.favoriteButton}
+              onClick={(e) => handleFavorite(e, resource.id)}
+            >
+              <svg
+                className={`${resourceStyles.starIcon} ${isFavorited ? resourceStyles.starFilled : ''}`}
+                viewBox="0 0 24 24"
+                fill={isFavorited ? "currentColor" : "none"}
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </button>
+          </Tooltip>
+          <Tooltip title={t('allCourses.resource.viewDetail')}>
+            <button
+              type="button"
+              className={resourceStyles.viewButton}
+              onClick={() => handleViewDetail(resource)}
+            >
+              <svg
+                className={resourceStyles.arrowIcon}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </Tooltip>
+        </div>
+      </div>
+    );
+  };
 
 
   return (
@@ -99,8 +323,23 @@ export default function UserProfilePage() {
             )}
             {activeTab === 'resources' && (
               <>
-                <h2 className={styles.sectionTitle}>{t('userProfile.sections.resources')}</h2>
-                <p className={styles['text-muted']}>{t('userProfile.placeholders.noResources')}</p>
+                {resourcesLoading ? (
+                  <div className={resourceStyles.loadingState}>
+                    <p className={resourceStyles.loadingText}>{t('allCourses.states.loading')}</p>
+                  </div>
+                ) : resourcesError ? (
+                  <div className={resourceStyles.errorState}>
+                    <p className={resourceStyles.errorText}>{resourcesError}</p>
+                  </div>
+                ) : resources.length === 0 ? (
+                  <div className={resourceStyles.emptyState}>
+                    <p className={resourceStyles.emptyStateText}>{t('userProfile.placeholders.noResources')}</p>
+                  </div>
+                ) : (
+                  <div className={resourceStyles.resourcesList}>
+                    {resources.map(resource => renderResourceCard(resource))}
+                  </div>
+                )}
               </>
             )}
             {activeTab === 'messages' && (
@@ -110,6 +349,17 @@ export default function UserProfilePage() {
               </>
             )}
           </section>
+
+          {selectedResource && (
+            <ResourceDetailModal
+              open={resourceDetailModalOpen}
+              onClose={() => {
+                setResourceDetailModalOpen(false);
+                setSelectedResource(null);
+              }}
+              resource={selectedResource}
+            />
+          )}
         </div>
       </main>
     </ProtectedRoute>

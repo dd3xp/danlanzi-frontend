@@ -91,12 +91,34 @@
       "light": "浅色",
       "dark": "深色",
       "auto": "跟随系统"
+    },
+    "security": {
+      "title": "安全邮箱",
+      "description": "安全邮箱用于账号安全验证和重要通知。",
+      "currentEmail": "当前安全邮箱",
+      "noEmail": "未设置",
+      "changeEmail": "换绑安全邮箱",
+      "newEmail": "新安全邮箱",
+      "newEmailPlaceholder": "请输入新的安全邮箱地址",
+      "verificationCode": "验证码",
+      "codePlaceholder": "请输入6位验证码",
+      "sendCode": "发送验证码",
+      "sending": "发送中...",
+      "submitting": "提交中...",
+      "cancel": "取消",
+      "confirm": "确认换绑",
+      "emailInvalid": "请输入有效的邮箱地址",
+      "codeInvalid": "请输入6位有效验证码",
+      "codeSent": "验证码已发送，请查收邮件",
+      "sendCodeFailed": "发送验证码失败",
+      "updateSuccess": "安全邮箱更新成功",
+      "updateFailed": "安全邮箱更新失败"
     }
   },
   "sidebar": {
     "homepage": "主界面",
     "courses": "课程板块",
-    "myCourses": "我的课程",
+    "myResources": "资源管理",
     "resources": "资源管理",
     "brandName": "旦篮子"
   },
@@ -173,10 +195,28 @@
     },
     "uncategorized": "未分类"
   },
+  "myResources": {
+    "title": "资源管理",
+    "subtitle": "管理您收藏和发布的资源",
+    "search": {
+      "placeholder": "搜索资源名称、标签、课程、老师...",
+      "deleteHistory": "删除历史记录"
+    },
+    "tabs": {
+      "favorited": "收藏的资源",
+      "uploaded": "发布的资源"
+    },
+    "states": {
+      "loading": "加载中...",
+      "loadFailed": "加载失败",
+      "noFavorited": "暂无收藏的资源",
+      "noUploaded": "暂无发布的资源"
+    }
+  },
   "login": {
     "subtitle": "登录到旦篮子",
-    "username": "邮箱",
-    "usernamePlaceholder": "请输入邮箱地址",
+    "username": "学号",
+    "usernamePlaceholder": "请输入学号",
     "password": "密码",
     "passwordPlaceholder": "请输入密码",
     "rememberMe": "记住我",
@@ -188,11 +228,59 @@
       "logging": "登录中..."
     },
     "errors": {
-      "emailRequired": "请输入邮箱地址",
+      "studentIdRequired": "请输入学号",
       "passwordRequired": "请输入密码"
     },
     "success": {
       "loginSuccess": "登录成功"
+    }
+  },
+  "forgotPassword": {
+    "subtitle": "重置密码",
+    "studentId": "学号",
+    "studentIdPlaceholder": "请输入学号",
+    "securityEmail": "安全邮箱",
+    "securityEmailHint": "验证码将发送到此安全邮箱",
+    "verificationCode": "验证码",
+    "verificationCodePlaceholder": "请输入验证码",
+    "newPassword": "新密码",
+    "newPasswordPlaceholder": "请输入新密码",
+    "confirmPassword": "确认密码",
+    "confirmPasswordPlaceholder": "请再次输入新密码",
+    "next": "下一步",
+    "sendCode": "发送验证码",
+    "sending": "发送中...",
+    "resetButton": "重置密码",
+    "backToLogin": "返回登录",
+    "rememberPassword": "记起密码了？",
+    "loading": {
+      "getting": "获取中...",
+      "resetting": "重置中..."
+    },
+    "errors": {
+      "studentIdRequired": "请输入学号",
+      "studentIdNotFound": "学号不存在",
+      "verificationCodeRequired": "请输入验证码",
+      "verificationCodeLength": "验证码必须为6位",
+      "invalidCode": "验证码无效或已过期",
+      "passwordRequired": "请输入新密码",
+      "passwordMinLength": "密码长度至少为6位",
+      "confirmPasswordRequired": "请确认密码",
+      "passwordMismatch": "两次输入的密码不一致",
+      "sendCodeFailed": "发送验证码失败",
+      "resetFailed": "重置密码失败",
+      "allFieldsRequired": "请填写所有字段",
+      "getSecurityEmailFailed": "获取安全邮箱失败",
+      "networkError": "网络错误，请稍后重试"
+    },
+    "success": {
+      "securityEmailSent": "已获取安全邮箱",
+      "codeSent": "验证码已发送，请查收邮件",
+      "resetSuccessful": "密码重置成功，即将跳转到登录页面"
+    },
+    "verificationEmail": {
+      "subject": "密码重置验证码",
+      "text": "您的密码重置验证码是："
     }
   },
   "register": {

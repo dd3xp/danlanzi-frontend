@@ -7,6 +7,7 @@ import ProtectedRoute from '@/components/global/ProtectedRoute';
 import SideBar from '@/components/global/SideBar';
 import Avatar from '@/components/global/Avatar';
 import ApplicationSettings from '@/components/settings/ApplicationSettings';
+import SecuritySettings from '@/components/settings/SecuritySettings';
 import styles from '@/styles/settings/Settings.module.css';
 
 interface TabPanelProps {
@@ -69,14 +70,7 @@ function Settings() {
 
           <section className={styles.tabPanel} role="tabpanel">
             {activeTab === 0 && <ApplicationSettings />}
-            {activeTab === 1 && (
-              <>
-                <h2 className={styles.sectionTitle}>
-                  {t('settings.sections.security')}
-                </h2>
-                {/* Add security settings content here */}
-              </>
-            )}
+            {activeTab === 1 && <SecuritySettings />}
           </section>
         </div>
       </main>

@@ -102,5 +102,40 @@
       "updated": "头像更新成功",
       "systemAvatarsRetrieved": "系统头像列表获取成功"
     }
+  },
+  "resource": {
+    "errors": {
+      "createFailed": "创建资源失败",
+      "retrieveFailed": "获取资源失败",
+      "authRequiredForFavorites": "需要身份验证才能查看收藏的资源",
+      "invalidId": "无效的资源ID",
+      "notFound": "资源不存在",
+      "favoriteFailed": "收藏失败",
+      "unfavoriteFailed": "取消收藏失败",
+      "likeFailed": "点赞失败",
+      "unlikeFailed": "取消点赞失败",
+      "onlyFileTypeDownloadable": "只有文件类型资源可下载",
+      "fileNotFound": "文件不存在",
+      "downloadFailed": "下载失败",
+      "noPermissionToDelete": "无权限删除此资源",
+      "deleteFailed": "删除失败",
+      "fileSizeExceeded": "文件大小不能超过 20MB",
+      "uploadFailed": "文件上传失败",
+      "invalidType": "type 必须是 file/link/note",
+      "titleRequired": "title 必填",
+      "invalidVisibility": "visibility 必须是 public/course/private",
+      "invalidFileFieldName": "请通过字段名 file 上传文件",
+      "urlOrPathRequired": "link 类型需要提供 url_or_path"
+    },
+    "success": {
+      "created": "资源创建成功",
+      "retrieved": "资源获取成功",
+      "alreadyFavorited": "已收藏",
+      "favorited": "收藏成功",
+      "unfavorited": "已取消收藏",
+      "liked": "点赞成功",
+      "unliked": "已取消点赞",
+      "deleted": "资源删除成功"
+    }
   }
 }

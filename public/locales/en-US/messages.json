@@ -102,5 +102,40 @@
       "updated": "Avatar updated successfully",
       "systemAvatarsRetrieved": "System avatars retrieved successfully"
     }
+  },
+  "resource": {
+    "errors": {
+      "createFailed": "Failed to create resource",
+      "retrieveFailed": "Failed to retrieve resources",
+      "authRequiredForFavorites": "Authentication required to view favorited resources",
+      "invalidId": "Invalid resource ID",
+      "notFound": "Resource not found",
+      "favoriteFailed": "Failed to favorite",
+      "unfavoriteFailed": "Failed to unfavorite",
+      "likeFailed": "Failed to like",
+      "unlikeFailed": "Failed to unlike",
+      "onlyFileTypeDownloadable": "Only file type resources can be downloaded",
+      "fileNotFound": "File not found",
+      "downloadFailed": "Download failed",
+      "noPermissionToDelete": "No permission to delete this resource",
+      "deleteFailed": "Delete failed",
+      "fileSizeExceeded": "File size cannot exceed 20MB",
+      "uploadFailed": "File upload failed",
+      "invalidType": "Type must be file/link/note",
+      "titleRequired": "Title is required",
+      "invalidVisibility": "Visibility must be public/course/private",
+      "invalidFileFieldName": "Please upload file using field name 'file'",
+      "urlOrPathRequired": "Link type requires url_or_path"
+    },
+    "success": {
+      "created": "Resource created successfully",
+      "retrieved": "Resources retrieved successfully",
+      "alreadyFavorited": "Already favorited",
+      "favorited": "Favorited successfully",
+      "unfavorited": "Unfavorited successfully",
+      "liked": "Liked successfully",
+      "unliked": "Unliked successfully",
+      "deleted": "Resource deleted successfully"
+    }
   }
 }

@@ -81,7 +81,7 @@ export const registerUser = async (
 
 // 用户登录
 export const loginUser = async (credentials: {
-  email: string;
+  student_id: string;
   password: string;
 }): Promise<{
   status: 'success' | 'error';
@@ -106,6 +106,39 @@ export const loginUser = async (credentials: {
   });
 };
 
+
+// 重置密码请求参数
+interface ResetPasswordRequest {
+  student_id?: string;
+  security_email?: string;
+  verificationCode?: string;
+  newPassword?: string;
+}
+
+// 重置密码响应
+interface ResetPasswordResponse {
+  security_email?: string;
+}
+
+// 获取安全邮箱（第一步）
+export const getSecurityEmail = async (
+  student_id: string
+): Promise<ApiResponse<ResetPasswordResponse>> => {
+  return apiCall<ResetPasswordResponse>('/auth/get-security-email', {
+    method: 'POST',
+    body: JSON.stringify({ student_id }),
+  });
+};
+
+// 重置密码（第二步）
+export const resetPassword = async (
+  request: ResetPasswordRequest
+): Promise<ApiResponse<ResetPasswordResponse>> => {
+  return apiCall<ResetPasswordResponse>('/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify(request),
+  });
+};
 
 // 错误处理函数
 export const handleAPIError = (error: any): string => {
