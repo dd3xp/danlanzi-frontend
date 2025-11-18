@@ -47,9 +47,15 @@ export interface Resource {
       course_id: number;
       term: string;
       section?: string;
-      instructor?: string;
+      instructor?: string | string[];
+      course?: {
+        id: number;
+        name: string;
+        dept?: string;
+      };
     };
   }>;
+  isFavorited?: boolean; // 是否被当前用户收藏
 }
 
 // 资源列表响应
@@ -81,8 +87,17 @@ export const getResources = async (params?: {
   const queryString = queryParams.toString();
   const endpoint = `/resources/${queryString ? `?${queryString}` : ''}`;
   
+  // 使用可选认证：如果用户已登录，发送认证头以获取收藏状态
+  // 后端使用optionalAuthenticateToken中间件，支持可选认证
+  const headers: Record<string, string> = {};
+  const authHeaders = getAuthHeaders();
+  if (authHeaders.Authorization) {
+    Object.assign(headers, authHeaders);
+  }
+  
   return apiCall<ResourcesResponse>(endpoint, {
     method: 'GET',
+    headers,
   }, false);
 };
 
@@ -183,5 +198,28 @@ export const uploadResource = async (params: UploadResourceParams): Promise<ApiR
       error: 'NETWORK_ERROR'
     };
   }
+};
+
+// 收藏资源
+export const favoriteResource = async (resourceId: number): Promise<ApiResponse<any>> => {
+  return apiCall<any>(`/resources/${resourceId}/favorite`, {
+    method: 'POST',
+  }, true); // 需要认证
+};
+
+// 取消收藏资源
+export const unfavoriteResource = async (resourceId: number): Promise<ApiResponse<any>> => {
+  return apiCall<any>(`/resources/${resourceId}/favorite`, {
+    method: 'DELETE',
+  }, true); // 需要认证
+};
+
+// 检查资源是否被收藏（通过获取资源详情或使用专门的接口）
+export const checkResourceFavorite = async (resourceId: number): Promise<ApiResponse<{ isFavorited: boolean }>> => {
+  // 如果后端有专门的接口，使用它；否则可以通过其他方式判断
+  // 这里先返回一个简单的实现，可能需要根据实际后端API调整
+  return apiCall<{ isFavorited: boolean }>(`/resources/${resourceId}/favorite`, {
+    method: 'GET',
+  });
 };
 

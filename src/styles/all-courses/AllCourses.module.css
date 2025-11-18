@@ -267,6 +267,11 @@
   padding-right: 24px;
 }
 
+.searchResultsPanel {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .courseList {
   display: flex;
   flex-direction: column;
@@ -408,6 +413,139 @@
   font-size: 14px;
   color: var(--text-secondary);
   font-weight: 400;
+}
+
+/* 搜索结果资源卡片样式 */
+.resourcesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 0;
+  width: 50%;
+  max-width: 500px;
+}
+
+.resourceCard {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.resourceCard:hover {
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+.resourceCardContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.resourceTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.tagTerm {
+  background: var(--tag-term-bg);
+  color: var(--tag-term-text);
+  border: 1px solid var(--tag-term-border);
+}
+
+.tagCourseCode {
+  background: var(--tag-coursecode-bg);
+  color: var(--tag-coursecode-text);
+  border: 1px solid var(--tag-coursecode-border);
+}
+
+.tagInstructor {
+  background: var(--tag-instructor-bg);
+  color: var(--tag-instructor-text);
+  border: 1px solid var(--tag-instructor-border);
+}
+
+.tagOther {
+  background: var(--tag-other-bg);
+  color: var(--tag-other-text);
+  border: 1px solid var(--tag-other-border);
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.favoriteButton,
+.viewButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+}
+
+.favoriteButton:hover,
+.viewButton:hover {
+  background: var(--hover-bg);
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.starIcon.starFilled {
+  color: #fbbf24; /* 黄色星星 */
+}
+
+.favoriteButton:hover .starIcon {
+  color: #fbbf24;
+}
+
+.resourceCard .arrowIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.viewButton:hover .arrowIcon {
+  color: var(--text);
+  transform: translateX(4px);
 }
 
 .courseDescription {

@@ -37,6 +37,7 @@
 .resourcesList {
   max-height: 600px;
   overflow-y: auto;
+  margin-top: 12px;
 }
 
 .resourceCard {
@@ -46,11 +47,74 @@
   padding: 16px;
   margin-bottom: 12px;
   transition: border-color 200ms ease, box-shadow 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .resourceCard:hover {
   border-color: var(--border);
   box-shadow: var(--shadow);
+}
+
+.resourceCardContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.favoriteButton,
+.viewButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+}
+
+.favoriteButton:hover,
+.viewButton:hover {
+  background: var(--hover-bg);
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.starIcon.starFilled {
+  color: #fbbf24; /* 黄色星星 */
+}
+
+.favoriteButton:hover .starIcon {
+  color: #fbbf24;
+}
+
+.arrowIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.viewButton:hover .arrowIcon {
+  color: var(--text);
+  transform: translateX(4px);
 }
 
 .resourceTitle {

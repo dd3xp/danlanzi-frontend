@@ -99,7 +99,9 @@
     "subtitle": "Browse all available course catalogs",
     "search": {
       "placeholder": "Search course code or name...",
-      "deleteHistory": "Delete history"
+      "resourcePlaceholder": "Search resource name, tags, course, instructor...",
+      "deleteHistory": "Delete history",
+      "noResults": "No resources found"
     },
     "resource": {
       "addResource": "Add Resource",
@@ -141,7 +143,12 @@
       "addTag": "Add Tag",
       "uploadSuccess": "Resource uploaded successfully",
       "uploadFailed": "Failed to upload resource",
-      "noResources": "No resources available for this course"
+      "noResources": "No resources available for this course",
+      "download": "Download File",
+      "downloadFailed": "Download failed",
+      "favorite": "Favorite",
+      "unfavorite": "Unfavorite",
+      "viewDetail": "View details"
     },
     "tabs": {
       "ariaLabel": "Course categories",

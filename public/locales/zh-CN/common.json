@@ -105,7 +105,9 @@
     "subtitle": "浏览所有可用的课程目录",
     "search": {
       "placeholder": "搜索课程代码或名称...",
-      "deleteHistory": "删除历史记录"
+      "resourcePlaceholder": "搜索资源名称、标签、课程、老师...",
+      "deleteHistory": "删除历史记录",
+      "noResults": "未找到相关资源"
     },
     "resource": {
       "addResource": "添加资源",
@@ -147,7 +149,12 @@
       "addTag": "添加标签",
       "uploadSuccess": "资源上传成功",
       "uploadFailed": "资源上传失败",
-      "noResources": "该课程暂无资源"
+      "noResources": "该课程暂无资源",
+      "download": "下载文件",
+      "downloadFailed": "下载失败",
+      "favorite": "收藏",
+      "unfavorite": "取消收藏",
+      "viewDetail": "查看详情"
     },
     "tabs": {
       "ariaLabel": "课程分类",

@@ -1,0 +1,160 @@
+.modal :global(.ant-modal-content) {
+  background: var(--card) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+}
+
+.modal :global(.ant-modal-header) {
+  background: var(--card) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+  padding-bottom: 15px !important;
+  margin-bottom: 0 !important;
+}
+
+.modal :global(.ant-modal-body) {
+  padding: 24px !important;
+}
+
+.modal :global(.ant-modal-title) {
+  color: var(--text) !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+}
+
+.modal :global(.ant-modal-close) {
+  color: var(--text) !important;
+}
+
+.modal :global(.ant-modal-close:hover) {
+  color: var(--text) !important;
+  background-color: var(--hover-bg) !important;
+}
+
+.modal :global(.ant-modal-close-x) {
+  color: var(--text) !important;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.infoRow {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 80px;
+}
+
+.value {
+  font-size: 14px;
+  color: var(--text);
+  flex: 1;
+}
+
+.divider {
+  width: 240px;
+  height: 1px;
+  background: var(--card-border);
+  margin-top: 8px;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.downloadButton {
+  appearance: none;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 200ms ease;
+  width: fit-content;
+}
+
+.downloadButton:hover {
+  border-color: var(--border);
+  background: var(--hover-bg);
+  transform: translateY(-1px);
+}
+
+.downloadButton:active {
+  transform: translateY(0);
+}
+
+.downloadIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.tagTerm {
+  background: var(--tag-term-bg);
+  color: var(--tag-term-text);
+  border: 1px solid var(--tag-term-border);
+}
+
+.tagCourseCode {
+  background: var(--tag-coursecode-bg);
+  color: var(--tag-coursecode-text);
+  border: 1px solid var(--tag-coursecode-border);
+}
+
+.tagInstructor {
+  background: var(--tag-instructor-bg);
+  color: var(--tag-instructor-text);
+  border: 1px solid var(--tag-instructor-border);
+}
+
+.tagOther {
+  background: var(--tag-other-bg);
+  color: var(--tag-other-text);
+  border: 1px solid var(--tag-other-border);
+}
+
