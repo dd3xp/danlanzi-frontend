@@ -113,6 +113,20 @@
     --select-item-margin: 2px 0;
     --select-font-size: 16px;
     --select-scrollbar-width: 6px;
+
+    /* Tag 标签相关 */
+    --tag-term-bg: rgba(251, 146, 60, 0.2);        /* 学期标签背景 */
+    --tag-term-text: #fb923c;                      /* 学期标签文字 */
+    --tag-term-border: rgba(251, 146, 60, 0.3);    /* 学期标签边框 */
+    --tag-coursecode-bg: rgba(34, 197, 94, 0.2);   /* 课程代码标签背景 */
+    --tag-coursecode-text: #22c55e;                 /* 课程代码标签文字 */
+    --tag-coursecode-border: rgba(34, 197, 94, 0.3); /* 课程代码标签边框 */
+    --tag-instructor-bg: rgba(59, 130, 246, 0.2);  /* 老师标签背景 */
+    --tag-instructor-text: #3b82f6;                /* 老师标签文字 */
+    --tag-instructor-border: rgba(59, 130, 246, 0.3); /* 老师标签边框 */
+    --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
+    --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
+    --tag-other-border: var(--card-border);         /* 其他标签边框 */
   }
 
   @media (prefers-color-scheme: dark) {
@@ -232,6 +246,20 @@
     --select-item-margin: 2px 0;
     --select-font-size: 16px;
     --select-scrollbar-width: 6px;
+
+    /* Tag 标签相关 */
+    --tag-term-bg: rgba(251, 146, 60, 0.2);        /* 学期标签背景 */
+    --tag-term-text: #fb923c;                      /* 学期标签文字 */
+    --tag-term-border: rgba(251, 146, 60, 0.3);    /* 学期标签边框 */
+    --tag-coursecode-bg: rgba(34, 197, 94, 0.2);   /* 课程代码标签背景 */
+    --tag-coursecode-text: #22c55e;                 /* 课程代码标签文字 */
+    --tag-coursecode-border: rgba(34, 197, 94, 0.3); /* 课程代码标签边框 */
+    --tag-instructor-bg: rgba(59, 130, 246, 0.2);  /* 老师标签背景 */
+    --tag-instructor-text: #3b82f6;                /* 老师标签文字 */
+    --tag-instructor-border: rgba(59, 130, 246, 0.3); /* 老师标签边框 */
+    --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
+    --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
+    --tag-other-border: var(--card-border);         /* 其他标签边框 */
     }
   }
 
@@ -339,6 +367,20 @@
     --select-hover: var(--alpha-2);
     --select-text: var(--alpha-12);
     --select-shadow: 0 10px 30px var(--alpha-2);
+
+    /* Tag 标签相关 */
+    --tag-term-bg: rgba(251, 146, 60, 0.15);       /* 学期标签背景 */
+    --tag-term-text: #ea580c;                      /* 学期标签文字 */
+    --tag-term-border: rgba(251, 146, 60, 0.4);    /* 学期标签边框 */
+    --tag-coursecode-bg: rgba(34, 197, 94, 0.15);  /* 课程代码标签背景 */
+    --tag-coursecode-text: #16a34a;                 /* 课程代码标签文字 */
+    --tag-coursecode-border: rgba(34, 197, 94, 0.4); /* 课程代码标签边框 */
+    --tag-instructor-bg: rgba(22, 119, 255, 0.15); /* 老师标签背景 */
+    --tag-instructor-text: #1677ff;                 /* 老师标签文字 */
+    --tag-instructor-border: rgba(22, 119, 255, 0.4); /* 老师标签边框 */
+    --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
+    --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
+    --tag-other-border: var(--card-border);         /* 其他标签边框 */
   }
 
   /* 自动主题 */
@@ -447,7 +489,21 @@
     --select-hover: var(--alpha-2);
     --select-text: var(--alpha-12);
     --select-shadow: 0 10px 30px var(--alpha-2);
-    }
+
+    /* Tag 标签相关 */
+    --tag-term-bg: rgba(251, 146, 60, 0.15);       /* 学期标签背景 */
+    --tag-term-text: #ea580c;                      /* 学期标签文字 */
+    --tag-term-border: rgba(251, 146, 60, 0.4);    /* 学期标签边框 */
+    --tag-coursecode-bg: rgba(34, 197, 94, 0.15);  /* 课程代码标签背景 */
+    --tag-coursecode-text: #16a34a;                 /* 课程代码标签文字 */
+    --tag-coursecode-border: rgba(34, 197, 94, 0.4); /* 课程代码标签边框 */
+    --tag-instructor-bg: rgba(22, 119, 255, 0.15); /* 老师标签背景 */
+    --tag-instructor-text: #1677ff;                 /* 老师标签文字 */
+    --tag-instructor-border: rgba(22, 119, 255, 0.4); /* 老师标签边框 */
+    --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
+    --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
+    --tag-other-border: var(--card-border);         /* 其他标签边框 */
+  }
   }
 
 

@@ -24,6 +24,68 @@ export interface UploadResourceParams {
   tags?: string[];
 }
 
+// 资源接口
+export interface Resource {
+  id: number;
+  uploader_id: number;
+  type: ResourceType;
+  title: string;
+  description?: string;
+  url_or_path?: string;
+  visibility: ResourceVisibility;
+  status: string;
+  tags?: string[];
+  created_at: string;
+  updated_at?: string;
+  courseLinks?: Array<{
+    id: number;
+    resource_id: number;
+    course_id?: number;
+    offering_id?: number;
+    offering?: {
+      id: number;
+      course_id: number;
+      term: string;
+      section?: string;
+      instructor?: string;
+    };
+  }>;
+}
+
+// 资源列表响应
+export interface ResourcesResponse {
+  resources: Resource[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+// 获取资源列表
+export const getResources = async (params?: {
+  page?: number;
+  limit?: number;
+  course_id?: number;
+  offering_id?: number;
+  search?: string;
+}): Promise<ApiResponse<ResourcesResponse>> => {
+  const queryParams = new URLSearchParams();
+  if (params?.page) queryParams.append('page', params.page.toString());
+  if (params?.limit) queryParams.append('limit', params.limit.toString());
+  if (params?.course_id) queryParams.append('course_id', params.course_id.toString());
+  if (params?.offering_id) queryParams.append('offering_id', params.offering_id.toString());
+  if (params?.search) queryParams.append('search', params.search);
+
+  const queryString = queryParams.toString();
+  const endpoint = `/resources/${queryString ? `?${queryString}` : ''}`;
+  
+  return apiCall<ResourcesResponse>(endpoint, {
+    method: 'GET',
+  }, false);
+};
+
 // 上传资源
 export const uploadResource = async (params: UploadResourceParams): Promise<ApiResponse<any>> => {
   const formData = new FormData();

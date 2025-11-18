@@ -19,7 +19,7 @@ export interface CourseOffering {
   course_id: number;
   term: string;
   section?: string;
-  instructor?: string;
+  instructor?: string | string[]; // 支持字符串或字符串数组
   schedule_json?: any;
   extra_info?: string;
   created_at: string;

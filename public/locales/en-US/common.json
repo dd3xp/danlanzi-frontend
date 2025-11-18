@@ -117,7 +117,8 @@
       "departmentPlaceholder": "Select department",
       "departmentRequired": "Please select department",
       "term": "Term",
-      "termPlaceholder": "Enter term (e.g., 2025 Spring)",
+      "termPlaceholder": "Please select a term",
+      "termRequired": "Please select term",
       "descriptionRequired": "Please enter description",
       "resourceName": "Resource Name",
       "resourceNamePlaceholder": "Enter resource name",
@@ -134,11 +135,13 @@
       "fileInvalid": "Invalid file format",
       "fileTooLarge": "File size cannot exceed 20MB",
       "fileHint": "All formats supported, max 20MB",
+      "removeFile": "Remove File",
       "tags": "Tags",
       "tagPlaceholder": "Enter tag",
       "addTag": "Add Tag",
       "uploadSuccess": "Resource uploaded successfully",
-      "uploadFailed": "Failed to upload resource"
+      "uploadFailed": "Failed to upload resource",
+      "noResources": "No resources available for this course"
     },
     "tabs": {
       "ariaLabel": "Course categories",

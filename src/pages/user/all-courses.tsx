@@ -7,6 +7,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import Tooltip from '@/components/global/Tooltip';
 import AddResourceModal from '@/components/resources/AddResourceModal';
+import CourseResourcesModal from '@/components/resources/CourseResourcesModal';
 import styles from '@/styles/all-courses/AllCourses.module.css';
 import { getCourses, Course } from '@/services/courseService';
 
@@ -26,6 +27,9 @@ export default function AllCourses() {
   const [showHistory, setShowHistory] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [addResourceModalOpen, setAddResourceModalOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [resourcesModalOpen, setResourcesModalOpen] = useState(false);
+  const [expandedDepts, setExpandedDepts] = useState<Set<string>>(new Set());
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
@@ -196,18 +200,33 @@ export default function AllCourses() {
     return (
       <div className={styles.courseList}>
         {coursesByName.map((course) => (
-          <div key={course.id} className={styles.courseCard}>
-            {course.code && (
-              <div className={styles.courseCode}>{course.code}</div>
-            )}
-            <div className={styles.courseName}>{course.name}</div>
-            {course.dept && (
-              <div className={styles.courseDept}>{course.dept}</div>
-            )}
-            {course.description && (
-              <div className={styles.courseDescription}>{course.description}</div>
-            )}
-          </div>
+          <button
+            key={course.id}
+            type="button"
+            className={styles.courseCardButton}
+            onClick={() => {
+              setSelectedCourse(course);
+              setResourcesModalOpen(true);
+            }}
+          >
+            <div className={styles.courseCardContent}>
+              <div className={styles.courseName}>{course.name}</div>
+              {course.dept && (
+                <div className={styles.courseDept}>{course.dept}</div>
+              )}
+            </div>
+            <svg
+              className={styles.arrowIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
         ))}
       </div>
     );
@@ -244,35 +263,81 @@ export default function AllCourses() {
       );
     }
 
+    const toggleDept = (dept: string) => {
+      setExpandedDepts(prev => {
+        const newSet = new Set(prev);
+        if (newSet.has(dept)) {
+          newSet.delete(dept);
+        } else {
+          newSet.add(dept);
+        }
+        return newSet;
+      });
+    };
+
     return (
       <div>
-        {sortedDepts.map((dept) => (
-          <div key={dept} style={{ marginBottom: '32px' }}>
-            <h3 style={{ 
-              fontSize: '20px', 
-              fontWeight: 600, 
-              color: 'var(--text)', 
-              marginBottom: '16px',
-              paddingBottom: '8px',
-              borderBottom: '1px solid var(--border-light)'
-            }}>
-              {dept}
-            </h3>
-            <div className={styles.courseList}>
-              {coursesByDept[dept].map((course) => (
-                <div key={course.id} className={styles.courseCard}>
-                  {course.code && (
-                    <div className={styles.courseCode}>{course.code}</div>
-                  )}
-                  <div className={styles.courseName}>{course.name}</div>
-                  {course.description && (
-                    <div className={styles.courseDescription}>{course.description}</div>
-                  )}
+        {sortedDepts.map((dept) => {
+          const isExpanded = expandedDepts.has(dept);
+          return (
+            <div key={dept} className={styles.deptSection}>
+              <button
+                type="button"
+                className={styles.deptHeader}
+                onClick={() => toggleDept(dept)}
+              >
+                <div className={styles.deptHeaderContent}>
+                  <svg
+                    className={`${styles.expandIcon} ${isExpanded ? styles.expanded : ''}`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                  <h3 className={styles.deptTitle}>{dept}</h3>
+                  <span className={styles.courseCount}>({coursesByDept[dept].length})</span>
                 </div>
-              ))}
+              </button>
+              {isExpanded && (
+                <div className={styles.courseList}>
+                  {coursesByDept[dept].map((course) => (
+                    <button
+                      key={course.id}
+                      type="button"
+                      className={styles.courseCardButton}
+                      onClick={() => {
+                        setSelectedCourse(course);
+                        setResourcesModalOpen(true);
+                      }}
+                    >
+                      <div className={styles.courseCardContent}>
+                        <div className={styles.courseName}>{course.name}</div>
+                        {course.dept && (
+                          <div className={styles.courseDept}>{course.dept}</div>
+                        )}
+                      </div>
+                      <svg
+                        className={styles.arrowIcon}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   };
@@ -419,6 +484,17 @@ export default function AllCourses() {
           // 可以在这里刷新数据或显示成功消息
         }}
       />
+      {selectedCourse && (
+        <CourseResourcesModal
+          open={resourcesModalOpen}
+          onClose={() => {
+            setResourcesModalOpen(false);
+            setSelectedCourse(null);
+          }}
+          courseId={selectedCourse.id}
+          courseName={selectedCourse.name}
+        />
+      )}
     </ProtectedRoute>
   );
 }

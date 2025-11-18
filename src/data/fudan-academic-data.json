@@ -1045,6 +1045,19 @@
           "name_en": "Stomatology"
         }
       ]
+    },
+    {
+      "id": "other",
+      "name_zh": "其他",
+      "name_en": "Other",
+      "type": "department",
+      "majors": [
+        {
+          "code": "000000",
+          "name_zh": "其他专业",
+          "name_en": "Other Major"
+        }
+      ]
     }
   ]
 }

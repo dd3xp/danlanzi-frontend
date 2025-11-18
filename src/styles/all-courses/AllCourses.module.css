@@ -262,14 +262,16 @@
 }
 
 .tabPanel {
-  padding-top: 16px;
+  padding-top: 8px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .courseList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0;
 }
 
 .courseCard {
@@ -286,6 +288,49 @@
   box-shadow: var(--shadow);
 }
 
+.courseCardButton {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--card-border);
+  padding: 14px 24px;
+  transition: background-color 200ms ease;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 -24px;
+}
+
+.courseCardButton:last-child {
+  border-bottom: none;
+}
+
+.courseCardButton:hover {
+  background-color: var(--hover-bg);
+}
+
+.courseCardContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.arrowIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.courseCardButton:hover .arrowIcon {
+  color: var(--text);
+  transform: translateX(4px);
+}
+
 .courseCode {
   font-size: 14px;
   font-weight: 600;
@@ -294,17 +339,75 @@
 }
 
 .courseName {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   line-height: 1.4;
 }
 
 .courseDept {
   font-size: 14px;
   color: var(--text-secondary);
-  margin-bottom: 12px;
+  margin-bottom: 0;
+}
+
+.deptSection {
+  margin-bottom: 24px;
+}
+
+.deptHeader {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color 200ms ease;
+  margin: 0 -24px;
+}
+
+.deptHeader:hover {
+  background-color: var(--hover-bg);
+}
+
+.deptHeaderContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.expandIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: transform 200ms ease, color 200ms ease;
+  transform: rotate(-90deg);
+}
+
+.expandIcon.expanded {
+  transform: rotate(0deg);
+}
+
+.deptHeader:hover .expandIcon {
+  color: var(--text);
+}
+
+.deptTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.courseCount {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 
 .courseDescription {

@@ -20,6 +20,19 @@
   font-weight: 700 !important;
 }
 
+.modal :global(.ant-modal-close) {
+  color: var(--text) !important;
+}
+
+.modal :global(.ant-modal-close:hover) {
+  color: var(--text) !important;
+  background-color: var(--hover-bg) !important;
+}
+
+.modal :global(.ant-modal-close-x) {
+  color: var(--text) !important;
+}
+
 .formLayout {
   display: flex;
   gap: 60px;
@@ -268,6 +281,74 @@
   color: var(--text-muted);
   margin: 0;
   font-size: 14px;
+}
+
+.fileListContainer {
+  margin-top: 12px;
+}
+
+.fileListItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  transition: border-color 200ms ease;
+}
+
+.fileListItem:hover {
+  border-color: var(--border);
+}
+
+.fileIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.fileInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.fileName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileSize {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.removeFileButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-assist);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.removeFileButton:hover {
+  background: var(--hover-bg);
+  color: var(--text);
 }
 
 .form {

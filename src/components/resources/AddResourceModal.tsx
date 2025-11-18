@@ -9,7 +9,7 @@ import { uploadResource, ResourceType } from '@/services/resourceService';
 import { getCourses, createCourse, getOfferings } from '@/services/courseService';
 import { getAuthHeaders } from '@/utils/auth';
 import backendUrl from '@/services/backendUrl';
-import { getDepartments } from '@/utils/academicOptions';
+import { getDepartments, getTermOptions } from '@/utils/academicOptions';
 import { translateApiMessage } from '@/utils/translator';
 import styles from '@/styles/resources/AddResourceModal.module.css';
 
@@ -38,6 +38,7 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
   const [tags, setTags] = useState<string[]>(['']);
   const [courseCodeTag, setCourseCodeTag] = useState('');
   const departments = getDepartments(locale, t);
+  const termOptions = getTermOptions();
 
   // 重置表单
   const resetForm = () => {
@@ -164,15 +165,15 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
   };
 
   // 获取或创建开课实例
-  const getOrCreateOffering = async (courseId: number, term: string, instructor?: string): Promise<number | null> => {
-    if (!term.trim()) {
+  const getOrCreateOffering = async (courseId: number, term: string, instructors?: string[]): Promise<number | null> => {
+    if (!term) {
       return null;
     }
 
     // 先查找是否存在
     const offeringsResponse = await getOfferings({
       course_id: courseId,
-      term: term.trim(),
+      term: term,
     });
 
     if (offeringsResponse.status === 'success' && offeringsResponse.data && offeringsResponse.data.offerings.length > 0) {
@@ -191,8 +192,8 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
         headers,
         body: JSON.stringify({
           course_id: courseId,
-          term: term.trim(),
-          instructor: instructor || undefined,
+          term: term,
+          instructor: instructors && instructors.length > 0 ? instructors : undefined,
         }),
       });
 
@@ -217,6 +218,11 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
 
     if (!department) {
       message.error(t('allCourses.resource.departmentRequired'));
+      return;
+    }
+
+    if (!term) {
+      message.error(t('allCourses.resource.termRequired'));
       return;
     }
 
@@ -251,6 +257,13 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
     if (courseCodeTag.trim()) {
       allTags.push(`课程代码:${courseCodeTag.trim()}`);
     }
+    
+    // 将所有老师添加到tags中
+    validInstructors.forEach(instructor => {
+      if (instructor.trim() && !allTags.includes(instructor.trim())) {
+        allTags.push(instructor.trim());
+      }
+    });
 
     setLoading(true);
     try {
@@ -268,9 +281,8 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
         }
 
         // 如果填写了学期，获取或创建开课实例
-        if (term.trim() && courseId) {
-          const firstInstructor = validInstructors.length > 0 ? validInstructors[0] : undefined;
-          offeringId = await getOrCreateOffering(courseId, term.trim(), firstInstructor);
+        if (term && courseId) {
+          offeringId = await getOrCreateOffering(courseId, term, validInstructors.length > 0 ? validInstructors : undefined);
         }
       }
 
@@ -378,10 +390,10 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
               </div>
             </div>
 
-            {/* 开课学期 - 选填 */}
+            {/* 开课学期 - 必填 */}
             <div className={styles.formItem}>
               <label className={styles.label}>
-                {t('allCourses.resource.term')} <span className={styles.optional}>({t('allCourses.resource.optional')})</span>
+                {t('allCourses.resource.term')} <span className={styles.required}>*</span>
               </label>
               <div className={styles.fieldControl}>
                 <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -390,12 +402,17 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
                   <line x1="8" y1="2" x2="8" y2="6" />
                   <line x1="3" y1="10" x2="21" y2="10" />
                 </svg>
-                <input
-                  className={styles.nameInput}
-                  value={term}
-                  onChange={(e) => setTerm(e.target.value)}
-                  placeholder={t('allCourses.resource.termPlaceholder')}
-                />
+                <div className={styles.profileSelectWrapper}>
+                  <Select
+                    value={term || undefined}
+                    onChange={setTerm}
+                    placeholder={t('allCourses.resource.termPlaceholder')}
+                    options={termOptions}
+                    showSearch={false}
+                    popupMatchSelectWidth
+                    listHeight={200}
+                  />
+                </div>
               </div>
             </div>
 
@@ -571,6 +588,47 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
                 </div>
               </Upload.Dragger>
             </div>
+            {fileList.length > 0 && (
+              <div className={styles.fileListContainer}>
+                <div className={styles.fileListItem}>
+                  <svg className={styles.fileIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14,2 14,8 20,8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                  </svg>
+                  <div className={styles.fileInfo}>
+                    <div className={styles.fileName}>{fileList[0].name}</div>
+                    <div className={styles.fileSize}>
+                      {(() => {
+                        const file = fileList[0].originFileObj || fileList[0];
+                        const size = file?.size;
+                        if (size) {
+                          if (size < 1024) {
+                            return `${size} B`;
+                          } else if (size < 1024 * 1024) {
+                            return `${(size / 1024).toFixed(2)} KB`;
+                          } else {
+                            return `${(size / 1024 / 1024).toFixed(2)} MB`;
+                          }
+                        }
+                        return '';
+                      })()}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.removeFileButton}
+                    onClick={() => {
+                      setFileList([]);
+                    }}
+                    title={t('allCourses.resource.removeFile')}
+                  >
+                    <CloseOutlined />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

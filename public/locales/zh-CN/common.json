@@ -123,7 +123,8 @@
       "departmentPlaceholder": "请选择开课院系",
       "departmentRequired": "请选择开课院系",
       "term": "开课学期",
-      "termPlaceholder": "请输入开课学期（如：2025春）",
+      "termPlaceholder": "请选择学期",
+      "termRequired": "请选择开课学期",
       "descriptionRequired": "请输入资源描述",
       "resourceName": "资源名称",
       "resourceNamePlaceholder": "请输入资源名称",
@@ -140,11 +141,13 @@
       "fileInvalid": "文件格式无效",
       "fileTooLarge": "文件大小不能超过 20MB",
       "fileHint": "支持任意格式，最大 20MB",
+      "removeFile": "移除文件",
       "tags": "标签",
       "tagPlaceholder": "请输入标签",
       "addTag": "添加标签",
       "uploadSuccess": "资源上传成功",
-      "uploadFailed": "资源上传失败"
+      "uploadFailed": "资源上传失败",
+      "noResources": "该课程暂无资源"
     },
     "tabs": {
       "ariaLabel": "课程分类",

@@ -1,5 +1,6 @@
 import { TFunction } from 'next-i18next';
 import academicData from '@/data/fudan-academic-data.json';
+import termData from '@/data/term-options.json';
 
 // 选项接口定义
 export interface Option {
@@ -95,4 +96,40 @@ export const getAvailableMajors = (locale: string, t: TFunction, department: str
   const majors = getMajors(locale);
   const departmentMajors = majors[department] || [];
   return [noneOption, ...departmentMajors];
+};
+
+/**
+ * 获取学期选项列表
+ * @returns 学期选项数组
+ */
+export const getTermOptions = (): Option[] => {
+  const options: Option[] = [];
+  const { startYear, endYear, startSeason, endSeason, seasons } = termData;
+  
+  // 起始年份：只添加起始学期
+  if (startSeason === '秋') {
+    options.push({ value: `${startYear}秋`, label: `${startYear}年秋` });
+  } else {
+    options.push({ value: `${startYear}春`, label: `${startYear}年春` });
+    options.push({ value: `${startYear}秋`, label: `${startYear}年秋` });
+  }
+  
+  // 中间年份：每年都有所有学期
+  for (let year = startYear + 1; year < endYear; year++) {
+    seasons.forEach(season => {
+      options.push({ value: `${year}${season}`, label: `${year}年${season}` });
+    });
+  }
+  
+  // 结束年份：根据结束学期决定
+  if (endYear > startYear) {
+    if (endSeason === '秋') {
+      options.push({ value: `${endYear}春`, label: `${endYear}年春` });
+      options.push({ value: `${endYear}秋`, label: `${endYear}年秋` });
+    } else {
+      options.push({ value: `${endYear}春`, label: `${endYear}年春` });
+    }
+  }
+  
+  return options;
 };
