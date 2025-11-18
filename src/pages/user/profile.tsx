@@ -193,6 +193,8 @@ export default function UserProfilePage() {
   // 渲染资源卡片
   const renderResourceCard = (resource: Resource) => {
     const isFavorited = favoritedResources.has(resource.id);
+    // 判断是否是当前用户查看自己的资源
+    const isCurrentUserResource = currentUser && user && currentUser.id === user.id && resource.uploader_id === currentUser.id;
     
     // 解析tags
     const parseTags = () => {
@@ -299,28 +301,30 @@ export default function UserProfilePage() {
               </svg>
             </button>
           </Tooltip>
-          <Tooltip title={t('myResources.delete')}>
-            <button
-              type="button"
-              className={resourceStyles.deleteButton}
-              onClick={(e) => handleDelete(e, resource)}
-            >
-              <svg
-                className={resourceStyles.deleteIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+          {isCurrentUserResource && (
+            <Tooltip title={t('myResources.delete')}>
+              <button
+                type="button"
+                className={resourceStyles.deleteButton}
+                onClick={(e) => handleDelete(e, resource)}
               >
-                <polyline points="3 6 5 6 21 6" />
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                <line x1="10" y1="11" x2="10" y2="17" />
-                <line x1="14" y1="11" x2="14" y2="17" />
-              </svg>
-            </button>
-          </Tooltip>
+                <svg
+                  className={resourceStyles.deleteIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  <line x1="10" y1="11" x2="10" y2="17" />
+                  <line x1="14" y1="11" x2="14" y2="17" />
+                </svg>
+              </button>
+            </Tooltip>
+          )}
           <Tooltip title={t('allCourses.resource.viewDetail')}>
             <button
               type="button"
