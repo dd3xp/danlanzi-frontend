@@ -1,0 +1,135 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dialog {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+  animation: slideUp 0.2s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.body {
+  padding: 24px;
+}
+
+.content {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.cancelButton,
+.okButton {
+  appearance: none;
+  border: none;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  min-width: 100px;
+}
+
+.cancelButton {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+
+.cancelButton:hover:not(:disabled) {
+  background: var(--hover-bg);
+}
+
+.cancelButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.okButton {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+.okButton:hover:not(:disabled) {
+  background: var(--button-hover-bg);
+}
+
+.okButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.dangerButton {
+  background: var(--error);
+  color: white;
+}
+
+.dangerButton:hover:not(:disabled) {
+  background: var(--error-hover, #dc2626);
+}
+
+.cancelButton:disabled,
+.okButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loadingText {
+  display: inline-block;
+}

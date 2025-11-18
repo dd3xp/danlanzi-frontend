@@ -7,10 +7,12 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import Tooltip from '@/components/global/Tooltip';
 import AddResourceModal from '@/components/resources/AddResourceModal';
+import ConfirmDialog from '@/components/global/ConfirmDialog';
 import styles from '@/styles/all-courses/AllCourses.module.css';
-import { getResources, Resource, favoriteResource, unfavoriteResource } from '@/services/resourceService';
+import { getResources, Resource, favoriteResource, unfavoriteResource, deleteResource } from '@/services/resourceService';
 import ResourceDetailModal from '@/components/resources/ResourceDetailModal';
 import { translateBackendMessage } from '@/utils/translator';
+import { showToast } from '@/components/global/Toast';
 
 type TabType = 'favorited' | 'uploaded';
 
@@ -37,6 +39,9 @@ export default function MyResources() {
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [resourceDetailModalOpen, setResourceDetailModalOpen] = useState(false);
   const [favoritedResources, setFavoritedResources] = useState<Set<number>>(new Set());
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [resourceToDelete, setResourceToDelete] = useState<Resource | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
@@ -308,6 +313,56 @@ export default function MyResources() {
     setResourceDetailModalOpen(true);
   };
 
+  // 处理删除资源
+  const handleDelete = (e: React.MouseEvent, resource: Resource) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setResourceToDelete(resource);
+    setDeleteConfirmOpen(true);
+  };
+
+  // 确认删除
+  const handleConfirmDelete = async () => {
+    if (!resourceToDelete) return;
+    
+    setIsDeleting(true);
+    try {
+      const response = await deleteResource(resourceToDelete.id);
+      
+      if (response.status === 'success') {
+        showToast(t('myResources.deleteSuccess'), 'success');
+        
+        // 从列表中移除已删除的资源
+        setFavoritedResourcesList(prev => prev.filter(r => r.id !== resourceToDelete.id));
+        setUploadedResourcesList(prev => prev.filter(r => r.id !== resourceToDelete.id));
+        setSearchResults(prev => prev.filter(r => r.id !== resourceToDelete.id));
+        
+        // 如果当前显示的是搜索结果，且结果为空，可以清空搜索
+        if (hasSearched && searchResults.length === 1) {
+          setHasSearched(false);
+          setSearchQuery('');
+        }
+        
+        setDeleteConfirmOpen(false);
+        setResourceToDelete(null);
+      } else {
+        const errorMessage = translateBackendMessage(response, t);
+        showToast(errorMessage || t('myResources.deleteFailed'), 'error');
+      }
+    } catch (error) {
+      console.error('Delete resource failed:', error);
+      showToast(t('myResources.deleteFailed'), 'error');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  // 取消删除
+  const handleCancelDelete = () => {
+    setDeleteConfirmOpen(false);
+    setResourceToDelete(null);
+  };
+
   // 点击外部关闭搜索历史
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -326,7 +381,7 @@ export default function MyResources() {
   }, []);
 
   // 渲染资源卡片
-  const renderResourceCard = (resource: Resource) => {
+  const renderResourceCard = (resource: Resource, showDelete: boolean = false) => {
     const isFavorited = favoritedResources.has(resource.id);
     
     // 解析tags
@@ -434,6 +489,30 @@ export default function MyResources() {
               </svg>
             </button>
           </Tooltip>
+          {showDelete && (
+            <Tooltip title={t('myResources.delete')}>
+              <button
+                type="button"
+                className={styles.deleteButton}
+                onClick={(e) => handleDelete(e, resource)}
+              >
+                <svg
+                  className={styles.deleteIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  <line x1="10" y1="11" x2="10" y2="17" />
+                  <line x1="14" y1="11" x2="14" y2="17" />
+                </svg>
+              </button>
+            </Tooltip>
+          )}
           <Tooltip title={t('allCourses.resource.viewDetail')}>
             <button
               type="button"
@@ -482,7 +561,11 @@ export default function MyResources() {
 
     return (
       <div className={styles.resourcesList}>
-        {searchResults.map(resource => renderResourceCard(resource))}
+        {searchResults.map(resource => {
+          // 搜索结果中，只有当前用户上传的资源才显示删除按钮
+          const showDelete = uploadedResourcesList.some(r => r.id === resource.id);
+          return renderResourceCard(resource, showDelete);
+        })}
       </div>
     );
   };
@@ -527,7 +610,7 @@ export default function MyResources() {
 
     return (
       <div className={styles.resourcesList}>
-        {currentResources.map(resource => renderResourceCard(resource))}
+        {currentResources.map(resource => renderResourceCard(resource, activeTab === 'uploaded'))}
       </div>
     );
   };
@@ -694,6 +777,17 @@ export default function MyResources() {
               resource={selectedResource}
             />
           )}
+          <ConfirmDialog
+            open={deleteConfirmOpen}
+            title={t('myResources.deleteConfirm.title')}
+            content={resourceToDelete ? t('myResources.deleteConfirm.content', { title: resourceToDelete.title }) : ''}
+            okText={t('myResources.deleteConfirm.okText')}
+            cancelText={t('myResources.deleteConfirm.cancelText')}
+            okType="danger"
+            onOk={handleConfirmDelete}
+            onCancel={handleCancelDelete}
+            loading={isDeleting}
+          />
         </div>
       </main>
     </ProtectedRoute>

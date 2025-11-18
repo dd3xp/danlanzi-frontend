@@ -232,3 +232,10 @@ export const checkResourceFavorite = async (resourceId: number): Promise<ApiResp
   });
 };
 
+// 删除资源
+export const deleteResource = async (resourceId: number): Promise<ApiResponse<any>> => {
+  return apiCall<any>(`/resources/${resourceId}`, {
+    method: 'DELETE',
+  }, true); // 需要认证
+};
+

@@ -525,7 +525,8 @@
 }
 
 .favoriteButton,
-.viewButton {
+.viewButton,
+.deleteButton {
   appearance: none;
   border: none;
   background: transparent;
@@ -541,6 +542,14 @@
 .favoriteButton:hover,
 .viewButton:hover {
   background: var(--hover-bg);
+}
+
+.deleteButton:hover {
+  background: var(--hover-bg);
+}
+
+.deleteButton:hover .deleteIcon {
+  color: var(--error);
 }
 
 .starIcon {
@@ -569,6 +578,13 @@
 .viewButton:hover .arrowIcon {
   color: var(--text);
   transform: translateX(4px);
+}
+
+.deleteIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
 }
 
 .courseDescription {

@@ -211,6 +211,15 @@
       "loadFailed": "加载失败",
       "noFavorited": "暂无收藏的资源",
       "noUploaded": "暂无发布的资源"
+    },
+    "delete": "删除资源",
+    "deleteSuccess": "资源删除成功",
+    "deleteFailed": "资源删除失败",
+    "deleteConfirm": {
+      "title": "确认删除",
+      "content": "确定要删除资源\"{{title}}\"吗？此操作不可恢复。",
+      "okText": "删除",
+      "cancelText": "取消"
     }
   },
   "login": {

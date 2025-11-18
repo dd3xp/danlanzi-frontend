@@ -205,6 +205,15 @@
       "loadFailed": "Failed to load",
       "noFavorited": "No favorited resources",
       "noUploaded": "No uploaded resources"
+    },
+    "delete": "Delete Resource",
+    "deleteSuccess": "Resource deleted successfully",
+    "deleteFailed": "Failed to delete resource",
+    "deleteConfirm": {
+      "title": "Confirm Delete",
+      "content": "Are you sure you want to delete resource \"{{title}}\"? This action cannot be undone.",
+      "okText": "Delete",
+      "cancelText": "Cancel"
     }
   },
   "login": {
