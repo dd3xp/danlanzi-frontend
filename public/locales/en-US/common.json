@@ -155,6 +155,10 @@
       "name": "Course Name",
       "dept": "Department"
     },
+    "course": {
+      "viewReviews": "View course reviews",
+      "viewResources": "View course resources"
+    },
     "states": {
       "loading": "Loading...",
       "noCourses": "No courses available",

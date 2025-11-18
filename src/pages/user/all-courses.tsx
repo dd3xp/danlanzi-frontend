@@ -334,7 +334,7 @@ export default function AllCourses() {
     if (searchResults.length === 0 && searchQuery.trim()) {
       return (
         <div className={styles.emptyState}>
-          <p className={styles.emptyStateText}>{t('allCourses.search.noResults') || '未找到相关资源'}</p>
+          <p className={styles.emptyStateText}>{t('allCourses.search.noResults')}</p>
         </div>
       );
     }
@@ -377,7 +377,7 @@ export default function AllCourses() {
                 </div>
               </div>
               <div className={styles.cardActions}>
-                <Tooltip title={isFavorited ? t('allCourses.resource.unfavorite') || '取消收藏' : t('allCourses.resource.favorite') || '收藏'}>
+                <Tooltip title={isFavorited ? t('allCourses.resource.unfavorite') : t('allCourses.resource.favorite')}>
                   <button
                     type="button"
                     className={styles.favoriteButton}
@@ -396,7 +396,7 @@ export default function AllCourses() {
                     </svg>
                   </button>
                 </Tooltip>
-                <Tooltip title={t('allCourses.resource.viewDetail') || '查看详情'}>
+                <Tooltip title={t('allCourses.resource.viewDetail')}>
                   <button
                     type="button"
                     className={styles.viewButton}
@@ -480,14 +480,9 @@ export default function AllCourses() {
     return (
       <div className={styles.courseList}>
         {coursesByName.map((course) => (
-          <button
+          <div
             key={course.id}
-            type="button"
-            className={styles.courseCardButton}
-            onClick={() => {
-              setSelectedCourse(course);
-              setResourcesModalOpen(true);
-            }}
+            className={styles.courseCard}
           >
             <div className={styles.courseCardContent}>
               <div className={styles.courseName}>{course.name}</div>
@@ -495,18 +490,53 @@ export default function AllCourses() {
                 <div className={styles.courseDept}>{course.dept}</div>
               )}
             </div>
-            <svg
-              className={styles.arrowIcon}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
+            <div className={styles.courseCardActions}>
+              <Tooltip title={t('allCourses.course.viewReviews')}>
+                <button
+                  type="button"
+                  className={styles.reviewButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    // TODO: 实现查看课程评价的逻辑
+                  }}
+                >
+                  <svg
+                    className={styles.reviewIcon}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                </button>
+              </Tooltip>
+              <Tooltip title={t('allCourses.course.viewResources')}>
+                <button
+                  type="button"
+                  className={styles.viewResourcesButton}
+                  onClick={() => {
+                    setSelectedCourse(course);
+                    setResourcesModalOpen(true);
+                  }}
+                >
+                  <svg
+                    className={styles.arrowIcon}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+              </Tooltip>
+            </div>
+          </div>
         ))}
       </div>
     );
@@ -561,12 +591,16 @@ export default function AllCourses() {
           const isExpanded = expandedDepts.has(dept);
           return (
             <div key={dept} className={styles.deptSection}>
-              <button
-                type="button"
-                className={styles.deptHeader}
-                onClick={() => toggleDept(dept)}
-              >
+              <div className={styles.deptHeader}>
                 <div className={styles.deptHeaderContent}>
+                  <h3 className={styles.deptTitle}>{dept}</h3>
+                  <span className={styles.courseCount}>({coursesByDept[dept].length})</span>
+                </div>
+                <button
+                  type="button"
+                  className={styles.expandButton}
+                  onClick={() => toggleDept(dept)}
+                >
                   <svg
                     className={`${styles.expandIcon} ${isExpanded ? styles.expanded : ''}`}
                     viewBox="0 0 24 24"
@@ -578,21 +612,14 @@ export default function AllCourses() {
                   >
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
-                  <h3 className={styles.deptTitle}>{dept}</h3>
-                  <span className={styles.courseCount}>({coursesByDept[dept].length})</span>
-                </div>
-              </button>
+                </button>
+              </div>
               {isExpanded && (
                 <div className={styles.courseList}>
                   {coursesByDept[dept].map((course) => (
-                    <button
+                    <div
                       key={course.id}
-                      type="button"
-                      className={styles.courseCardButton}
-                      onClick={() => {
-                        setSelectedCourse(course);
-                        setResourcesModalOpen(true);
-                      }}
+                      className={styles.courseCard}
                     >
                       <div className={styles.courseCardContent}>
                         <div className={styles.courseName}>{course.name}</div>
@@ -600,18 +627,53 @@ export default function AllCourses() {
                           <div className={styles.courseDept}>{course.dept}</div>
                         )}
                       </div>
-                      <svg
-                        className={styles.arrowIcon}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="9 18 15 12 9 6" />
-                      </svg>
-                    </button>
+                      <div className={styles.courseCardActions}>
+                        <Tooltip title={t('allCourses.course.viewReviews')}>
+                          <button
+                            type="button"
+                            className={styles.reviewButton}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // TODO: 实现查看课程评价的逻辑
+                            }}
+                          >
+                            <svg
+                              className={styles.reviewIcon}
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                          </button>
+                        </Tooltip>
+                        <Tooltip title={t('allCourses.course.viewResources')}>
+                          <button
+                            type="button"
+                            className={styles.viewResourcesButton}
+                            onClick={() => {
+                              setSelectedCourse(course);
+                              setResourcesModalOpen(true);
+                            }}
+                          >
+                            <svg
+                              className={styles.arrowIcon}
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                          </button>
+                        </Tooltip>
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
@@ -635,7 +697,7 @@ export default function AllCourses() {
                   ref={searchInputRef}
                   type="text"
                   className={styles.searchInput}
-                  placeholder={t('allCourses.search.resourcePlaceholder') || '搜索资源名称、标签、课程、老师...'}
+                  placeholder={t('allCourses.search.resourcePlaceholder')}
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onFocus={() => setShowHistory(true)}

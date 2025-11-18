@@ -161,6 +161,10 @@
       "name": "课程名称",
       "dept": "开课院系"
     },
+    "course": {
+      "viewReviews": "查看课程评价",
+      "viewResources": "查看课程资源"
+    },
     "states": {
       "loading": "加载中...",
       "noCourses": "暂无课程",

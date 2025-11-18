@@ -280,47 +280,61 @@
 }
 
 .courseCard {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  padding: 20px;
-  transition: border-color 200ms ease, box-shadow 200ms ease;
-  cursor: pointer;
-}
-
-.courseCard:hover {
-  border-color: var(--border);
-  box-shadow: var(--shadow);
-}
-
-.courseCardButton {
-  appearance: none;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--card-border);
-  padding: 14px 24px;
-  transition: background-color 200ms ease;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  border-bottom: 1px solid var(--card-border);
+  padding: 14px 24px;
   margin: 0 -24px;
+  transition: background-color 200ms ease;
 }
 
-.courseCardButton:last-child {
+.courseCard:last-child {
   border-bottom: none;
 }
 
-.courseCardButton:hover {
-  background-color: var(--hover-bg);
-}
 
 .courseCardContent {
   flex: 1;
   min-width: 0;
+}
+
+.courseCardActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.reviewButton,
+.viewResourcesButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+}
+
+.reviewButton:hover,
+.viewResourcesButton:hover {
+  background: var(--hover-bg);
+}
+
+.reviewIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.reviewButton:hover .reviewIcon {
+  color: var(--text);
 }
 
 .arrowIcon {
@@ -331,7 +345,7 @@
   transition: color 200ms ease, transform 200ms ease;
 }
 
-.courseCardButton:hover .arrowIcon {
+.viewResourcesButton:hover .arrowIcon {
   color: var(--text);
   transform: translateX(4px);
 }
@@ -362,26 +376,35 @@
 }
 
 .deptHeader {
-  appearance: none;
-  background: transparent;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 12px 24px;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
   border-bottom: 1px solid var(--border-light);
-  transition: background-color 200ms ease;
   margin: 0 -24px;
-}
-
-.deptHeader:hover {
-  background-color: var(--hover-bg);
 }
 
 .deptHeaderContent {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.expandButton {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+}
+
+.expandButton:hover {
+  background-color: var(--hover-bg);
 }
 
 .expandIcon {
