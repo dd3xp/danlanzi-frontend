@@ -1,0 +1,440 @@
+.modal :global(.ant-modal-content) {
+  background: var(--card) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+}
+
+.modal :global(.ant-modal-header) {
+  background: var(--card) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+  padding-bottom: 15px !important;
+  margin-bottom: 0 !important;
+}
+
+.modal :global(.ant-modal-body) {
+  padding-top: 10px !important;
+}
+
+.modal :global(.ant-modal-title) {
+  color: var(--text) !important;
+  font-weight: 700 !important;
+}
+
+.modal :global(.ant-modal-close) {
+  color: var(--text) !important;
+}
+
+.modal :global(.ant-modal-close:hover) {
+  color: var(--text) !important;
+  background-color: var(--hover-bg) !important;
+}
+
+.modal :global(.ant-modal-close-x) {
+  color: var(--text) !important;
+}
+
+.formLayout {
+  display: flex;
+  gap: 60px;
+  padding: 8px 32px;
+}
+
+.leftPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rightPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fieldControl {
+  position: relative;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 10px 16px 10px 48px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fieldControl:hover {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
+}
+
+.fieldControl:focus-within { 
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
+}
+
+.readonlyField {
+  background: var(--hover-bg);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.readonlyField:hover {
+  border-color: var(--card-border);
+  box-shadow: none;
+}
+
+.fieldIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--text-assist);
+}
+
+/* 文本域的图标位置调整 */
+.descriptionFieldControl .fieldIcon {
+  top: 20px;
+  transform: none;
+}
+
+.nameInput {
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  padding-right: 40px;
+}
+
+.nameInput:disabled {
+  cursor: not-allowed;
+}
+
+.bioInput {
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  resize: none;
+  min-height: 200px;
+  font-family: inherit;
+}
+
+.bioInput::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bioInput::-webkit-scrollbar-track {
+  margin-right: 12px;
+  background: transparent;
+}
+
+.bioInput::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+  margin-right: 12px;
+}
+
+.bioInput::-webkit-resizer {
+  display: none;
+}
+
+.descriptionFieldControl {
+  min-height: 200px;
+}
+
+.descriptionFieldControl .bioInput {
+  width: calc(100% - 35px);
+  padding: 8px 8px 8px 3px;
+  margin-right: 25px;
+}
+
+/* Profile Select 样式 */
+.profileSelectWrapper {
+  position: relative;
+  width: 100%;
+  padding-right: 25px;
+  display: flex;
+  align-items: center;
+}
+
+/* antd Select 样式覆盖 - 高度和输入框完全一致，自然计算 */
+.profileSelectWrapper :global(.ant-select) { 
+  width: 100%;
+  height: auto !important;
+  line-height: 1.4 !important;
+}
+
+.profileSelectWrapper :global(.ant-select .ant-select-selector) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.profileSelectWrapper :global(.ant-select-selection-search) {
+  height: auto !important;
+  line-height: 1.4 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.profileSelectWrapper :global(.ant-select .ant-select-selection-item) {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.profileSelectWrapper :global(.ant-select .ant-select-selection-placeholder) {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.profileSelectWrapper :global(.ant-select .ant-select-arrow) {
+  color: var(--text);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.required {
+  color: var(--error, #ef4444);
+  margin-left: 4px;
+}
+
+.optional {
+  font-weight: normal;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.multiInputWrapper {
+  margin-bottom: 12px;
+}
+
+.multiInputWrapper:last-child {
+  margin-bottom: 0;
+}
+
+.multiInputWrapper .fieldControl {
+  padding-right: 48px;
+}
+
+.removeButton {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-assist);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.removeButton:hover {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+.addInlineButton {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-assist);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.addInlineButton:hover {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+/* 评分相关样式 */
+.ratingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.starsContainer {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.starButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.starButton:hover {
+  transform: scale(1.1);
+}
+
+.star {
+  font-size: 24px;
+  opacity: 0.3;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.starFilled {
+  opacity: 1;
+}
+
+.ratingValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+.cancelButton,
+.confirmButton {
+  appearance: none;
+  border: none;
+  height: 36px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 160ms ease, transform 0.1s ease;
+}
+
+.cancelButton,
+.confirmButton {
+  background: var(--button-bg, var(--hover-bg));
+  color: var(--button-text, var(--text));
+}
+
+.cancelButton:hover:not(:disabled),
+.confirmButton:hover:not(:disabled) {
+  background: var(--button-hover-bg, var(--active-bg));
+}
+
+.cancelButton:active:not(:disabled),
+.confirmButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.cancelButton:disabled,
+.confirmButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loadingDots {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.loadingDots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: loadingDots 1.4s infinite;
+}
+
+.loadingDots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loadingDots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes loadingDots {
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

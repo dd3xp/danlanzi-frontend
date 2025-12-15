@@ -9,8 +9,9 @@ import Tooltip from '@/components/global/Tooltip';
 import AddResourceModal from '@/components/resources/AddResourceModal';
 import ConfirmDialog from '@/components/global/ConfirmDialog';
 import styles from '@/styles/all-courses/AllCourses.module.css';
-import { getResources, Resource, favoriteResource, unfavoriteResource, deleteResource } from '@/services/resourceService';
+import { getResources, Resource, favoriteResource, unfavoriteResource, deleteResource, likeResource, unlikeResource } from '@/services/resourceService';
 import ResourceDetailModal from '@/components/resources/ResourceDetailModal';
+import ResourceCard from '@/components/resources/ResourceCard';
 import { translateBackendMessage } from '@/utils/translator';
 import { showToast } from '@/components/global/Toast';
 
@@ -39,6 +40,7 @@ export default function MyResources() {
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [resourceDetailModalOpen, setResourceDetailModalOpen] = useState(false);
   const [favoritedResources, setFavoritedResources] = useState<Set<number>>(new Set());
+  const [likedResources, setLikedResources] = useState<Set<number>>(new Set());
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [resourceToDelete, setResourceToDelete] = useState<Resource | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -118,14 +120,19 @@ export default function MyResources() {
           // 后端已经根据activeTab过滤了资源
           setSearchResults(response.data.resources);
           
-          // 初始化收藏状态
+          // 初始化收藏和点赞状态
           const favoritedSet = new Set<number>();
+          const likedSet = new Set<number>();
           response.data.resources.forEach(resource => {
             if (resource.isFavorited) {
               favoritedSet.add(resource.id);
             }
+            if (resource.isLiked) {
+              likedSet.add(resource.id);
+            }
           });
           setFavoritedResources(favoritedSet);
+          setLikedResources(likedSet);
           
           saveSearchHistory(trimmedQuery);
         } else {
@@ -165,11 +172,15 @@ export default function MyResources() {
       if (response.status === 'success' && response.data) {
         setFavoritedResourcesList(response.data.resources);
         
-        // 初始化收藏状态
+        // 初始化收藏和点赞状态
         const favoritedSet = new Set<number>();
+        const likedSet = new Set<number>();
         response.data.resources.forEach(resource => {
           if (resource.isFavorited) {
             favoritedSet.add(resource.id);
+          }
+          if (resource.isLiked) {
+            likedSet.add(resource.id);
           }
         });
         setFavoritedResources(prev => {
@@ -177,6 +188,17 @@ export default function MyResources() {
           if (response.data) {
             response.data.resources.forEach(resource => {
               if (resource.isFavorited) {
+                newSet.add(resource.id);
+              }
+            });
+          }
+          return newSet;
+        });
+        setLikedResources(prev => {
+          const newSet = new Set(prev);
+          if (response.data) {
+            response.data.resources.forEach(resource => {
+              if (resource.isLiked) {
                 newSet.add(resource.id);
               }
             });
@@ -208,11 +230,15 @@ export default function MyResources() {
       if (response.status === 'success' && response.data) {
         setUploadedResourcesList(response.data.resources);
         
-        // 初始化收藏状态
+        // 初始化收藏和点赞状态
         const favoritedSet = new Set<number>();
+        const likedSet = new Set<number>();
         response.data.resources.forEach(resource => {
           if (resource.isFavorited) {
             favoritedSet.add(resource.id);
+          }
+          if (resource.isLiked) {
+            likedSet.add(resource.id);
           }
         });
         setFavoritedResources(prev => {
@@ -220,6 +246,17 @@ export default function MyResources() {
           if (response.data) {
             response.data.resources.forEach(resource => {
               if (resource.isFavorited) {
+                newSet.add(resource.id);
+              }
+            });
+          }
+          return newSet;
+        });
+        setLikedResources(prev => {
+          const newSet = new Set(prev);
+          if (response.data) {
+            response.data.resources.forEach(resource => {
+              if (resource.isLiked) {
                 newSet.add(resource.id);
               }
             });
@@ -270,10 +307,9 @@ export default function MyResources() {
     performSearch(searchQuery);
   };
 
+
   // 处理收藏/取消收藏
-  const handleFavorite = async (e: React.MouseEvent, resourceId: number) => {
-    e.stopPropagation();
-    
+  const handleFavorite = async (resourceId: number) => {
     const isFavorited = favoritedResources.has(resourceId);
     
     try {
@@ -290,10 +326,25 @@ export default function MyResources() {
         }
         setFavoritedResources(newFavorited);
         
-        // 更新资源列表中的收藏状态
+        // 更新资源列表中的收藏状态和统计
         const updateResourceFavorite = (resource: Resource) => {
           if (resource.id === resourceId) {
-            return { ...resource, isFavorited: !isFavorited };
+            const newStats = resource.stats ? {
+              ...resource.stats,
+              favorite_count: isFavorited 
+                ? Math.max(0, (resource.stats.favorite_count || 0) - 1)
+                : (resource.stats.favorite_count || 0) + 1
+            } : {
+              favorite_count: isFavorited ? 0 : 1,
+              like_count: 0,
+              download_count: 0,
+              view_count: 0
+            };
+            return { 
+              ...resource, 
+              isFavorited: !isFavorited,
+              stats: newStats
+            };
           }
           return resource;
         };
@@ -307,6 +358,56 @@ export default function MyResources() {
     }
   };
 
+  // 处理点赞/取消点赞
+  const handleLike = async (resourceId: number) => {
+    const isLiked = likedResources.has(resourceId);
+    
+    try {
+      const response = isLiked
+        ? await unlikeResource(resourceId)
+        : await likeResource(resourceId);
+      
+      if (response.status === 'success') {
+        const newLiked = new Set(likedResources);
+        if (isLiked) {
+          newLiked.delete(resourceId);
+        } else {
+          newLiked.add(resourceId);
+        }
+        setLikedResources(newLiked);
+        
+        // 更新资源列表中的点赞状态和统计
+        const updateResourceLike = (resource: Resource) => {
+          if (resource.id === resourceId) {
+            const newStats = resource.stats ? {
+              ...resource.stats,
+              like_count: isLiked 
+                ? Math.max(0, (resource.stats.like_count || 0) - 1)
+                : (resource.stats.like_count || 0) + 1
+            } : {
+              favorite_count: 0,
+              like_count: isLiked ? 0 : 1,
+              download_count: 0,
+              view_count: 0
+            };
+            return { 
+              ...resource, 
+              isLiked: !isLiked,
+              stats: newStats
+            };
+          }
+          return resource;
+        };
+        
+        setFavoritedResourcesList(prev => prev.map(updateResourceLike));
+        setUploadedResourcesList(prev => prev.map(updateResourceLike));
+        setSearchResults(prev => prev.map(updateResourceLike));
+      }
+    } catch (err) {
+      console.error('Like toggle failed:', err);
+    }
+  };
+
   // 处理查看详情
   const handleViewDetail = (resource: Resource) => {
     setSelectedResource(resource);
@@ -314,9 +415,7 @@ export default function MyResources() {
   };
 
   // 处理删除资源
-  const handleDelete = (e: React.MouseEvent, resource: Resource) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleDelete = (resource: Resource) => {
     setResourceToDelete(resource);
     setDeleteConfirmOpen(true);
   };
@@ -383,157 +482,20 @@ export default function MyResources() {
   // 渲染资源卡片
   const renderResourceCard = (resource: Resource, showDelete: boolean = false) => {
     const isFavorited = favoritedResources.has(resource.id);
-    
-    // 解析tags
-    const parseTags = () => {
-      const term: string[] = [];
-      const courseCode: string[] = [];
-      const instructors: string[] = [];
-      const others: string[] = [];
-      
-      if (resource.courseLinks && resource.courseLinks.length > 0) {
-        resource.courseLinks.forEach(link => {
-          if (link.offering) {
-            if (link.offering.term) {
-              term.push(link.offering.term);
-            }
-            if (link.offering.instructor) {
-              const instructorArray = Array.isArray(link.offering.instructor)
-                ? link.offering.instructor
-                : [link.offering.instructor];
-              instructors.push(...instructorArray);
-            }
-            if (link.offering.course) {
-              if (link.offering.course.name) {
-                courseCode.push(link.offering.course.name);
-              }
-            }
-          }
-        });
-      }
-      
-      if (resource.tags && Array.isArray(resource.tags)) {
-        resource.tags.forEach(tag => {
-          if (typeof tag === 'string') {
-            if (tag.startsWith('开课学期:') || tag.startsWith('Term:')) {
-              const termValue = tag.split(':')[1]?.trim();
-              if (termValue && !term.includes(termValue)) {
-                term.push(termValue);
-              }
-            } else if (tag.startsWith('课程代码:') || tag.startsWith('Course Code:')) {
-              const codeValue = tag.split(':')[1]?.trim();
-              if (codeValue && !courseCode.includes(codeValue)) {
-                courseCode.push(codeValue);
-              }
-            } else if (tag.startsWith('开课老师:') || tag.startsWith('Instructor:')) {
-              const instructorValue = tag.split(':')[1]?.trim();
-              if (instructorValue && !instructors.includes(instructorValue)) {
-                instructors.push(instructorValue);
-              }
-            } else {
-              others.push(tag);
-            }
-          }
-        });
-      }
-      
-      return { term, courseCode, instructors, others };
-    };
-    
-    const { term, courseCode, instructors, others } = parseTags();
+    const isLiked = likedResources.has(resource.id);
     
     return (
-      <div key={resource.id} className={styles.resourceCard}>
-        <div className={styles.resourceCardContent}>
-          <div className={styles.resourceTitle}>{resource.title}</div>
-          <div className={styles.tagsContainer}>
-            {term.map((t, idx) => (
-              <span key={`term-${idx}`} className={`${styles.tag} ${styles.tagTerm}`}>
-                {t}
-              </span>
-            ))}
-            {courseCode.map((code, idx) => (
-              <span key={`code-${idx}`} className={`${styles.tag} ${styles.tagCourseCode}`}>
-                {code}
-              </span>
-            ))}
-            {instructors.map((inst, idx) => (
-              <span key={`inst-${idx}`} className={`${styles.tag} ${styles.tagInstructor}`}>
-                {inst}
-              </span>
-            ))}
-            {others.map((other, idx) => (
-              <span key={`other-${idx}`} className={`${styles.tag} ${styles.tagOther}`}>
-                {other}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className={styles.cardActions}>
-          <Tooltip title={isFavorited ? t('allCourses.resource.unfavorite') : t('allCourses.resource.favorite')}>
-            <button
-              type="button"
-              className={styles.favoriteButton}
-              onClick={(e) => handleFavorite(e, resource.id)}
-            >
-              <svg
-                className={`${styles.starIcon} ${isFavorited ? styles.starFilled : ''}`}
-                viewBox="0 0 24 24"
-                fill={isFavorited ? "currentColor" : "none"}
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-              </svg>
-            </button>
-          </Tooltip>
-          {showDelete && (
-            <Tooltip title={t('myResources.delete')}>
-              <button
-                type="button"
-                className={styles.deleteButton}
-                onClick={(e) => handleDelete(e, resource)}
-              >
-                <svg
-                  className={styles.deleteIcon}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="3 6 5 6 21 6" />
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                  <line x1="10" y1="11" x2="10" y2="17" />
-                  <line x1="14" y1="11" x2="14" y2="17" />
-                </svg>
-              </button>
-            </Tooltip>
-          )}
-          <Tooltip title={t('allCourses.resource.viewDetail')}>
-            <button
-              type="button"
-              className={styles.viewButton}
-              onClick={() => handleViewDetail(resource)}
-            >
-              <svg
-                className={styles.arrowIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
-          </Tooltip>
-        </div>
-      </div>
+      <ResourceCard
+        key={resource.id}
+        resource={resource}
+        isFavorited={isFavorited}
+        isLiked={isLiked}
+        showDelete={showDelete}
+        onFavorite={handleFavorite}
+        onLike={handleLike}
+        onDelete={handleDelete}
+        onViewDetail={handleViewDetail}
+      />
     );
   };
 

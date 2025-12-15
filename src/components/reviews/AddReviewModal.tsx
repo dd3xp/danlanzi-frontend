@@ -1,0 +1,458 @@
+import React, { useState, useEffect } from 'react';
+import { Modal, Input, Select, message } from 'antd';
+import { showToast } from '@/components/global/Toast';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { useTranslation } from 'next-i18next';
+import { createReview } from '@/services/reviewService';
+import { getOfferings, createOffering } from '@/services/courseService';
+import { getAuthHeaders } from '@/utils/auth';
+import backendUrl from '@/services/backendUrl';
+import { getTermOptions } from '@/utils/academicOptions';
+import { translateApiMessage } from '@/utils/translator';
+import styles from '@/styles/reviews/AddReviewModal.module.css';
+
+const { TextArea } = Input;
+
+interface AddReviewModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSuccess?: () => void;
+  courseId: number;
+  courseName: string;
+  courseDept?: string;
+}
+
+export default function AddReviewModal({ 
+  open, 
+  onClose, 
+  onSuccess,
+  courseId,
+  courseName,
+  courseDept
+}: AddReviewModalProps) {
+  const { t } = useTranslation('common');
+
+  const [loading, setLoading] = useState(false);
+  const [courseCode, setCourseCode] = useState('');
+  const [term, setTerm] = useState('');
+  const [instructors, setInstructors] = useState<string[]>(['']);
+  const [content, setContent] = useState('');
+  const [title, setTitle] = useState('');
+  const [rating, setRating] = useState<number | null>(null);
+  const termOptions = getTermOptions();
+
+  // 重置表单
+  const resetForm = () => {
+    setCourseCode('');
+    setTerm('');
+    setInstructors(['']);
+    setContent('');
+    setTitle('');
+    setRating(null);
+  };
+
+  // 处理关闭
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
+  // 添加教师
+  const addInstructor = () => {
+    setInstructors([...instructors, '']);
+  };
+
+  // 删除教师
+  const removeInstructor = (index: number) => {
+    if (instructors.length > 1) {
+      setInstructors(instructors.filter((_, i) => i !== index));
+    }
+  };
+
+  // 更新教师
+  const updateInstructor = (index: number, value: string) => {
+    const newInstructors = [...instructors];
+    newInstructors[index] = value;
+    setInstructors(newInstructors);
+  };
+
+  // 处理星星点击
+  const handleStarClick = (value: number) => {
+    setRating(value);
+  };
+
+  // 获取或创建开课实例
+  const getOrCreateOffering = async (instructor: string, term: string): Promise<number | null> => {
+    if (!instructor.trim() || !term.trim()) {
+      return null;
+    }
+
+    // 先查找是否存在（通过课程ID、学期和老师）
+    const offeringsResponse = await getOfferings({
+      course_id: courseId,
+      term: term,
+    });
+
+    if (offeringsResponse.status === 'success' && offeringsResponse.data) {
+      // 查找匹配的开课实例（匹配学期和老师）
+      const matchingOffering = offeringsResponse.data.offerings.find((offering: any) => {
+        if (offering.term !== term) return false;
+        const offeringInstructors = Array.isArray(offering.instructor) 
+          ? offering.instructor 
+          : (offering.instructor ? [offering.instructor] : []);
+        return offeringInstructors.includes(instructor.trim());
+      });
+
+      if (matchingOffering) {
+        return matchingOffering.id;
+      }
+    }
+
+    // 如果不存在，创建新的开课实例
+    const API_BASE_URL = `${backendUrl}/api`;
+    const headers = getAuthHeaders();
+    headers['Content-Type'] = 'application/json';
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/course/offerings`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          course_id: courseId,
+          term: term,
+          instructor: [instructor.trim()],
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.status === 'success' && data.data?.offering) {
+        return data.data.offering.id;
+      }
+    } catch (error) {
+      console.error('Failed to create offering:', error);
+    }
+
+    return null;
+  };
+
+  // 提交表单
+  const handleSubmit = async () => {
+    // 验证必填字段
+    if (!term.trim()) {
+      message.error(t('allCourses.review.termRequired'));
+      return;
+    }
+
+    const validInstructors = instructors.filter(i => i.trim());
+    if (validInstructors.length === 0) {
+      message.error(t('allCourses.review.instructorRequired'));
+      return;
+    }
+
+    if (!title.trim()) {
+      message.error(t('allCourses.review.titleRequired'));
+      return;
+    }
+
+    if (!rating || rating < 1 || rating > 10) {
+      message.error(t('allCourses.review.ratingRequired'));
+      return;
+    }
+
+    if (!content.trim()) {
+      message.error(t('allCourses.review.contentRequired'));
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // 获取或创建开课实例（使用第一个老师和学期）
+      let offeringId: number | null = null;
+      if (validInstructors.length > 0 && term.trim()) {
+        offeringId = await getOrCreateOffering(validInstructors[0], term.trim());
+      }
+
+      // 将1-10的评分转换为后端需要的格式
+      // 后端使用1-5分，我们将1-10分映射到1-5分
+      // 映射规则：1-2->1, 3-4->2, 5-6->3, 7-8->4, 9-10->5
+      const ratingOverall = Math.ceil((rating! / 10) * 5);
+      const ratingTeaching = Math.ceil((rating! / 10) * 5);
+
+      const response = await createReview({
+        course_id: courseId,
+        offering_id: offeringId || undefined,
+        rating_overall: ratingOverall,
+        rating_teaching: ratingTeaching,
+        title: title.trim(),
+        content: content.trim(),
+        course_code: courseCode.trim() || undefined,
+        instructor: validInstructors[0],
+      });
+
+      if (response.status === 'success') {
+        showToast(t('allCourses.review.createSuccess'), 'success');
+        handleClose();
+        onSuccess?.();
+      } else {
+        console.error('Create review failed:', response);
+        message.error(translateApiMessage(response, t));
+      }
+    } catch (error) {
+      console.error('Create review error:', error);
+      message.error(t('allCourses.review.createFailed'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Modal
+      open={open}
+      onCancel={handleClose}
+      footer={null}
+      title={t('allCourses.review.addReview')}
+      width={1000}
+      className={styles.modal}
+      style={{ top: '5%' }}
+    >
+      <div className={styles.formLayout}>
+        {/* 左侧：基本信息 */}
+        <div className={styles.leftPanel}>
+          <div className={styles.form}>
+            {/* 课程名称 - 只读 */}
+            <div className={styles.formItem}>
+              <label className={styles.label}>
+                {t('allCourses.resource.courseName')}
+              </label>
+              <div className={`${styles.fieldControl} ${styles.readonlyField}`}>
+                <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+                <input
+                  className={styles.nameInput}
+                  value={courseName}
+                  readOnly
+                  disabled
+                />
+              </div>
+            </div>
+
+            {/* 开课院系 - 只读 */}
+            {courseDept && (
+              <div className={styles.formItem}>
+                <label className={styles.label}>
+                  {t('allCourses.resource.department')}
+                </label>
+                <div className={`${styles.fieldControl} ${styles.readonlyField}`}>
+                  <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <input
+                    className={styles.nameInput}
+                    value={courseDept}
+                    readOnly
+                    disabled
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 课程代码 - 选填 */}
+            <div className={styles.formItem}>
+              <label className={styles.label}>
+                {t('allCourses.resource.courseCode')} <span className={styles.optional}>({t('allCourses.resource.optional')})</span>
+              </label>
+              <div className={styles.fieldControl}>
+                <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="14" rx="2" />
+                  <path d="M3 8h18" />
+                </svg>
+                <input
+                  className={styles.nameInput}
+                  value={courseCode}
+                  onChange={(e) => setCourseCode(e.target.value)}
+                  placeholder={t('allCourses.resource.courseCodePlaceholder')}
+                />
+              </div>
+            </div>
+
+            {/* 开课时间 - 必填 */}
+            <div className={styles.formItem}>
+              <label className={styles.label}>
+                {t('allCourses.resource.term')} <span className={styles.required}>*</span>
+              </label>
+              <div className={styles.fieldControl}>
+                <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <div className={styles.profileSelectWrapper}>
+                  <Select
+                    value={term || undefined}
+                    onChange={setTerm}
+                    placeholder={t('allCourses.resource.termPlaceholder')}
+                    options={termOptions}
+                    showSearch={false}
+                    popupMatchSelectWidth
+                    listHeight={200}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 任课老师 - 必填 */}
+            <div className={styles.formItem}>
+              <label className={styles.label}>
+                {t('allCourses.resource.instructors')} <span className={styles.required}>*</span>
+              </label>
+              {instructors.map((instructor, index) => (
+                <div key={index} className={styles.multiInputWrapper}>
+                  <div className={styles.fieldControl}>
+                    <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <input
+                      className={styles.nameInput}
+                      value={instructor}
+                      onChange={(e) => updateInstructor(index, e.target.value)}
+                      placeholder={t('allCourses.resource.instructorPlaceholder')}
+                    />
+                    {index === instructors.length - 1 ? (
+                      <button
+                        type="button"
+                        className={styles.addInlineButton}
+                        onClick={addInstructor}
+                        title={t('allCourses.resource.addInstructor')}
+                      >
+                        <PlusOutlined />
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className={styles.removeButton}
+                        onClick={() => removeInstructor(index)}
+                      >
+                        <CloseOutlined />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* 打分 - 必填 */}
+            <div className={styles.formItem}>
+              <label className={styles.label}>
+                {t('allCourses.review.rating')} <span className={styles.required}>*</span>
+              </label>
+              <div className={styles.ratingContainer}>
+                <div className={styles.starsContainer}>
+                  {Array.from({ length: 10 }, (_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      className={styles.starButton}
+                      onClick={() => handleStarClick(i + 1)}
+                      onMouseEnter={() => {
+                        // 可以添加悬停效果
+                      }}
+                    >
+                      <span className={`${styles.star} ${i < (rating || 0) ? styles.starFilled : ''}`}>
+                        ⭐
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                {rating !== null && (
+                  <div className={styles.ratingValue}>
+                    {rating}/10
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 右侧：标题和内容 */}
+        <div className={styles.rightPanel}>
+          {/* 标题 - 必填 */}
+          <div className={styles.rightSection}>
+            <label className={styles.label}>
+              {t('allCourses.review.title')} <span className={styles.required}>*</span>
+            </label>
+            <div className={styles.fieldControl}>
+              <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14,2 14,8 20,8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <polyline points="10,9 9,9 8,9" />
+              </svg>
+              <input
+                className={styles.nameInput}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder={t('allCourses.review.titlePlaceholder')}
+              />
+            </div>
+          </div>
+
+          {/* 课评内容 - 必填 */}
+          <div className={styles.rightSection}>
+            <label className={styles.label}>
+              {t('allCourses.review.content')} <span className={styles.required}>*</span>
+            </label>
+            <div className={`${styles.fieldControl} ${styles.descriptionFieldControl}`}>
+              <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14,2 14,8 20,8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <polyline points="10,9 9,9 8,9" />
+              </svg>
+              <textarea
+                className={styles.bioInput}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder={t('allCourses.review.contentPlaceholder')}
+                rows={12}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.actionButtons}>
+        <button
+          type="button"
+          className={styles.cancelButton}
+          onClick={handleClose}
+          disabled={loading}
+        >
+          {t('allCourses.resource.cancel')}
+        </button>
+        <button
+          type="button"
+          className={styles.confirmButton}
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? (
+            <span className={styles.loadingDots}>
+              <span></span><span></span><span></span>
+            </span>
+          ) : (
+            t('allCourses.resource.submit')
+          )}
+        </button>
+      </div>
+    </Modal>
+  );
+}
+

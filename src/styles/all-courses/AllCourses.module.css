@@ -287,7 +287,6 @@
   border-bottom: 1px solid var(--card-border);
   padding: 14px 24px;
   margin: 0 -24px;
-  transition: background-color 200ms ease;
 }
 
 .courseCard:last-child {
@@ -453,16 +452,10 @@
   border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 16px;
-  transition: border-color 200ms ease, box-shadow 200ms ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-}
-
-.resourceCard:hover {
-  border-color: var(--border);
-  box-shadow: var(--shadow);
 }
 
 .resourceCardContent {
@@ -524,7 +517,14 @@
   flex-shrink: 0;
 }
 
+.actionButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .favoriteButton,
+.likeButton,
 .viewButton,
 .deleteButton {
   appearance: none;
@@ -533,15 +533,26 @@
   padding: 4px;
   cursor: pointer;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2px;
   border-radius: 6px;
   transition: background-color 200ms ease;
+  min-width: 40px;
 }
 
 .favoriteButton:hover,
+.likeButton:hover,
 .viewButton:hover {
   background: var(--hover-bg);
+}
+
+.actionCount {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1;
+  margin-top: 2px;
 }
 
 .deleteButton:hover {
@@ -565,6 +576,21 @@
 
 .favoriteButton:hover .starIcon {
   color: #fbbf24;
+}
+
+.likeIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.likeIcon.likeFilled {
+  color: #ef4444; /* 红色心形 */
+}
+
+.likeButton:hover .likeIcon {
+  color: #ef4444;
 }
 
 .resourceCard .arrowIcon {

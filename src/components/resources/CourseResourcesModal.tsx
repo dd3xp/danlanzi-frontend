@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'next-i18next';
-import { getResources, Resource, favoriteResource, unfavoriteResource } from '@/services/resourceService';
+import { getResources, Resource, favoriteResource, unfavoriteResource, likeResource, unlikeResource } from '@/services/resourceService';
 import ResourceDetailModal from './ResourceDetailModal';
+import ResourceCard from './ResourceCard';
 import Tooltip from '@/components/global/Tooltip';
 import styles from '@/styles/resources/CourseResourcesModal.module.css';
 
@@ -20,6 +21,7 @@ export default function CourseResourcesModal({ open, onClose, courseId, courseNa
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [favoritedResources, setFavoritedResources] = useState<Set<number>>(new Set());
+  const [likedResources, setLikedResources] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     if (open && courseId) {
@@ -28,6 +30,7 @@ export default function CourseResourcesModal({ open, onClose, courseId, courseNa
       // 关闭模态框时清空状态
       setResources([]);
       setFavoritedResources(new Set());
+      setLikedResources(new Set());
     }
   }, [open, courseId]);
 
@@ -40,15 +43,19 @@ export default function CourseResourcesModal({ open, onClose, courseId, courseNa
       });
       if (response.status === 'success' && response.data) {
         setResources(response.data.resources);
-        // 从API响应中获取收藏状态
+        // 从API响应中获取收藏和点赞状态
         const favoritedIds = new Set(
           response.data.resources
             .filter((r: Resource) => r.isFavorited === true)
             .map((r: Resource) => r.id)
         );
+        const likedIds = new Set(
+          response.data.resources
+            .filter((r: Resource) => r.isLiked === true)
+            .map((r: Resource) => r.id)
+        );
         setFavoritedResources(favoritedIds);
-        // 调试日志
-        console.log('Loaded resources with favorites:', favoritedIds);
+        setLikedResources(likedIds);
       }
     } catch (error) {
       console.error('Failed to load resources:', error);
@@ -58,8 +65,7 @@ export default function CourseResourcesModal({ open, onClose, courseId, courseNa
   };
 
   // 处理收藏/取消收藏
-  const handleFavorite = async (e: React.MouseEvent, resourceId: number) => {
-    e.stopPropagation();
+  const handleFavorite = async (resourceId: number) => {
     const isFavorited = favoritedResources.has(resourceId);
     
     try {
@@ -76,16 +82,36 @@ export default function CourseResourcesModal({ open, onClose, courseId, courseNa
           setFavoritedResources(prev => {
             const newSet = new Set(prev);
             newSet.delete(resourceId);
-            console.log('Unfavorited resource:', resourceId, 'New set:', newSet);
             return newSet;
           });
         } else {
-          setFavoritedResources(prev => {
-            const newSet = new Set(prev).add(resourceId);
-            console.log('Favorited resource:', resourceId, 'New set:', newSet);
-            return newSet;
-          });
+          setFavoritedResources(prev => new Set(prev).add(resourceId));
         }
+        
+        // 更新资源列表中的收藏状态和统计
+        const updateResourceFavorite = (resource: Resource) => {
+          if (resource.id === resourceId) {
+            const newStats = resource.stats ? {
+              ...resource.stats,
+              favorite_count: isFavorited 
+                ? Math.max(0, (resource.stats.favorite_count || 0) - 1)
+                : (resource.stats.favorite_count || 0) + 1
+            } : {
+              favorite_count: isFavorited ? 0 : 1,
+              like_count: 0,
+              download_count: 0,
+              view_count: 0
+            };
+            return { 
+              ...resource, 
+              isFavorited: !isFavorited,
+              stats: newStats
+            };
+          }
+          return resource;
+        };
+        
+        setResources(prev => prev.map(updateResourceFavorite));
       } else {
         console.error('Failed to toggle favorite:', response);
         // 如果是认证错误，可能需要重新登录
@@ -98,56 +124,62 @@ export default function CourseResourcesModal({ open, onClose, courseId, courseNa
     }
   };
 
+  // 处理点赞/取消点赞
+  const handleLike = async (resourceId: number) => {
+    const isLiked = likedResources.has(resourceId);
+    
+    try {
+      const response = isLiked
+        ? await unlikeResource(resourceId)
+        : await likeResource(resourceId);
+      
+      if (response.status === 'success') {
+        if (isLiked) {
+          setLikedResources(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(resourceId);
+            return newSet;
+          });
+        } else {
+          setLikedResources(prev => new Set(prev).add(resourceId));
+        }
+        
+        // 更新资源列表中的点赞状态和统计
+        const updateResourceLike = (resource: Resource) => {
+          if (resource.id === resourceId) {
+            const newStats = resource.stats ? {
+              ...resource.stats,
+              like_count: isLiked 
+                ? Math.max(0, (resource.stats.like_count || 0) - 1)
+                : (resource.stats.like_count || 0) + 1
+            } : {
+              favorite_count: 0,
+              like_count: isLiked ? 0 : 1,
+              download_count: 0,
+              view_count: 0
+            };
+            return { 
+              ...resource, 
+              isLiked: !isLiked,
+              stats: newStats
+            };
+          }
+          return resource;
+        };
+        
+        setResources(prev => prev.map(updateResourceLike));
+      }
+    } catch (error) {
+      console.error('Failed to toggle like:', error);
+    }
+  };
+
   // 处理查看详情
   const handleViewDetail = (resource: Resource) => {
     setSelectedResource(resource);
     setDetailModalOpen(true);
   };
 
-  // 解析tags，提取不同类型
-  const parseTags = (resource: Resource) => {
-    const tags = resource.tags || [];
-    
-    // 从offering中获取学期信息
-    let term: string | undefined;
-    let instructors: string[] = [];
-    if (resource.courseLinks && resource.courseLinks.length > 0) {
-      const link = resource.courseLinks[0];
-      if (link.offering?.term) {
-        term = link.offering.term;
-      }
-      if (link.offering?.instructor) {
-        // 处理instructor可能是字符串或数组的情况
-        if (Array.isArray(link.offering.instructor)) {
-          instructors = link.offering.instructor;
-        } else if (typeof link.offering.instructor === 'string') {
-          instructors = [link.offering.instructor];
-        }
-      }
-    }
-    
-    // 从tags中查找学期（如果offering中没有）
-    if (!term) {
-      term = tags.find(tag => /^\d{4}[春秋]$/.test(tag));
-    }
-    
-    // 从tags中查找课程代码
-    const courseCodeTag = tags.find(tag => tag.startsWith('课程代码:'));
-    
-    // 从tags中查找其他tag（排除课程代码、学期和已经在instructors中的老师）
-    const otherTags = tags.filter(tag => 
-      !tag.startsWith('课程代码:') && 
-      !/^\d{4}[春秋]$/.test(tag) &&
-      !instructors.includes(tag)
-    );
-
-    return {
-      term,
-      courseCode: courseCodeTag?.replace('课程代码:', ''),
-      instructors,
-      others: otherTags
-    };
-  };
 
   return (
     <Modal
@@ -168,80 +200,21 @@ export default function CourseResourcesModal({ open, onClose, courseId, courseNa
             <p>{t('allCourses.resource.noResources')}</p>
           </div>
         ) : (
-                resources.map((resource) => {
-                  const { term, courseCode, instructors, others } = parseTags(resource);
-                  const isFavorited = favoritedResources.has(resource.id);
-                  return (
-                    <div 
-                      key={resource.id} 
-                      className={styles.resourceCard}
-                    >
-                      <div className={styles.resourceCardContent}>
-                        <div className={styles.resourceTitle}>{resource.title}</div>
-                        <div className={styles.tagsContainer}>
-                          {term && (
-                            <span className={`${styles.tag} ${styles.tagTerm}`}>{term}</span>
-                          )}
-                          {courseCode && (
-                            <span className={`${styles.tag} ${styles.tagCourseCode}`}>
-                              {courseCode}
-                            </span>
-                          )}
-                          {instructors.map((instructor, index) => (
-                            <span key={index} className={`${styles.tag} ${styles.tagInstructor}`}>
-                              {instructor}
-                            </span>
-                          ))}
-                          {others.map((tag, index) => (
-                            <span key={index} className={`${styles.tag} ${styles.tagOther}`}>
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className={styles.cardActions}>
-                        <Tooltip title={isFavorited ? t('allCourses.resource.unfavorite') || '取消收藏' : t('allCourses.resource.favorite') || '收藏'}>
-                          <button
-                            type="button"
-                            className={styles.favoriteButton}
-                            onClick={(e) => handleFavorite(e, resource.id)}
-                          >
-                            <svg
-                              className={`${styles.starIcon} ${isFavorited ? styles.starFilled : ''}`}
-                              viewBox="0 0 24 24"
-                              fill={isFavorited ? "currentColor" : "none"}
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                            </svg>
-                          </button>
-                        </Tooltip>
-                        <Tooltip title={t('allCourses.resource.viewDetail') || '查看详情'}>
-                          <button
-                            type="button"
-                            className={styles.viewButton}
-                            onClick={() => handleViewDetail(resource)}
-                          >
-                            <svg
-                              className={styles.arrowIcon}
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                          </button>
-                        </Tooltip>
-                      </div>
-                    </div>
-                  );
-                })
+          resources.map((resource) => {
+            const isFavorited = favoritedResources.has(resource.id);
+            const isLiked = likedResources.has(resource.id);
+            return (
+              <ResourceCard
+                key={resource.id}
+                resource={resource}
+                isFavorited={isFavorited}
+                isLiked={isLiked}
+                onFavorite={handleFavorite}
+                onLike={handleLike}
+                onViewDetail={handleViewDetail}
+              />
+            );
+          })
         )}
       </div>
       {selectedResource && (

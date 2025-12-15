@@ -201,6 +201,12 @@
   border: 1px solid var(--tag-term-border);
 }
 
+.tagCourseName {
+  background: var(--tag-coursename-bg);
+  color: var(--tag-coursename-text);
+  border: 1px solid var(--tag-coursename-border);
+}
+
 .tagCourseCode {
   background: var(--tag-coursecode-bg);
   color: var(--tag-coursecode-text);

@@ -46,7 +46,6 @@
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 12px;
-  transition: border-color 200ms ease, box-shadow 200ms ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -140,6 +139,12 @@
   background: var(--tag-term-bg);
   color: var(--tag-term-text);
   border: 1px solid var(--tag-term-border);
+}
+
+.tagCourseName {
+  background: var(--tag-coursename-bg);
+  color: var(--tag-coursename-text);
+  border: 1px solid var(--tag-coursename-border);
 }
 
 .tagCourseCode {

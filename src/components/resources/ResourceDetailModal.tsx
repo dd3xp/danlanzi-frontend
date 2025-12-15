@@ -7,6 +7,7 @@ import { Resource } from '@/services/resourceService';
 import { getAuthHeaders } from '@/utils/auth';
 import backendUrl from '@/services/backendUrl';
 import { getUserAvatar } from '@/services/userAvatarService';
+import { TAG_PREFIXES } from '@/utils/resourceUtils';
 import styles from '@/styles/resources/ResourceDetailModal.module.css';
 
 interface ResourceDetailModalProps {
@@ -86,30 +87,33 @@ export default function ResourceDetailModal({ open, onClose, resource, courseNam
       term = tags.find(tag => /^\d{4}[春秋]$/.test(tag));
     }
     
-    // 从tags中查找课程代码
-    const courseCodeTag = tags.find(tag => tag.startsWith('课程代码:'));
+    // 从tags中查找课程代码（兼容中英文前缀）
+    const courseCodeTag = tags.find(tag => 
+      tag.startsWith(TAG_PREFIXES.COURSE_CODE_ZH) || tag.startsWith(TAG_PREFIXES.COURSE_CODE_EN)
+    );
     
     // 从tags中查找其他tag（排除课程代码、学期和已经在instructors中的老师）
     const otherTags = tags.filter(tag => 
-      !tag.startsWith('课程代码:') && 
+      !tag.startsWith(TAG_PREFIXES.COURSE_CODE_ZH) && 
+      !tag.startsWith(TAG_PREFIXES.COURSE_CODE_EN) &&
       !/^\d{4}[春秋]$/.test(tag) &&
       !instructors.includes(tag)
     );
 
     return {
       term,
-      courseCode: courseCodeTag?.replace('课程代码:', ''),
+      courseNameFromTags: courseNameFromApi ? [courseNameFromApi] : [],
+      courseCode: courseCodeTag?.replace(TAG_PREFIXES.COURSE_CODE_ZH, '').replace(TAG_PREFIXES.COURSE_CODE_EN, ''),
       instructors,
       others: otherTags,
-      courseNameFromApi,
       courseDept
     };
   };
 
-  const { term, courseCode, instructors, others, courseNameFromApi, courseDept } = parseTags();
+  const { term, courseNameFromTags, courseCode, instructors, others, courseDept } = parseTags();
   
-  // 优先使用API返回的课程名称，如果没有则使用props传入的
-  const displayCourseName = courseNameFromApi || courseName;
+  // 优先使用从 offering 获取的课程名称，如果没有则使用props传入的
+  const displayCourseName = (courseNameFromTags && courseNameFromTags.length > 0) ? courseNameFromTags[0] : courseName;
 
   // 处理文件下载
   const handleDownload = async () => {
@@ -270,6 +274,11 @@ export default function ResourceDetailModal({ open, onClose, resource, courseNam
             {term && (
               <span className={`${styles.tag} ${styles.tagTerm}`}>{term}</span>
             )}
+            {courseNameFromTags.map((name, index) => (
+              <span key={index} className={`${styles.tag} ${styles.tagCourseName}`}>
+                {name}
+              </span>
+            ))}
             {courseCode && (
               <span className={`${styles.tag} ${styles.tagCourseCode}`}>
                 {courseCode}

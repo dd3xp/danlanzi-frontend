@@ -1,0 +1,505 @@
+.modal :global(.ant-modal-content) {
+  background: var(--card) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+}
+
+.modal :global(.ant-modal-header) {
+  background: var(--card) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+  padding-bottom: 15px !important;
+  margin-bottom: 0 !important;
+}
+
+.modal :global(.ant-modal-body) {
+  padding: 24px !important;
+}
+
+.modal :global(.ant-modal-title) {
+  color: var(--text) !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  width: 100%;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding-right: 56px; /* 为关闭按钮留出空间 */
+  box-sizing: border-box;
+}
+
+.titleText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.titleActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-right: 8px;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background-color 200ms ease;
+  flex-shrink: 0;
+}
+
+.authorInfo:hover {
+  background-color: var(--hover-bg);
+}
+
+.authorAvatar {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.authorAvatarFallback {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--tag-other-bg);
+  color: var(--tag-other-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.avatarImage {
+  object-fit: cover;
+}
+
+.authorName {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.modal :global(.ant-modal-close) {
+  color: var(--text) !important;
+}
+
+.modal :global(.ant-modal-close:hover) {
+  color: var(--text) !important;
+  background-color: var(--hover-bg) !important;
+}
+
+.modal :global(.ant-modal-close-x) {
+  color: var(--text) !important;
+}
+
+.replyButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.replyButton:hover {
+  background: var(--hover-bg);
+}
+
+.replyButton svg {
+  width: 18px;
+  height: 18px;
+  transition: color 200ms ease;
+  color: var(--text-secondary);
+}
+
+.replyButton:hover svg {
+  color: var(--text);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.infoRow {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 80px;
+}
+
+.value {
+  font-size: 14px;
+  color: var(--text);
+  flex: 1;
+}
+
+.divider {
+  width: 240px;
+  height: 1px;
+  background: var(--card-border);
+  margin-top: 8px;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ratingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ratingItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ratingLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 100px;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star {
+  font-size: 16px;
+  opacity: 0.3;
+  transition: opacity 200ms ease;
+}
+
+.starFilled {
+  opacity: 1;
+}
+
+.ratingValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-left: 8px;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.tagTerm {
+  background: var(--tag-term-bg);
+  color: var(--tag-term-text);
+  border: 1px solid var(--tag-term-border);
+}
+
+.tagInstructor {
+  background: var(--tag-instructor-bg);
+  color: var(--tag-instructor-text);
+  border: 1px solid var(--tag-instructor-border);
+}
+
+/* 回复输入框 */
+.replyInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.replyInputWrapper {
+  position: relative;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.replyInputWrapper:hover {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
+}
+
+.replyInputWrapper:focus-within {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
+}
+
+.replyInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+}
+
+.replyInput::placeholder {
+  color: var(--text-muted);
+}
+
+.replyActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancelButton,
+.submitButton {
+  appearance: none;
+  border: none;
+  height: 36px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 160ms ease, transform 0.1s ease;
+}
+
+.cancelButton,
+.submitButton {
+  background: var(--button-bg, var(--hover-bg));
+  color: var(--button-text, var(--text));
+}
+
+.cancelButton:hover:not(:disabled),
+.submitButton:hover:not(:disabled) {
+  background: var(--button-hover-bg, var(--active-bg));
+}
+
+.cancelButton:active:not(:disabled),
+.submitButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.cancelButton:disabled,
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 评论列表 */
+.commentsHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.commentsTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.loadingState,
+.emptyComments {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.commentItem {
+  padding: 16px;
+  background: var(--hover-bg);
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.commentUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.commentUserInfo:hover {
+  opacity: 0.8;
+}
+
+.commentAvatar,
+.commentAvatarFallback {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.commentAvatarFallback {
+  background: var(--tag-other-bg);
+  color: var(--tag-other-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.commentUserName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.commentTime {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.commentContent {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 8px;
+}
+
+.commentActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.commentActionButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.commentLikeButton,
+.commentDislikeButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+  min-width: 40px;
+}
+
+.commentLikeButton:hover,
+.commentDislikeButton:hover {
+  background: var(--hover-bg);
+}
+
+.commentLikeIcon,
+.commentDislikeIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.commentLikeIcon.commentLikeFilled {
+  color: #ef4444; /* 红色心形 */
+}
+
+.commentDislikeIcon.commentDislikeFilled {
+  color: #6b7280; /* 灰色倒心形 */
+}
+
+.commentLikeButton:hover .commentLikeIcon {
+  color: #ef4444;
+}
+
+.commentDislikeButton:hover .commentDislikeIcon {
+  color: #6b7280;
+}
+
+.commentActionCount {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1;
+  margin-top: 2px;
+  text-align: center;
+  min-width: 20px;
+}
+

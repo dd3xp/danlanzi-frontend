@@ -121,9 +121,15 @@
     --tag-coursecode-bg: rgba(34, 197, 94, 0.2);   /* 课程代码标签背景 */
     --tag-coursecode-text: #22c55e;                 /* 课程代码标签文字 */
     --tag-coursecode-border: rgba(34, 197, 94, 0.3); /* 课程代码标签边框 */
-    --tag-instructor-bg: rgba(59, 130, 246, 0.2);  /* 老师标签背景 */
+    --tag-instructor-bg: rgba(59, 130, 246, 0.2);  /* 老师标签背景 - 蓝色 */
     --tag-instructor-text: #3b82f6;                /* 老师标签文字 */
     --tag-instructor-border: rgba(59, 130, 246, 0.3); /* 老师标签边框 */
+    --tag-rating-bg: rgba(168, 85, 247, 0.2);      /* 评分标签背景 - 紫色 */
+    --tag-rating-text: #a855f7;                    /* 评分标签文字 */
+    --tag-rating-border: rgba(168, 85, 247, 0.3);  /* 评分标签边框 */
+    --tag-coursename-bg: rgba(20, 184, 166, 0.2);  /* 课程名称标签背景 - 青色 */
+    --tag-coursename-text: #14b8a6;                /* 课程名称标签文字 */
+    --tag-coursename-border: rgba(20, 184, 166, 0.3); /* 课程名称标签边框 */
     --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
     --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
     --tag-other-border: var(--card-border);         /* 其他标签边框 */
@@ -254,9 +260,15 @@
     --tag-coursecode-bg: rgba(34, 197, 94, 0.2);   /* 课程代码标签背景 */
     --tag-coursecode-text: #22c55e;                 /* 课程代码标签文字 */
     --tag-coursecode-border: rgba(34, 197, 94, 0.3); /* 课程代码标签边框 */
-    --tag-instructor-bg: rgba(59, 130, 246, 0.2);  /* 老师标签背景 */
+    --tag-instructor-bg: rgba(59, 130, 246, 0.2);  /* 老师标签背景 - 蓝色 */
     --tag-instructor-text: #3b82f6;                /* 老师标签文字 */
     --tag-instructor-border: rgba(59, 130, 246, 0.3); /* 老师标签边框 */
+    --tag-rating-bg: rgba(168, 85, 247, 0.2);      /* 评分标签背景 - 紫色 */
+    --tag-rating-text: #a855f7;                    /* 评分标签文字 */
+    --tag-rating-border: rgba(168, 85, 247, 0.3);  /* 评分标签边框 */
+    --tag-coursename-bg: rgba(20, 184, 166, 0.2);  /* 课程名称标签背景 - 青色 */
+    --tag-coursename-text: #14b8a6;                /* 课程名称标签文字 */
+    --tag-coursename-border: rgba(20, 184, 166, 0.3); /* 课程名称标签边框 */
     --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
     --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
     --tag-other-border: var(--card-border);         /* 其他标签边框 */
@@ -369,15 +381,21 @@
     --select-shadow: 0 10px 30px var(--alpha-2);
 
     /* Tag 标签相关 */
-    --tag-term-bg: rgba(251, 146, 60, 0.15);       /* 学期标签背景 */
+    --tag-term-bg: rgba(251, 146, 60, 0.15);       /* 学期标签背景 - 橙色 */
     --tag-term-text: #ea580c;                      /* 学期标签文字 */
     --tag-term-border: rgba(251, 146, 60, 0.4);    /* 学期标签边框 */
-    --tag-coursecode-bg: rgba(34, 197, 94, 0.15);  /* 课程代码标签背景 */
+    --tag-coursecode-bg: rgba(34, 197, 94, 0.15);  /* 课程代码标签背景 - 绿色 */
     --tag-coursecode-text: #16a34a;                 /* 课程代码标签文字 */
     --tag-coursecode-border: rgba(34, 197, 94, 0.4); /* 课程代码标签边框 */
-    --tag-instructor-bg: rgba(22, 119, 255, 0.15); /* 老师标签背景 */
+    --tag-instructor-bg: rgba(22, 119, 255, 0.15); /* 老师标签背景 - 蓝色 */
     --tag-instructor-text: #1677ff;                 /* 老师标签文字 */
     --tag-instructor-border: rgba(22, 119, 255, 0.4); /* 老师标签边框 */
+    --tag-rating-bg: rgba(168, 85, 247, 0.15);     /* 评分标签背景 - 紫色 */
+    --tag-rating-text: #9333ea;                    /* 评分标签文字 */
+    --tag-rating-border: rgba(168, 85, 247, 0.4);  /* 评分标签边框 */
+    --tag-coursename-bg: rgba(20, 184, 166, 0.15); /* 课程名称标签背景 - 青色 */
+    --tag-coursename-text: #0f766e;                /* 课程名称标签文字 */
+    --tag-coursename-border: rgba(20, 184, 166, 0.4); /* 课程名称标签边框 */
     --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
     --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
     --tag-other-border: var(--card-border);         /* 其他标签边框 */
@@ -491,15 +509,21 @@
     --select-shadow: 0 10px 30px var(--alpha-2);
 
     /* Tag 标签相关 */
-    --tag-term-bg: rgba(251, 146, 60, 0.15);       /* 学期标签背景 */
+    --tag-term-bg: rgba(251, 146, 60, 0.15);       /* 学期标签背景 - 橙色 */
     --tag-term-text: #ea580c;                      /* 学期标签文字 */
     --tag-term-border: rgba(251, 146, 60, 0.4);    /* 学期标签边框 */
-    --tag-coursecode-bg: rgba(34, 197, 94, 0.15);  /* 课程代码标签背景 */
+    --tag-coursecode-bg: rgba(34, 197, 94, 0.15);  /* 课程代码标签背景 - 绿色 */
     --tag-coursecode-text: #16a34a;                 /* 课程代码标签文字 */
     --tag-coursecode-border: rgba(34, 197, 94, 0.4); /* 课程代码标签边框 */
-    --tag-instructor-bg: rgba(22, 119, 255, 0.15); /* 老师标签背景 */
+    --tag-instructor-bg: rgba(22, 119, 255, 0.15); /* 老师标签背景 - 蓝色 */
     --tag-instructor-text: #1677ff;                 /* 老师标签文字 */
     --tag-instructor-border: rgba(22, 119, 255, 0.4); /* 老师标签边框 */
+    --tag-rating-bg: rgba(168, 85, 247, 0.15);     /* 评分标签背景 - 紫色 */
+    --tag-rating-text: #9333ea;                    /* 评分标签文字 */
+    --tag-rating-border: rgba(168, 85, 247, 0.4);  /* 评分标签边框 */
+    --tag-coursename-bg: rgba(20, 184, 166, 0.15); /* 课程名称标签背景 - 青色 */
+    --tag-coursename-text: #0f766e;                /* 课程名称标签文字 */
+    --tag-coursename-border: rgba(20, 184, 166, 0.4); /* 课程名称标签边框 */
     --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
     --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
     --tag-other-border: var(--card-border);         /* 其他标签边框 */

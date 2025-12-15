@@ -1,0 +1,153 @@
+.reviewCard {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.reviewCardContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.reviewTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.reviewContent {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.tagRating {
+  background: var(--tag-rating-bg);
+  color: var(--tag-rating-text);
+  border: 1px solid var(--tag-rating-border);
+}
+
+.tagTerm {
+  background: var(--tag-term-bg);
+  color: var(--tag-term-text);
+  border: 1px solid var(--tag-term-border);
+}
+
+.tagInstructor {
+  background: var(--tag-instructor-bg);
+  color: var(--tag-instructor-text);
+  border: 1px solid var(--tag-instructor-border);
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.actionButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.likeButton,
+.dislikeButton,
+.viewButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+  min-width: 40px;
+}
+
+.likeButton:hover,
+.dislikeButton:hover,
+.viewButton:hover {
+  background: var(--hover-bg);
+}
+
+.likeIcon,
+.dislikeIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.likeIcon.likeFilled {
+  color: #ef4444; /* 红色心形 */
+}
+
+.dislikeIcon.dislikeFilled {
+  color: #6b7280; /* 灰色倒心形 */
+}
+
+.likeButton:hover .likeIcon {
+  color: #ef4444;
+}
+
+.dislikeButton:hover .dislikeIcon {
+  color: #6b7280;
+}
+
+.actionCount {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1;
+  margin-top: 2px;
+  text-align: center;
+  min-width: 20px;
+}
+
+.viewButton {
+  flex-direction: row;
+  gap: 0;
+}
+
+.arrowIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.viewButton:hover .arrowIcon {
+  color: var(--text);
+  transform: translateX(4px);
+}
+

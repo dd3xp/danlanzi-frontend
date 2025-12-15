@@ -170,6 +170,8 @@
       "downloadFailed": "Download failed",
       "favorite": "Favorite",
       "unfavorite": "Unfavorite",
+      "like": "Like",
+      "unlike": "Unlike",
       "viewDetail": "View details"
     },
     "tabs": {
@@ -181,11 +183,42 @@
       "viewReviews": "View course reviews",
       "viewResources": "View course resources"
     },
+    "review": {
+      "addReview": "Add Review",
+      "viewDetail": "View details",
+      "noReviews": "No reviews available for this course",
+      "noTitle": "No title",
+      "title": "Title",
+      "titlePlaceholder": "Enter review title",
+      "titleRequired": "Please enter review title",
+      "content": "Review Content",
+      "contentPlaceholder": "Enter review content",
+      "contentRequired": "Please enter review content",
+      "instructorRequired": "Please enter instructor name",
+      "rating": "Rating",
+      "ratingRequired": "Please select a rating",
+      "termRequired": "Please select term",
+      "createSuccess": "Review created successfully",
+      "createFailed": "Failed to create review",
+      "reply": "Reply",
+      "replyPlaceholder": "Write your reply...",
+      "comments": "Replies",
+      "noComments": "No replies yet",
+      "commentRequired": "Please enter reply content",
+      "commentSuccess": "Reply posted successfully",
+      "commentFailed": "Failed to post reply",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "anonymous": "Anonymous",
+      "dislike": "Dislike",
+      "undislike": "Undislike"
+    },
     "states": {
       "loading": "Loading...",
       "noCourses": "No courses available",
       "networkError": "Network error",
-      "loadFailed": "Failed to load courses"
+      "loadFailed": "Failed to load courses",
+      "submitting": "Submitting..."
     },
     "uncategorized": "Uncategorized"
   },

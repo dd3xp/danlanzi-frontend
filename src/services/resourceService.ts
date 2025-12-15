@@ -61,6 +61,13 @@ export interface Resource {
     };
   }>;
   isFavorited?: boolean; // 是否被当前用户收藏
+  isLiked?: boolean; // 是否被当前用户点赞
+  stats?: {
+    favorite_count: number;
+    like_count: number;
+    download_count: number;
+    view_count: number;
+  };
 }
 
 // 资源列表响应
@@ -230,6 +237,20 @@ export const checkResourceFavorite = async (resourceId: number): Promise<ApiResp
   return apiCall<{ isFavorited: boolean }>(`/resources/${resourceId}/favorite`, {
     method: 'GET',
   });
+};
+
+// 点赞资源
+export const likeResource = async (resourceId: number): Promise<ApiResponse<any>> => {
+  return apiCall<any>(`/resources/${resourceId}/like`, {
+    method: 'POST',
+  }, true); // 需要认证
+};
+
+// 取消点赞资源
+export const unlikeResource = async (resourceId: number): Promise<ApiResponse<any>> => {
+  return apiCall<any>(`/resources/${resourceId}/like`, {
+    method: 'DELETE',
+  }, true); // 需要认证
 };
 
 // 删除资源

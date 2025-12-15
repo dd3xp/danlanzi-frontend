@@ -11,6 +11,7 @@ import { getAuthHeaders } from '@/utils/auth';
 import backendUrl from '@/services/backendUrl';
 import { getDepartments, getTermOptions } from '@/utils/academicOptions';
 import { translateApiMessage } from '@/utils/translator';
+import { TAG_PREFIXES } from '@/utils/resourceUtils';
 import styles from '@/styles/resources/AddResourceModal.module.css';
 
 const { TextArea } = Input;
@@ -255,15 +256,12 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
     // 如果有课程代码tag，添加到tags中
     const allTags = [...validTags];
     if (courseCodeTag.trim()) {
-      allTags.push(`课程代码:${courseCodeTag.trim()}`);
+      // 使用中文前缀（与数据库中已存储的格式保持一致）
+      allTags.push(`${TAG_PREFIXES.COURSE_CODE_ZH}${courseCodeTag.trim()}`);
     }
     
-    // 将所有老师添加到tags中
-    validInstructors.forEach(instructor => {
-      if (instructor.trim() && !allTags.includes(instructor.trim())) {
-        allTags.push(instructor.trim());
-      }
-    });
+    // 不再将老师添加到tags中，因为老师信息已经通过offering关联
+    // 老师信息会从offering.instructor中获取并显示
 
     setLoading(true);
     try {
