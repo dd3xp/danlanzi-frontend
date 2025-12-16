@@ -22,9 +22,9 @@ export default function ReviewCard({
   const [likeCount, setLikeCount] = useState(review.stats?.like_count || 0);
   const [dislikeCount, setDislikeCount] = useState(review.stats?.dislike_count || 0);
   
-  // 显示评分（如果有），将1-5分映射到1-10分显示
+  // 直接显示1-10分，不再需要映射转换
   const rawRating = review.rating_overall || review.rating_teaching;
-  const displayRating = rawRating ? Math.ceil((rawRating / 5) * 10) : null;
+  const displayRating = rawRating || null;
   
   // 显示老师信息
   const instructors = review.offering?.instructor 
@@ -116,7 +116,10 @@ export default function ReviewCard({
             </span>
           )}
           {instructors.map((instructor, idx) => (
-            <span key={`inst-${idx}`} className={`${styles.tag} ${styles.tagInstructor}`}>
+            <span 
+              key={`inst-${idx}`} 
+              className={`${styles.tag} ${styles.tagInstructor}`}
+            >
               {instructor}
             </span>
           ))}

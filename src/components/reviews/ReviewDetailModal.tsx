@@ -161,27 +161,6 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
               <span className={styles.authorName}>{author.nickname}</span>
             </div>
           )}
-          <div className={styles.titleActions}>
-            <Tooltip title={t('allCourses.review.reply')}>
-              <button
-                type="button"
-                className={styles.replyButton}
-                onClick={handleReplyClick}
-                aria-label={t('allCourses.review.reply')}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-              </button>
-            </Tooltip>
-          </div>
         </div>
       }
       width={700}
@@ -212,22 +191,20 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
               <div className={styles.ratingItem}>
                 <span className={styles.ratingLabel}>{t('allCourses.review.rating')}:</span>
                 <div className={styles.stars}>
-                  {/* 后端使用1-5分，映射到1-10分显示 */}
+                  {/* 直接显示1-10分，不再需要映射转换 */}
                   {Array.from({ length: 10 }, (_, i) => {
-                    // 将1-5分映射到1-10分：1->2, 2->4, 3->6, 4->8, 5->10
                     const rawRating = review.rating_overall || review.rating_teaching || 0;
-                    const mappedRating = Math.ceil((rawRating / 5) * 10);
                     return (
                       <span
                         key={i}
-                        className={`${styles.star} ${i < mappedRating ? styles.starFilled : ''}`}
+                        className={`${styles.star} ${i < rawRating ? styles.starFilled : ''}`}
                       >
                         ⭐
                       </span>
                     );
                   })}
                   <span className={styles.ratingValue}>
-                    {Math.ceil(((review.rating_overall || review.rating_teaching || 0) / 5) * 10)}/10
+                    {(review.rating_overall || review.rating_teaching || 0)}/10
                   </span>
                 </div>
               </div>
@@ -256,9 +233,34 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
           </div>
         </div>
 
-        {/* 回复输入框 */}
-        {showReplyInput && (
-          <div className={styles.section}>
+        {/* 回复列表 */}
+        <div className={styles.section}>
+          <div className={styles.commentsHeader}>
+            <span className={styles.commentsTitle}>
+              {t('allCourses.review.comments')} ({comments.length})
+            </span>
+            <Tooltip title={t('allCourses.review.reply')}>
+              <button
+                type="button"
+                className={styles.replyButton}
+                onClick={handleReplyClick}
+                aria-label={t('allCourses.review.reply')}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </button>
+            </Tooltip>
+          </div>
+          {/* 回复输入框 */}
+          {showReplyInput && (
             <div className={styles.replyInputContainer}>
               <div className={styles.replyInputWrapper}>
                 <textarea
@@ -290,16 +292,7 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
                 </button>
               </div>
             </div>
-          </div>
-        )}
-
-        {/* 回复列表 */}
-        <div className={styles.section}>
-          <div className={styles.commentsHeader}>
-            <span className={styles.commentsTitle}>
-              {t('allCourses.review.comments')} ({comments.length})
-            </span>
-          </div>
+          )}
           {loadingComments ? (
             <div className={styles.loadingState}>
               {t('allCourses.states.loading')}
@@ -310,10 +303,11 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
             </div>
           ) : (
             <div className={styles.commentsList}>
-              {comments.map((comment) => (
+              {comments.map((comment, index) => (
                 <CommentItem 
                   key={comment.id} 
                   comment={comment}
+                  commentNumber={index + 1}
                   onUpdate={(updatedComment) => {
                     setComments(comments.map(c => c.id === updatedComment.id ? updatedComment : c));
                   }}
@@ -330,10 +324,11 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
 // 评论项组件
 interface CommentItemProps {
   comment: ReviewComment;
+  commentNumber: number;
   onUpdate?: (updatedComment: ReviewComment) => void;
 }
 
-function CommentItem({ comment, onUpdate }: CommentItemProps) {
+function CommentItem({ comment, commentNumber, onUpdate }: CommentItemProps) {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [userAvatar, setUserAvatar] = useState<string | null>(null);
@@ -451,8 +446,10 @@ function CommentItem({ comment, onUpdate }: CommentItemProps) {
         </span>
       </div>
       <div className={styles.commentContent}>{comment.content}</div>
-      <div className={styles.commentActions}>
-        <div className={styles.commentActionButtonGroup}>
+      <div className={styles.commentFooter}>
+        <span className={styles.commentNumber}>#{commentNumber}</span>
+        <div className={styles.commentActions}>
+          <div className={styles.commentActionButtonGroup}>
           <Tooltip title={isLiked ? t('allCourses.resource.unlike') : t('allCourses.resource.like')}>
             <button
               type="button"
@@ -493,6 +490,7 @@ function CommentItem({ comment, onUpdate }: CommentItemProps) {
               <span className={styles.commentActionCount}>{formatCount(dislikeCount)}</span>
             </button>
           </Tooltip>
+          </div>
         </div>
       </div>
     </div>

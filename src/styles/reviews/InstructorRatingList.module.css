@@ -1,0 +1,78 @@
+.instructorList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.instructorItem {
+  padding: 16px;
+  background: var(--card);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.instructorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.instructorName {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.reviewCount {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.ratingInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.averageRating {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.grade {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  padding: 4px 12px;
+  background: var(--tag-rating-bg);
+  border: 1px solid var(--tag-rating-border);
+  border-radius: 8px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.gradeF {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 16px;
+}
+

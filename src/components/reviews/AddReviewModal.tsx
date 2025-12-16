@@ -127,6 +127,29 @@ export default function AddReviewModal({
       const data = await response.json();
       if (response.ok && data.status === 'success' && data.data?.offering) {
         return data.data.offering.id;
+      } else {
+        // 如果返回400，可能是因为已经存在相同的offering，尝试再次查找
+        if (response.status === 400 && data.message?.includes('already exists')) {
+          console.warn('Offering already exists, trying to find it again...');
+          // 重新查找一次，可能是在创建过程中被其他请求创建了
+          const retryResponse = await getOfferings({
+            course_id: courseId,
+            term: term,
+          });
+          if (retryResponse.status === 'success' && retryResponse.data) {
+            const matchingOffering = retryResponse.data.offerings.find((offering: any) => {
+              if (offering.term !== term) return false;
+              const offeringInstructors = Array.isArray(offering.instructor) 
+                ? offering.instructor 
+                : (offering.instructor ? [offering.instructor] : []);
+              return offeringInstructors.includes(instructor.trim());
+            });
+            if (matchingOffering) {
+              return matchingOffering.id;
+            }
+          }
+        }
+        console.error('Failed to create offering:', response.status, data);
       }
     } catch (error) {
       console.error('Failed to create offering:', error);
@@ -172,17 +195,12 @@ export default function AddReviewModal({
         offeringId = await getOrCreateOffering(validInstructors[0], term.trim());
       }
 
-      // 将1-10的评分转换为后端需要的格式
-      // 后端使用1-5分，我们将1-10分映射到1-5分
-      // 映射规则：1-2->1, 3-4->2, 5-6->3, 7-8->4, 9-10->5
-      const ratingOverall = Math.ceil((rating! / 10) * 5);
-      const ratingTeaching = Math.ceil((rating! / 10) * 5);
-
+      // 直接使用1-10分，不再需要映射转换
       const response = await createReview({
         course_id: courseId,
         offering_id: offeringId || undefined,
-        rating_overall: ratingOverall,
-        rating_teaching: ratingTeaching,
+        rating_overall: rating!,
+        rating_teaching: rating!,
         title: title.trim(),
         content: content.trim(),
         course_code: courseCode.trim() || undefined,

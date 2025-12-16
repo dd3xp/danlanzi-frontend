@@ -27,6 +27,48 @@
   align-items: center;
   gap: 12px;
   width: 100%;
+  padding-right: 56px;
+  box-sizing: border-box;
+}
+
+.titleText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.replyButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.replyButton:hover {
+  background: var(--hover-bg);
+}
+
+.replyButton svg {
+  width: 18px;
+  height: 18px;
+  transition: color 200ms ease;
+  color: var(--text-secondary);
+}
+
+.replyButton:hover svg {
+  color: var(--text);
 }
 
 .titleText {
@@ -42,6 +84,7 @@
   border-radius: 8px;
   transition: background-color 200ms ease;
   flex-shrink: 0;
+  margin-left: 0;
 }
 
 .uploaderInfo:hover {
@@ -223,5 +266,265 @@
   background: var(--tag-other-bg);
   color: var(--tag-other-text);
   border: 1px solid var(--tag-other-border);
+}
+
+/* 回复输入框 */
+.replyInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.replyInputWrapper {
+  position: relative;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.replyInputWrapper:hover {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
+}
+
+.replyInputWrapper:focus-within {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--hover-bg);
+}
+
+.replyInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+}
+
+.replyInput::placeholder {
+  color: var(--text-muted);
+}
+
+.replyActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancelButton,
+.submitButton {
+  appearance: none;
+  border: none;
+  height: 36px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 160ms ease, transform 0.1s ease;
+  background: var(--button-bg, var(--hover-bg));
+  color: var(--button-text, var(--text));
+}
+
+.cancelButton:hover:not(:disabled),
+.submitButton:hover:not(:disabled) {
+  background: var(--button-hover-bg, var(--active-bg));
+}
+
+.cancelButton:active:not(:disabled),
+.submitButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.cancelButton:disabled,
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 评论列表 */
+.commentsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.replyInputContainer {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.commentsTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.loadingState,
+.emptyComments {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.commentItem {
+  padding: 16px;
+  background: var(--hover-bg);
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.commentUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.commentUserInfo:hover {
+  opacity: 0.8;
+}
+
+.commentAvatar,
+.commentAvatarFallback {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.commentAvatarFallback {
+  background: var(--tag-other-bg);
+  color: var(--tag-other-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.commentUserName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.commentTime {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.commentContent {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 8px;
+}
+
+.commentFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.commentNumber {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.commentActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.commentActionButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.commentLikeButton,
+.commentDislikeButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 6px;
+  transition: background-color 200ms ease;
+  min-width: 40px;
+}
+
+.commentLikeButton:hover,
+.commentDislikeButton:hover {
+  background: var(--hover-bg);
+}
+
+.commentLikeIcon,
+.commentDislikeIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.commentLikeIcon.commentLikeFilled {
+  color: #ef4444;
+}
+
+.commentDislikeIcon.commentDislikeFilled {
+  color: #6b7280;
+}
+
+.commentLikeButton:hover .commentLikeIcon {
+  color: #ef4444;
+}
+
+.commentDislikeButton:hover .commentDislikeIcon {
+  color: #6b7280;
+}
+
+.commentActionCount {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1;
+  margin-top: 2px;
+  text-align: center;
+  min-width: 20px;
 }
 
