@@ -13,6 +13,7 @@ export interface ReviewComment {
   content: string;
   status: string;
   created_at: string;
+  floor_number?: number;
   user?: {
     id: number;
     nickname: string;
@@ -59,6 +60,13 @@ export const getReviewComments = async (params: {
   const endpoint = `/reviewComments/${queryString ? `?${queryString}` : ''}`;
   
   return apiCall<ReviewCommentsResponse>(endpoint, {
+    method: 'GET',
+  }, false);
+};
+
+// 获取单条评论详情
+export const getReviewComment = async (commentId: number): Promise<{ status: string; data?: { comment: ReviewComment }; message?: string }> => {
+  return apiCall<{ comment: ReviewComment }>(`/reviewComments/${commentId}`, {
     method: 'GET',
   }, false);
 };

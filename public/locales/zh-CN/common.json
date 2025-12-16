@@ -67,6 +67,7 @@
     "ariaLabel": "用户菜单",
     "profile": "用户资料",
     "settings": "设置",
+    "notifications": "通知",
     "logout": "退出登录"
   },
   "settings": {
@@ -120,7 +121,13 @@
     "courses": "课程板块",
     "myResources": "资源管理",
     "resources": "资源管理",
-    "brandName": "旦篮子"
+    "brandName": "旦篮子",
+    "announcements": "公告管理",
+    "moderation": "审核处理"
+  },
+  "homepage": {
+    "title": "旦篮子",
+    "subtitle": "旦篮子是一个面向复旦大学的课程资源共享平台，致力于为学生提供优质的课程资料和学习资源。在这里，你可以浏览课程信息、分享学习资源、查看课程评价，与同学们一起共同成长。"
   },
   "allCourses": {
     "title": "所有课程",
@@ -245,6 +252,10 @@
       "noFavorited": "暂无收藏的资源",
       "noUploaded": "暂无发布的资源"
     },
+    "edit": "编辑资源",
+    "editResource": "编辑资源",
+    "updateSuccess": "资源更新成功",
+    "updateFailed": "资源更新失败",
     "delete": "删除资源",
     "deleteSuccess": "资源删除成功",
     "deleteFailed": "资源删除失败",
@@ -373,5 +384,196 @@
     "fileTooLargeWithLimit": "文件不能超过 {{limit}}MB",
     "uploadFailed": "上传失败",
     "loadSystemAvatarsFailed": "加载系统头像失败"
+  },
+  "admin": {
+    "announcements": {
+      "title": "公告管理",
+      "subtitle": "管理系统公告，创建、编辑和删除公告",
+      "create": "创建公告",
+      "edit": "编辑",
+      "delete": "删除",
+      "loading": "加载中...",
+      "loadFailed": "加载失败",
+      "noAnnouncements": "暂无公告",
+      "createTitle": "创建公告",
+      "editTitle": "编辑公告",
+      "deleteConfirmTitle": "确认删除",
+      "deleteConfirmMessage": "确定要删除公告「{{title}}」吗？此操作不可恢复。",
+      "createSuccess": "公告创建成功",
+      "updateSuccess": "公告更新成功",
+      "deleteSuccess": "公告删除成功",
+      "operationFailed": "操作失败",
+      "titleRequired": "请输入公告标题",
+      "submitting": "提交中...",
+      "update": "更新",
+      "cancel": "取消",
+      "submit": "提交",
+      "priority": "优先级",
+      "startsAt": "开始时间",
+      "endsAt": "结束时间",
+      "status": {
+        "scheduled": "已计划",
+        "active": "进行中",
+        "ended": "已结束"
+      },
+      "tabs": {
+        "all": "全部"
+      },
+      "filter": {
+        "all": "全部",
+        "scheduled": "已计划",
+        "active": "进行中",
+        "ended": "已结束"
+      },
+      "form": {
+        "title": "标题",
+        "titlePlaceholder": "请输入公告标题",
+        "content": "内容",
+        "contentPlaceholder": "请输入公告内容（可选）",
+        "priority": "优先级",
+        "startsAt": "开始时间",
+        "endsAt": "结束时间"
+      },
+      "prevPage": "上一页",
+      "nextPage": "下一页",
+      "pageInfo": "第 {{page}} 页，共 {{totalPages}} 页"
+    },
+    "moderation": {
+      "title": "审核处理",
+      "subtitle": "处理用户举报和审核队列",
+      "loading": "加载中...",
+      "loadFailed": "加载失败",
+      "noReports": "暂无举报",
+      "noQueueItems": "暂无待审核项",
+      "handle": "处理",
+      "handleTitle": "处理审核项",
+      "handleSuccess": "处理成功",
+      "operationFailed": "操作失败",
+      "submitting": "提交中...",
+      "submit": "提交",
+      "cancel": "取消",
+      "stats": {
+        "pending": "待处理",
+        "reports": "待处理举报",
+        "approved": "已通过",
+        "rejected": "已拒绝"
+      },
+      "tabs": {
+        "queue": "审核队列",
+        "reports": "举报列表",
+        "pendingReview": "待复核"
+      },
+      "action": {
+        "noViolation": "不违规",
+        "delete": "删除",
+        "hide": "隐藏"
+      },
+      "filter": {
+        "all": "全部",
+        "pending": "待处理",
+        "handled": "已处理",
+        "approved": "已通过",
+        "rejected": "已拒绝",
+        "removed": "已移除"
+      },
+      "status": {
+        "pending": "待处理",
+        "handled": "已处理",
+        "approved": "已通过",
+        "rejected": "已拒绝",
+        "removed": "已移除"
+      },
+      "entityType": {
+        "resource": "资源",
+        "review": "评价",
+        "comment": "评论"
+      },
+      "reason": "举报原因",
+      "reporter": "举报人",
+      "reportCount": "举报次数",
+      "handler": "处理人",
+      "handledAt": "处理时间",
+      "notes": "备注",
+      "reportedContent": "被举报内容",
+      "sourceReview": "来源课评：",
+      "sourceResource": "来源资源：",
+      "commentNotSupported": "评论详情暂不支持在此处查看",
+      "createdAt": "创建时间",
+      "form": {
+        "status": "处理结果",
+        "notes": "备注",
+        "notesPlaceholder": "请输入处理备注（可选）"
+      },
+      "prevPage": "上一页",
+      "nextPage": "下一页",
+      "pageInfo": "第 {{page}} 页，共 {{totalPages}} 页",
+      "deleteFailed": "删除失败",
+      "deleteFailedWithCount": "{{count}} 条举报记录删除失败（可能是未处理的举报）"
+    },
+    "report": {
+      "title": "举报内容",
+      "reason": "举报原因",
+      "reasons": {
+        "plagiarism": "抄袭",
+        "abuse": "辱骂/不当言论",
+        "spam": "垃圾信息",
+        "other": "其他"
+      },
+      "details": "详细说明（可选）",
+      "detailsPlaceholder": "请描述举报原因...",
+      "submit": "提交举报",
+      "submitting": "提交中...",
+      "cancel": "取消",
+      "submitSuccess": "举报提交成功",
+      "submitFailed": "举报提交失败"
+    }
+  },
+  "notifications": {
+    "tabs": {
+      "ariaLabel": "通知标签",
+      "announcements": "系统公告",
+      "messages": "用户消息"
+    },
+    "loading": "加载中...",
+    "loadFailed": "加载失败",
+    "noAnnouncements": "暂无系统公告",
+    "noMessages": "暂无用户消息",
+    "announcement": "系统公告",
+    "message": "消息",
+    "markAsRead": "标记已读",
+    "markAsUnread": "标记未读",
+    "markAllAsRead": "全部已读",
+    "markAllReadSuccess": "已全部标记为已读",
+    "markAllReadFailed": "操作失败",
+    "delete": "删除",
+    "deleteSuccess": "删除成功",
+    "deleteFailed": "删除失败",
+    "deleteAll": "全部删除",
+    "deleteAllSuccess": "已删除所有通知",
+    "deleteAllFailed": "删除失败",
+    "confirmDeleteAll": "确定要删除所有通知吗？",
+    "noContent": "暂无内容",
+    "prevPage": "上一页",
+    "nextPage": "下一页",
+    "pageInfo": "第 {{page}} 页，共 {{totalPages}} 页",
+    "types": {
+      "resource": "资源通知",
+      "review": "课评通知",
+      "comment": "评论通知",
+      "system": "系统通知"
+    },
+    "detail": "通知详情",
+    "relatedEntity": "关联内容：",
+    "commentContent": "评论内容",
+    "sourceReview": "来源课评：",
+    "sourceResource": "来源资源：",
+    "entityTypes": {
+      "resource": "资源",
+      "review": "课程评价",
+      "resource_comment": "资源评论",
+      "review_comment": "课评回复",
+      "announcement": "公告"
+    },
+    "unreadCount": "{{count}} 条未读通知"
   }
 }

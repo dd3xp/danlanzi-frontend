@@ -18,7 +18,8 @@
       "tokenError": "令牌错误",
       "tokenMissing": "缺少访问令牌",
       "authRequired": "需要身份验证",
-      "adminRequired": "需要管理员权限"
+      "adminRequired": "需要管理员权限",
+      "invalidTokenPayload": "无效的令牌载荷：缺少用户ID"
     },
     "success": {
       "registrationSuccessful": "注册成功",
@@ -136,6 +137,31 @@
       "liked": "点赞成功",
       "unliked": "已取消点赞",
       "deleted": "资源删除成功"
+    }
+  },
+  "notification": {
+    "errors": {
+      "validationFailed": "参数验证失败",
+      "createFailed": "创建通知失败",
+      "someUserIdsNotExist": "部分用户ID不存在",
+      "batchCreateFailed": "批量创建通知失败",
+      "retrieveFailed": "获取通知列表失败",
+      "unreadCountRetrieveFailed": "获取未读通知数量失败",
+      "notFound": "通知不存在",
+      "retrieveSingleFailed": "获取通知详情失败",
+      "markAsReadFailed": "标记通知为已读失败",
+      "markAllAsReadFailed": "标记所有通知为已读失败",
+      "deleteFailed": "删除通知失败"
+    },
+    "success": {
+      "created": "通知创建成功",
+      "batchCreated": "批量创建通知成功",
+      "retrieved": "通知列表获取成功",
+      "unreadCountRetrieved": "未读通知数量获取成功",
+      "retrievedSingle": "通知详情获取成功",
+      "markedAsRead": "通知已标记为已读",
+      "allMarkedAsRead": "所有通知已标记为已读",
+      "deleted": "通知删除成功"
     }
   }
 }

@@ -5,7 +5,7 @@ import type { UploadProps } from 'antd';
 import { PlusOutlined, UploadOutlined, CloseOutlined } from '@ant-design/icons';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { uploadResource, ResourceType } from '@/services/resourceService';
+import { uploadResource, updateResource, ResourceType, Resource } from '@/services/resourceService';
 import { getCourses, createCourse, getOfferings } from '@/services/courseService';
 import { getAuthHeaders } from '@/utils/auth';
 import backendUrl from '@/services/backendUrl';
@@ -21,9 +21,10 @@ interface AddResourceModalProps {
   open: boolean;
   onClose: () => void;
   onSuccess?: () => void;
+  initialData?: Resource | null; // 编辑模式时传入的资源数据
 }
 
-export default function AddResourceModal({ open, onClose, onSuccess }: AddResourceModalProps) {
+export default function AddResourceModal({ open, onClose, onSuccess, initialData }: AddResourceModalProps) {
   const { t } = useTranslation('common');
   const router = useRouter();
   const locale = router.locale || 'zh';
@@ -40,6 +41,76 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
   const [courseCodeTag, setCourseCodeTag] = useState('');
   const departments = getDepartments(locale, t);
   const termOptions = getTermOptions();
+
+  // 从 initialData 加载数据到表单（编辑模式）
+  useEffect(() => {
+    console.log('AddResourceModal useEffect triggered', { 
+      open, 
+      hasInitialData: !!initialData,
+      initialDataId: initialData?.id,
+      initialDataTitle: initialData?.title,
+      initialDataDescription: initialData?.description,
+      initialDataTags: initialData?.tags
+    });
+    
+    if (open && initialData) {
+      // 编辑模式：加载资源数据
+      console.log('Loading resource data into form', initialData);
+      setResourceName(initialData.title || '');
+      setDescription(initialData.description || '');
+      
+      // 解析标签和课程信息
+      const { parseResourceTags } = require('@/utils/resourceUtils');
+      const parsed = parseResourceTags(initialData);
+      
+      console.log('Parsed tags', parsed);
+      
+      if (parsed.term.length > 0) {
+        setTerm(parsed.term[0]);
+      } else {
+        setTerm('');
+      }
+      if (parsed.courseName.length > 0) {
+        setCourseName(parsed.courseName[0]);
+      } else {
+        setCourseName('');
+      }
+      if (parsed.courseCode.length > 0) {
+        setCourseCodeTag(parsed.courseCode[0]);
+      } else {
+        setCourseCodeTag('');
+      }
+      if (parsed.instructors.length > 0) {
+        setInstructors(parsed.instructors);
+      } else {
+        setInstructors(['']);
+      }
+      if (parsed.others.length > 0) {
+        setTags(parsed.others);
+      } else {
+        setTags(['']);
+      }
+      
+      // 如果有课程关联，设置部门
+      if (initialData.courseLinks && initialData.courseLinks.length > 0) {
+        const course = initialData.courseLinks[0]?.offering?.course;
+        if (course?.dept) {
+          setDepartment(course.dept);
+        } else {
+          setDepartment('');
+        }
+      } else {
+        setDepartment('');
+      }
+      
+      // 文件类型资源不需要设置文件列表（编辑时不能重新上传文件，除非用户选择新文件）
+      setFileList([]);
+    } else if (open && !initialData) {
+      // 新建模式：重置表单
+      console.log('Resetting form for new resource');
+      resetForm();
+    }
+  }, [open, initialData?.id, initialData?.title, initialData?.description, initialData?.tags, initialData?.courseLinks]);
 
   // 重置表单
   const resetForm = () => {
@@ -284,38 +355,76 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
         }
       }
 
-      console.log('Uploading resource', { 
-        courseName, 
-        courseId,
-        term,
-        offeringId,
-        resourceName,
-        fileName: file ? file.name : 'no file',
-        fileSize: file ? file.size : 0,
-        fileType: file ? file.type : 'note',
-        tags: allTags
-      });
+      if (initialData) {
+        // 编辑模式
+        console.log('Updating resource', { 
+          id: initialData.id,
+          courseName, 
+          courseId,
+          term,
+          offeringId,
+          resourceName,
+          description: description.trim(),
+          fileName: file ? file.name : 'no file',
+          tags: allTags
+        });
 
-      const response = await uploadResource({
-        type: file ? 'file' : 'note',
-        title: resourceName.trim(),
-        description: description.trim() || undefined,
-        visibility: 'public',
-        course_id: courseId || undefined,
-        offering_id: offeringId || undefined,
-        file: file || undefined,
-        tags: allTags.length > 0 ? allTags : undefined,
-      });
+        const response = await updateResource(initialData.id, {
+          type: file ? 'file' : (initialData.type || 'note'),
+          title: resourceName.trim(),
+          description: description.trim(),
+          visibility: initialData.visibility || 'public',
+          course_id: courseId || undefined,
+          offering_id: offeringId || undefined,
+          file: file || undefined,
+          tags: allTags.length > 0 ? allTags : undefined,
+        });
 
-      console.log('Upload response', response);
+        console.log('Update response', response);
 
-      if (response.status === 'success') {
-        showToast(t('allCourses.resource.uploadSuccess'), 'success');
-        handleClose();
-        onSuccess?.();
+        if (response.status === 'success') {
+          showToast(t('myResources.updateSuccess'), 'success');
+          handleClose();
+          onSuccess?.();
+        } else {
+          console.error('Update failed:', response);
+          message.error(translateApiMessage(response, t));
+        }
       } else {
-        console.error('Upload failed:', response);
-        message.error(translateApiMessage(response, t));
+        // 新建模式
+        console.log('Uploading resource', { 
+          courseName, 
+          courseId,
+          term,
+          offeringId,
+          resourceName,
+          fileName: file ? file.name : 'no file',
+          fileSize: file ? file.size : 0,
+          fileType: file ? file.type : 'note',
+          tags: allTags
+        });
+
+        const response = await uploadResource({
+          type: file ? 'file' : 'note',
+          title: resourceName.trim(),
+          description: description.trim() || undefined,
+          visibility: 'public',
+          course_id: courseId || undefined,
+          offering_id: offeringId || undefined,
+          file: file || undefined,
+          tags: allTags.length > 0 ? allTags : undefined,
+        });
+
+        console.log('Upload response', response);
+
+        if (response.status === 'success') {
+          showToast(t('allCourses.resource.uploadSuccess'), 'success');
+          handleClose();
+          onSuccess?.();
+        } else {
+          console.error('Upload failed:', response);
+          message.error(translateApiMessage(response, t));
+        }
       }
     } catch (error) {
       console.error('Upload error:', error);
@@ -336,10 +445,11 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
       open={open}
       onCancel={handleClose}
       footer={null}
-      title={t('allCourses.resource.addResource')}
+      title={initialData ? t('myResources.editResource') : t('allCourses.resource.addResource')}
       width={1000}
       className={styles.modal}
       style={{ top: '5%' }}
+      key={initialData?.id || 'new'}
     >
       <div className={styles.formLayout}>
         {/* 左侧：基本信息 */}
@@ -650,7 +760,7 @@ export default function AddResourceModal({ open, onClose, onSuccess }: AddResour
               <span></span><span></span><span></span>
             </span>
           ) : (
-            t('allCourses.resource.submit')
+            initialData ? t('myResources.update') : t('allCourses.resource.submit')
           )}
         </button>
       </div>

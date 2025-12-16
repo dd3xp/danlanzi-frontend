@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 import Tooltip from '@/components/global/Tooltip';
 import { Review, reactToReview } from '@/services/reviewService';
 import { formatCount } from '@/utils/resourceUtils';
+import ReportModal from '@/components/report/ReportModal';
 import styles from '@/styles/reviews/ReviewCard.module.css';
 
 interface ReviewCardProps {
   review: Review;
+  hideActions?: boolean; // 隐藏所有操作按钮
   onViewDetail?: (review: Review) => void;
   onUpdate?: (updatedReview: Review) => void;
 }
 
 export default function ReviewCard({
   review,
+  hideActions = false,
   onViewDetail,
   onUpdate
 }: ReviewCardProps) {
@@ -21,6 +24,15 @@ export default function ReviewCard({
   const [isDisliked, setIsDisliked] = useState(review.userReaction === 'dislike');
   const [likeCount, setLikeCount] = useState(review.stats?.like_count || 0);
   const [dislikeCount, setDislikeCount] = useState(review.stats?.dislike_count || 0);
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  // 当review变化时，同步更新状态
+  useEffect(() => {
+    setIsLiked(review.userReaction === 'like');
+    setIsDisliked(review.userReaction === 'dislike');
+    setLikeCount(review.stats?.like_count || 0);
+    setDislikeCount(review.stats?.dislike_count || 0);
+  }, [review.id, review.userReaction, review.stats?.like_count, review.stats?.dislike_count]);
   
   // 直接显示1-10分，不再需要映射转换
   const rawRating = review.rating_overall || review.rating_teaching;
@@ -37,6 +49,11 @@ export default function ReviewCard({
     if (onViewDetail) {
       onViewDetail(review);
     }
+  };
+
+  const handleReport = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowReportModal(true);
   };
 
   const handleLike = async (e: React.MouseEvent) => {
@@ -92,6 +109,7 @@ export default function ReviewCard({
   };
 
   return (
+    <>
     <div className={styles.reviewCard}>
       <div className={styles.reviewCardContent}>
         {review.title && (
@@ -125,8 +143,9 @@ export default function ReviewCard({
           ))}
         </div>
       </div>
-      <div className={styles.cardActions}>
-        <div className={styles.actionButtonGroup}>
+      {!hideActions && (
+        <div className={styles.cardActions}>
+          <div className={styles.actionButtonGroup}>
           <Tooltip title={isLiked ? t('allCourses.resource.unlike') : t('allCourses.resource.like')}>
             <button
               type="button"
@@ -168,6 +187,26 @@ export default function ReviewCard({
             </button>
           </Tooltip>
         </div>
+        <Tooltip title={t('report.title')}>
+          <button
+            type="button"
+            className={styles.reportButton}
+            onClick={handleReport}
+          >
+            <svg
+              className={styles.reportIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+              <line x1="4" y1="22" x2="4" y2="15" />
+            </svg>
+          </button>
+        </Tooltip>
         {onViewDetail && (
           <Tooltip title={t('allCourses.review.viewDetail')}>
             <button
@@ -190,7 +229,17 @@ export default function ReviewCard({
           </Tooltip>
         )}
       </div>
+      )}
+      {!hideActions && (
+        <ReportModal
+          open={showReportModal}
+          onClose={() => setShowReportModal(false)}
+          entityType="review"
+          entityId={review.id}
+        />
+      )}
     </div>
+    </>
   );
 }
 

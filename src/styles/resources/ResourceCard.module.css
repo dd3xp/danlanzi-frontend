@@ -23,6 +23,11 @@
   line-height: 1.4;
 }
 
+.resourceTitle.hidden {
+  font-style: italic;
+  opacity: 0.6;
+}
+
 .tagsContainer {
   display: flex;
   flex-wrap: wrap;
@@ -84,7 +89,9 @@
 .favoriteButton,
 .likeButton,
 .viewButton,
-.deleteButton {
+.deleteButton,
+.editButton,
+.reportButton {
   appearance: none;
   border: none;
   background: transparent;
@@ -102,7 +109,9 @@
 
 .favoriteButton:hover,
 .likeButton:hover,
-.viewButton:hover {
+.viewButton:hover,
+.editButton:hover,
+.reportButton:hover {
   background: var(--hover-bg);
 }
 
@@ -129,11 +138,11 @@
 }
 
 .starIcon.starFilled {
-  color: #fbbf24; /* 黄色星星 */
+  color: var(--icon-star);
 }
 
 .favoriteButton:hover .starIcon {
-  color: #fbbf24;
+  color: var(--icon-star);
 }
 
 .likeIcon {
@@ -144,11 +153,11 @@
 }
 
 .likeIcon.likeFilled {
-  color: #ef4444; /* 红色心形 */
+  color: var(--icon-heart);
 }
 
 .likeButton:hover .likeIcon {
-  color: #ef4444;
+  color: var(--icon-heart);
 }
 
 .arrowIcon {
@@ -169,5 +178,27 @@
   height: 20px;
   color: var(--text-secondary);
   transition: color 200ms ease;
+}
+
+.reportIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.reportButton:hover .reportIcon {
+  color: var(--text);
+}
+
+.editIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.editButton:hover .editIcon {
+  color: var(--text);
 }
 

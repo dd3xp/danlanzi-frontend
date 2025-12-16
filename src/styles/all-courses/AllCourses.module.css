@@ -42,7 +42,7 @@
 
 .searchInput:focus {
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px var(--alpha-blue-1);
 }
 
 .searchIcon {
@@ -197,7 +197,7 @@
 }
 
 .courseOption.selected {
-  background: var(--blue-light, rgba(59, 130, 246, 0.1));
+  background: var(--alpha-blue-1);
 }
 
 .courseCode {
@@ -284,13 +284,21 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  border-bottom: 1px solid var(--card-border);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
   padding: 14px 24px;
-  margin: 0 -24px;
+  margin-bottom: 12px;
+  background: var(--card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.courseCard:hover {
+  border-color: var(--border);
+  box-shadow: 0 2px 8px var(--alpha-dark-2);
 }
 
 .courseCard:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
 }
 
 
@@ -571,11 +579,11 @@
 }
 
 .starIcon.starFilled {
-  color: #fbbf24; /* 黄色星星 */
+  color: var(--icon-star); /* 黄色星星 */
 }
 
 .favoriteButton:hover .starIcon {
-  color: #fbbf24;
+  color: var(--icon-star);
 }
 
 .likeIcon {
@@ -586,11 +594,11 @@
 }
 
 .likeIcon.likeFilled {
-  color: #ef4444; /* 红色心形 */
+  color: var(--icon-heart); /* 红色心形 */
 }
 
 .likeButton:hover .likeIcon {
-  color: #ef4444;
+  color: var(--icon-heart);
 }
 
 .resourceCard .arrowIcon {

@@ -1,0 +1,216 @@
+.messagesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.toolbarButton {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: var(--button-bg);
+  border: none;
+  color: var(--button-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 160ms ease;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.toolbarButton:hover:not(:disabled) {
+  background: var(--button-hover-bg);
+  transform: scale(1.05);
+}
+
+.toolbarButton:active {
+  transform: scale(0.95);
+}
+
+.markAllReadButton {
+  appearance: none;
+  border: none;
+  background: var(--button-bg);
+  color: var(--button-text);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.markAllReadButton:hover:not(:disabled) {
+  background: var(--button-hover-bg);
+}
+
+.loadingState,
+.emptyState {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.notificationsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notificationItem {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.notificationItem:hover {
+  background: var(--hover-bg);
+  border-color: var(--card-border);
+}
+
+.notificationItem.unread {
+  background: var(--card);
+  border-color: var(--card-border);
+  border-left: 4px solid var(--blue);
+}
+
+.notificationContent {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notificationTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notificationBody {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.notificationTime {
+  font-size: 12px;
+  color: var(--text-assist);
+  white-space: nowrap;
+}
+
+.notificationActions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.iconButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 160ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.iconButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.iconButton:hover {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+.actionButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.actionButton:hover {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.pageButton {
+  appearance: none;
+  border: none;
+  background: var(--button-bg);
+  color: var(--button-text);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.pageButton:hover:not(:disabled) {
+  background: var(--button-hover-bg);
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 14px;
+  color: var(--text-secondary);
+}

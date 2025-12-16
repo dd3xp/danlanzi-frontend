@@ -32,10 +32,39 @@
   background: var(--hover-bg);
 }
 
+.menuItemIconContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .menuItemIcon {
   width: 16px;
   height: 16px;
   color: var(--text-assist);
+  flex-shrink: 0;
+}
+
+.unreadBadge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 14px;
+  height: 14px;
+  border-radius: 7px;
+  background: var(--error);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  border: 1.5px solid var(--panel);
+  padding: 0 3px;
+  box-sizing: border-box;
 }
 
 .userInfo {

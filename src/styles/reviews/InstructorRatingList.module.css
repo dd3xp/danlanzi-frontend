@@ -60,9 +60,9 @@
 }
 
 .gradeF {
-  background: #fee2e2;
-  border-color: #fca5a5;
-  color: #dc2626;
+  background: var(--red-2);
+  border-color: var(--red-3);
+  color: var(--red-1);
 }
 
 .emptyState {

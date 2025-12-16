@@ -144,18 +144,18 @@ export default function CourseReviewsModal({
           >
             {t('allCourses.review.instructors') || '老师评价'}
           </button>
-        </div>
+            </div>
 
         <div className={styles.tabPanel} role="tabpanel">
           {activeTab === 'reviews' && (
             <ReviewList
               reviews={reviews}
               loading={loading}
-              onViewDetail={handleViewDetail}
-              onUpdate={(updatedReview) => {
-                setReviews(reviews.map(r => r.id === updatedReview.id ? updatedReview : r));
-              }}
-            />
+                onViewDetail={handleViewDetail}
+                onUpdate={(updatedReview) => {
+                  setReviews(reviews.map(r => r.id === updatedReview.id ? updatedReview : r));
+                }}
+              />
           )}
 
           {activeTab === 'instructors' && (

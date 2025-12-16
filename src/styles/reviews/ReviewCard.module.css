@@ -78,7 +78,8 @@
 
 .likeButton,
 .dislikeButton,
-.viewButton {
+.viewButton,
+.reportButton {
   appearance: none;
   border: none;
   background: transparent;
@@ -96,7 +97,8 @@
 
 .likeButton:hover,
 .dislikeButton:hover,
-.viewButton:hover {
+.viewButton:hover,
+.reportButton:hover {
   background: var(--hover-bg);
 }
 
@@ -109,19 +111,19 @@
 }
 
 .likeIcon.likeFilled {
-  color: #ef4444; /* 红色心形 */
+  color: var(--icon-heart);
 }
 
 .dislikeIcon.dislikeFilled {
-  color: #6b7280; /* 灰色倒心形 */
+  color: var(--icon-heart-disabled);
 }
 
 .likeButton:hover .likeIcon {
-  color: #ef4444;
+  color: var(--icon-heart);
 }
 
 .dislikeButton:hover .dislikeIcon {
-  color: #6b7280;
+  color: var(--icon-heart-disabled);
 }
 
 .actionCount {
@@ -149,5 +151,16 @@
 .viewButton:hover .arrowIcon {
   color: var(--text);
   transform: translateX(4px);
+}
+
+.reportIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.reportButton:hover .reportIcon {
+  color: var(--text);
 }
 

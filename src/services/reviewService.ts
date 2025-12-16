@@ -83,14 +83,14 @@ export const getReviews = async (params?: {
   
   return apiCall<ReviewsResponse>(endpoint, {
     method: 'GET',
-  }, false);
+  }, true); // 需要认证以获取用户的点赞/踩状态
 };
 
 // 获取课评详情
 export const getReview = async (reviewId: number): Promise<ApiResponse<Review>> => {
   return apiCall<Review>(`/reviews/${reviewId}`, {
     method: 'GET',
-  }, false);
+  }, true); // 需要认证以获取用户的点赞/踩状态
 };
 
 // 创建课评

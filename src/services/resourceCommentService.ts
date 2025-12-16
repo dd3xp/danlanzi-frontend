@@ -13,6 +13,7 @@ export interface ResourceComment {
   content: string;
   status: string;
   created_at: string;
+  floor_number?: number;
   user?: {
     id: number;
     nickname: string;
@@ -76,6 +77,31 @@ export const getResourceComments = async (params?: {
     return {
       status: 'error',
       message: error instanceof Error ? error.message : 'Failed to get resource comments',
+    };
+  }
+};
+
+// 获取单条资源评论详情
+export const getResourceComment = async (commentId: number): Promise<{ status: string; data?: { comment: ResourceComment }; message?: string }> => {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  const authHeaders = getAuthHeaders();
+  Object.assign(headers, authHeaders);
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/resourceComments/${commentId}`, {
+      method: 'GET',
+      headers,
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to get resource comment:', error);
+    return {
+      status: 'error',
+      message: error instanceof Error ? error.message : 'Failed to get resource comment',
     };
   }
 };

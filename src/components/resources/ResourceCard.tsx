@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import Tooltip from '@/components/global/Tooltip';
 import { Resource } from '@/services/resourceService';
 import { parseResourceTags, formatCount } from '@/utils/resourceUtils';
+import ReportModal from '@/components/report/ReportModal';
 import styles from '@/styles/resources/ResourceCard.module.css';
 
 interface ResourceCardProps {
@@ -10,9 +11,12 @@ interface ResourceCardProps {
   isFavorited?: boolean;
   isLiked?: boolean;
   showDelete?: boolean;
+  showEdit?: boolean;
+  hideActions?: boolean; // 隐藏所有操作按钮
   onFavorite?: (resourceId: number) => void;
   onLike?: (resourceId: number) => void;
   onDelete?: (resource: Resource) => void;
+  onEdit?: (resource: Resource) => void;
   onViewDetail?: (resource: Resource) => void;
 }
 
@@ -21,15 +25,19 @@ export default function ResourceCard({
   isFavorited = false,
   isLiked = false,
   showDelete = false,
+  showEdit = false,
+  hideActions = false,
   onFavorite,
   onLike,
   onDelete,
+  onEdit,
   onViewDetail
 }: ResourceCardProps) {
   const { t } = useTranslation('common');
   const { term, courseName, courseCode, instructors, others } = parseResourceTags(resource);
   const favoriteCount = resource.stats?.favorite_count || 0;
   const likeCount = resource.stats?.like_count || 0;
+  const [showReportModal, setShowReportModal] = useState(false);
 
   const handleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -53,16 +61,32 @@ export default function ResourceCard({
     }
   };
 
+  const handleEdit = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onEdit) {
+      onEdit(resource);
+    }
+  };
+
   const handleViewDetail = () => {
     if (onViewDetail) {
       onViewDetail(resource);
     }
   };
 
+  const handleReport = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowReportModal(true);
+  };
+
   return (
-    <div className={styles.resourceCard}>
+    <>
+      <div className={styles.resourceCard}>
       <div className={styles.resourceCardContent}>
-        <div className={styles.resourceTitle}>{resource.title}</div>
+        <div className={`${styles.resourceTitle} ${resource.status === 'hidden' ? styles.hidden : ''}`}>
+          {resource.title}
+        </div>
         <div className={styles.tagsContainer}>
           {term.map((t, idx) => (
             <span key={`term-${idx}`} className={`${styles.tag} ${styles.tagTerm}`}>
@@ -91,9 +115,10 @@ export default function ResourceCard({
           ))}
         </div>
       </div>
-      <div className={styles.cardActions}>
-        <div className={styles.actionButtonGroup}>
-          {onFavorite && (
+      {!hideActions && (
+        <div className={styles.cardActions}>
+          <div className={styles.actionButtonGroup}>
+            {onFavorite && (
             <Tooltip title={isFavorited ? t('allCourses.resource.unfavorite') : t('allCourses.resource.favorite')}>
               <button
                 type="button"
@@ -138,6 +163,28 @@ export default function ResourceCard({
             </Tooltip>
           )}
         </div>
+        {showEdit && onEdit && (
+          <Tooltip title={t('myResources.edit')}>
+            <button
+              type="button"
+              className={styles.editButton}
+              onClick={handleEdit}
+            >
+              <svg
+                className={styles.editIcon}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+            </button>
+          </Tooltip>
+        )}
         {showDelete && onDelete && (
           <Tooltip title={t('myResources.delete')}>
             <button
@@ -162,6 +209,26 @@ export default function ResourceCard({
             </button>
           </Tooltip>
         )}
+        <Tooltip title={t('report.title')}>
+          <button
+            type="button"
+            className={styles.reportButton}
+            onClick={handleReport}
+          >
+            <svg
+              className={styles.reportIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+              <line x1="4" y1="22" x2="4" y2="15" />
+            </svg>
+          </button>
+        </Tooltip>
         {onViewDetail && (
           <Tooltip title={t('allCourses.resource.viewDetail')}>
             <button
@@ -184,7 +251,17 @@ export default function ResourceCard({
           </Tooltip>
         )}
       </div>
+      )}
+      {!hideActions && (
+        <ReportModal
+          open={showReportModal}
+          onClose={() => setShowReportModal(false)}
+          entityType="resource"
+          entityId={resource.id}
+        />
+      )}
     </div>
+    </>
   );
 }
 

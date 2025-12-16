@@ -158,7 +158,29 @@ export function translateBackendMessage(
     'title 必填': 'resource.errors.titleRequired',
     'visibility 必须是 public/course/private': 'resource.errors.invalidVisibility',
     '请通过字段名 file 上传文件': 'resource.errors.invalidFileFieldName',
-    'link 类型需要提供 url_or_path': 'resource.errors.urlOrPathRequired'
+    'link 类型需要提供 url_or_path': 'resource.errors.urlOrPathRequired',
+    
+    // 通知相关消息
+    'Validation failed': 'notification.errors.validationFailed',
+    'Notification created successfully': 'notification.success.created',
+    'Failed to create notification': 'notification.errors.createFailed',
+    'Some user_ids do not exist': 'notification.errors.someUserIdsNotExist',
+    'Notifications created successfully': 'notification.success.batchCreated',
+    'Failed to create notifications': 'notification.errors.batchCreateFailed',
+    'Invalid token payload: user id missing': 'auth.errors.invalidTokenPayload',
+    'Notifications retrieved successfully': 'notification.success.retrieved',
+    'Failed to retrieve notifications': 'notification.errors.retrieveFailed',
+    'Unread count retrieved successfully': 'notification.success.unreadCountRetrieved',
+    'Failed to retrieve unread count': 'notification.errors.unreadCountRetrieveFailed',
+    'Notification not found': 'notification.errors.notFound',
+    'Notification retrieved successfully': 'notification.success.retrievedSingle',
+    'Failed to retrieve notification': 'notification.errors.retrieveSingleFailed',
+    'Notification marked as read': 'notification.success.markedAsRead',
+    'Failed to mark notification as read': 'notification.errors.markAsReadFailed',
+    'All notifications marked as read': 'notification.success.allMarkedAsRead',
+    'Failed to mark all notifications as read': 'notification.errors.markAllAsReadFailed',
+    'Notification deleted successfully': 'notification.success.deleted',
+    'Failed to delete notification': 'notification.errors.deleteFailed'
   };
 
   const translationKey = messageMap[message];

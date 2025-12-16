@@ -18,7 +18,8 @@
       "tokenError": "Token error",
       "tokenMissing": "Token missing",
       "authRequired": "Authentication required",
-      "adminRequired": "Admin privileges required"
+      "adminRequired": "Admin privileges required",
+      "invalidTokenPayload": "Invalid token payload: user ID missing"
     },
     "success": {
       "registrationSuccessful": "Registration successful",
@@ -136,6 +137,31 @@
       "liked": "Liked successfully",
       "unliked": "Unliked successfully",
       "deleted": "Resource deleted successfully"
+    }
+  },
+  "notification": {
+    "errors": {
+      "validationFailed": "Validation failed",
+      "createFailed": "Failed to create notification",
+      "someUserIdsNotExist": "Some user IDs do not exist",
+      "batchCreateFailed": "Failed to batch create notifications",
+      "retrieveFailed": "Failed to retrieve notifications",
+      "unreadCountRetrieveFailed": "Failed to retrieve unread count",
+      "notFound": "Notification not found",
+      "retrieveSingleFailed": "Failed to retrieve notification details",
+      "markAsReadFailed": "Failed to mark as read",
+      "markAllAsReadFailed": "Failed to mark all as read",
+      "deleteFailed": "Failed to delete notification"
+    },
+    "success": {
+      "created": "Notification created successfully",
+      "batchCreated": "Notifications batch created successfully",
+      "retrieved": "Notifications retrieved successfully",
+      "unreadCountRetrieved": "Unread count retrieved successfully",
+      "retrievedSingle": "Notification details retrieved successfully",
+      "markedAsRead": "Marked as read",
+      "allMarkedAsRead": "All marked as read",
+      "deleted": "Notification deleted successfully"
     }
   }
 }

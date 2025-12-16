@@ -221,3 +221,11 @@
 .hamburgerLine:nth-child(3) {
   top: 30px;
 }
+
+/* 分隔线 */
+.divider {
+  width: calc(100% - 20px);
+  height: 1px;
+  background: var(--card-border);
+  margin: 8px 10px;
+}

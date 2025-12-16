@@ -253,6 +253,100 @@ export const unlikeResource = async (resourceId: number): Promise<ApiResponse<an
   }, true); // 需要认证
 };
 
+// 更新资源参数
+export interface UpdateResourceParams {
+  type?: ResourceType;
+  title?: string;
+  description?: string;
+  url_or_path?: string;
+  visibility?: ResourceVisibility;
+  course_id?: number;
+  offering_id?: number;
+  tags?: string[];
+  file?: File;
+}
+
+// 更新资源
+export const updateResource = async (id: number, params: UpdateResourceParams): Promise<ApiResponse<any>> => {
+  console.log('updateResource called with params:', params);
+  
+  const formData = new FormData();
+  
+  // 添加文件（如果有）
+  if (params.file) {
+    formData.append('file', params.file);
+  }
+  
+  // 添加其他字段
+  if (params.type) formData.append('type', params.type);
+  if (params.title) formData.append('title', params.title);
+  if (params.description !== undefined) formData.append('description', params.description);
+  if (params.url_or_path) formData.append('url_or_path', params.url_or_path);
+  if (params.visibility) formData.append('visibility', params.visibility);
+  if (params.course_id) formData.append('course_id', params.course_id.toString());
+  if (params.offering_id) formData.append('offering_id', params.offering_id.toString());
+  if (params.tags && params.tags.length > 0) {
+    formData.append('tags', JSON.stringify(params.tags));
+  }
+  
+  // 调试：打印 FormData 内容
+  console.log('FormData entries:');
+  for (const pair of formData.entries()) {
+    console.log(pair[0], '=', pair[1]);
+  }
+
+  const headers: Record<string, string> = {};
+  const authHeaders = getAuthHeaders();
+  Object.assign(headers, authHeaders);
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/resources/${id}`, {
+      method: 'PUT',
+      headers,
+      body: formData,
+    });
+
+    let data;
+    try {
+      data = await response.json();
+    } catch (jsonError) {
+      if (response.status === 403 || response.status === 401) {
+        return {
+          status: 'error',
+          message: 'TOKEN_EXPIRED',
+          error: 'TOKEN_EXPIRED'
+        };
+      }
+      return {
+        status: 'error',
+        message: 'SERVER_RESPONSE_ERROR',
+        error: 'SERVER_RESPONSE_ERROR'
+      };
+    }
+
+    if (!response.ok) {
+      return {
+        status: 'error',
+        message: data.message || 'Failed to update resource',
+        error: data.error || 'UNKNOWN_ERROR'
+      };
+    }
+
+    return {
+      status: 'success',
+      message: data.message || 'Resource updated successfully',
+      data: data.data
+    };
+  } catch (error) {
+    console.error('Update resource failed:', error);
+    return {
+      status: 'error',
+      message: error instanceof Error ? error.message : 'Failed to update resource',
+      error: 'NETWORK_ERROR'
+    };
+  }
+};
+
 // 删除资源
 export const deleteResource = async (resourceId: number): Promise<ApiResponse<any>> => {
   return apiCall<any>(`/resources/${resourceId}`, {

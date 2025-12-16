@@ -44,6 +44,8 @@ export default function MyResources() {
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [resourceToDelete, setResourceToDelete] = useState<Resource | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [resourceToEdit, setResourceToEdit] = useState<Resource | null>(null);
+  const [editResourceModalOpen, setEditResourceModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
@@ -217,7 +219,7 @@ export default function MyResources() {
   };
 
   // 加载发布的资源
-  const loadUploadedResources = async () => {
+  const loadUploadedResources = async (): Promise<Resource[]> => {
     setUploadedLoading(true);
     setUploadedError(null);
     
@@ -228,12 +230,13 @@ export default function MyResources() {
       });
       
       if (response.status === 'success' && response.data) {
-        setUploadedResourcesList(response.data.resources);
+        const resources = response.data.resources;
+        setUploadedResourcesList(resources);
         
         // 初始化收藏和点赞状态
         const favoritedSet = new Set<number>();
         const likedSet = new Set<number>();
-        response.data.resources.forEach(resource => {
+        resources.forEach(resource => {
           if (resource.isFavorited) {
             favoritedSet.add(resource.id);
           }
@@ -243,32 +246,31 @@ export default function MyResources() {
         });
         setFavoritedResources(prev => {
           const newSet = new Set(prev);
-          if (response.data) {
-            response.data.resources.forEach(resource => {
-              if (resource.isFavorited) {
-                newSet.add(resource.id);
-              }
-            });
-          }
+          resources.forEach(resource => {
+            if (resource.isFavorited) {
+              newSet.add(resource.id);
+            }
+          });
           return newSet;
         });
         setLikedResources(prev => {
           const newSet = new Set(prev);
-          if (response.data) {
-            response.data.resources.forEach(resource => {
-              if (resource.isLiked) {
-                newSet.add(resource.id);
-              }
-            });
-          }
+          resources.forEach(resource => {
+            if (resource.isLiked) {
+              newSet.add(resource.id);
+            }
+          });
           return newSet;
         });
+        return resources;
       } else {
         setUploadedError(translateBackendMessage(response, t) || t('myResources.states.loadFailed'));
+        return [];
       }
     } catch (err: any) {
       console.error('Load uploaded resources failed:', err);
       setUploadedError(translateBackendMessage(err.message || 'Failed to load resources', t) || t('myResources.states.loadFailed'));
+      return [];
     } finally {
       setUploadedLoading(false);
     }
@@ -414,6 +416,18 @@ export default function MyResources() {
     setResourceDetailModalOpen(true);
   };
 
+  // 处理编辑资源
+  const handleEdit = (resource: Resource) => {
+    console.log('handleEdit called', { 
+      resourceId: resource.id, 
+      resource,
+      uploadedResourcesListLength: uploadedResourcesList.length 
+    });
+    // 直接使用传入的 resource，因为它来自于最新渲染的卡片
+    setResourceToEdit(resource);
+    setEditResourceModalOpen(true);
+  };
+
   // 处理删除资源
   const handleDelete = (resource: Resource) => {
     setResourceToDelete(resource);
@@ -480,7 +494,7 @@ export default function MyResources() {
   }, []);
 
   // 渲染资源卡片
-  const renderResourceCard = (resource: Resource, showDelete: boolean = false) => {
+  const renderResourceCard = (resource: Resource, showDelete: boolean = false, showEdit: boolean = false) => {
     const isFavorited = favoritedResources.has(resource.id);
     const isLiked = likedResources.has(resource.id);
     
@@ -491,9 +505,11 @@ export default function MyResources() {
         isFavorited={isFavorited}
         isLiked={isLiked}
         showDelete={showDelete}
+        showEdit={showEdit}
         onFavorite={handleFavorite}
         onLike={handleLike}
         onDelete={handleDelete}
+        onEdit={handleEdit}
         onViewDetail={handleViewDetail}
       />
     );
@@ -526,7 +542,8 @@ export default function MyResources() {
         {searchResults.map(resource => {
           // 搜索结果中，只有当前用户上传的资源才显示删除按钮
           const showDelete = uploadedResourcesList.some(r => r.id === resource.id);
-          return renderResourceCard(resource, showDelete);
+          const showEdit = uploadedResourcesList.some(r => r.id === resource.id);
+          return renderResourceCard(resource, showDelete, showEdit);
         })}
       </div>
     );
@@ -572,7 +589,7 @@ export default function MyResources() {
 
     return (
       <div className={styles.resourcesList}>
-        {currentResources.map(resource => renderResourceCard(resource, activeTab === 'uploaded'))}
+        {currentResources.map(resource => renderResourceCard(resource, activeTab === 'uploaded', activeTab === 'uploaded'))}
       </div>
     );
   };
@@ -725,6 +742,27 @@ export default function MyResources() {
                 loadFavoritedResources();
               } else {
                 loadUploadedResources();
+              }
+            }}
+          />
+
+          <AddResourceModal
+            open={editResourceModalOpen}
+            initialData={resourceToEdit}
+            onClose={() => {
+              setEditResourceModalOpen(false);
+              setResourceToEdit(null);
+            }}
+            onSuccess={async () => {
+              // 先关闭模态框
+              setEditResourceModalOpen(false);
+              setResourceToEdit(null);
+              
+              // 重新加载当前tab的数据
+              if (activeTab === 'favorited') {
+                await loadFavoritedResources();
+              } else {
+                await loadUploadedResources();
               }
             }}
           />

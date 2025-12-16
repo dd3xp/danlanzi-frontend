@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import styles from '@/styles/global/SideBar.module.css';
+import { getUserProfile } from '@/services/userProfileService';
+import { getToken } from '@/utils/auth';
 
 // 全局状态，在组件外部定义，避免重新挂载时重置
 let globalSidebarExpanded = false;
 let globalSidebarHovered = false;
+let globalUserRole: string | null = null;
 
 export default function SideBar() {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(globalSidebarExpanded);
   const [isHovered, setIsHovered] = useState(globalSidebarHovered);
+  const [userRole, setUserRole] = useState<string | null>(globalUserRole);
   
   // 同步全局状态
   useEffect(() => {
@@ -29,12 +33,39 @@ export default function SideBar() {
     }
   }, []);
 
+  // 获取用户角色
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const token = getToken();
+        if (!token) return;
+
+        const response = await getUserProfile();
+        if (response.status === 'success' && response.user) {
+          globalUserRole = response.user.role;
+          setUserRole(response.user.role);
+        }
+      } catch (error) {
+        console.error('Failed to fetch user role:', error);
+      }
+    };
+
+    // 如果还没有获取过角色，才去获取
+    if (!globalUserRole) {
+      fetchUserRole();
+    } else {
+      setUserRole(globalUserRole);
+    }
+  }, []);
+
   // 判断当前页面
   const getCurrentPage = () => {
     const path = router.pathname;
     if (path === '/user' || path === '/user/') return 'home';
     if (path === '/user/all-courses') return 'courses';
     if (path === '/user/my-resources') return 'my-resources';
+    if (path === '/admin/announcements') return 'announcements';
+    if (path === '/admin/moderation') return 'moderation';
     return null;
   };
 
@@ -163,6 +194,43 @@ export default function SideBar() {
         </svg>
         <span className={styles.navText}>{t('sidebar.myResources')}</span>
       </button>
+
+      {/* 管理员菜单 */}
+      {userRole === 'admin' && (
+        <>
+          <div className={styles.divider} />
+          <button
+            className={`${styles.iconButton} ${styles.navItem} ${currentPage === 'announcements' ? styles.active : ''}`}
+            aria-label="announcements"
+            type="button"
+            onClick={() => navigateToPage('/admin/announcements')}
+            onMouseEnter={handleNavItemMouseEnter}
+            onMouseLeave={handleNavItemMouseLeave}
+          >
+            {/* 公告管理图标：喇叭 */}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span className={styles.navText}>{t('sidebar.announcements')}</span>
+          </button>
+
+          <button
+            className={`${styles.iconButton} ${styles.navItem} ${currentPage === 'moderation' ? styles.active : ''}`}
+            aria-label="moderation"
+            type="button"
+            onClick={() => navigateToPage('/admin/moderation')}
+            onMouseEnter={handleNavItemMouseEnter}
+            onMouseLeave={handleNavItemMouseLeave}
+          >
+            {/* 审核处理图标：盾牌 */}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span className={styles.navText}>{t('sidebar.moderation')}</span>
+          </button>
+        </>
+      )}
     </aside>
   );
 }

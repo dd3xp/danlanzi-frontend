@@ -474,7 +474,8 @@
 }
 
 .commentLikeButton,
-.commentDislikeButton {
+.commentDislikeButton,
+.commentReportButton {
   appearance: none;
   border: none;
   background: transparent;
@@ -491,7 +492,8 @@
 }
 
 .commentLikeButton:hover,
-.commentDislikeButton:hover {
+.commentDislikeButton:hover,
+.commentReportButton:hover {
   background: var(--hover-bg);
 }
 
@@ -504,19 +506,30 @@
 }
 
 .commentLikeIcon.commentLikeFilled {
-  color: #ef4444;
+  color: var(--icon-heart);
 }
 
 .commentDislikeIcon.commentDislikeFilled {
-  color: #6b7280;
+  color: var(--icon-heart-disabled);
 }
 
 .commentLikeButton:hover .commentLikeIcon {
-  color: #ef4444;
+  color: var(--icon-heart);
 }
 
 .commentDislikeButton:hover .commentDislikeIcon {
-  color: #6b7280;
+  color: var(--icon-heart-disabled);
+}
+
+.commentReportIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.commentReportButton:hover .commentReportIcon {
+  color: var(--text);
 }
 
 .commentActionCount {

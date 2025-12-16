@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, message } from 'antd';
 import { useTranslation } from 'next-i18next';
+import { formatDateTime } from '@/utils/dateUtils';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Review } from '@/services/reviewService';
@@ -13,6 +14,7 @@ import {
   ReviewComment 
 } from '@/services/reviewCommentService';
 import Tooltip from '@/components/global/Tooltip';
+import ReportModal from '@/components/report/ReportModal';
 import styles from '@/styles/reviews/ReviewDetailModal.module.css';
 
 interface ReviewDetailModalProps {
@@ -20,9 +22,10 @@ interface ReviewDetailModalProps {
   onClose: () => void;
   review: Review | null;
   courseName?: string;
+  showReportButton?: boolean; // 是否显示举报按钮，默认true
 }
 
-export default function ReviewDetailModal({ open, onClose, review, courseName }: ReviewDetailModalProps) {
+export default function ReviewDetailModal({ open, onClose, review, courseName, showReportButton = true }: ReviewDetailModalProps) {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [authorAvatar, setAuthorAvatar] = useState<string | null>(null);
@@ -259,8 +262,8 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
               </button>
             </Tooltip>
           </div>
-          {/* 回复输入框 */}
-          {showReplyInput && (
+        {/* 回复输入框 */}
+        {showReplyInput && (
             <div className={styles.replyInputContainer}>
               <div className={styles.replyInputWrapper}>
                 <textarea
@@ -290,9 +293,9 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
                 >
                   {submittingReply ? t('allCourses.states.submitting') : t('allCourses.review.submit')}
                 </button>
-              </div>
             </div>
-          )}
+          </div>
+        )}
           {loadingComments ? (
             <div className={styles.loadingState}>
               {t('allCourses.states.loading')}
@@ -325,17 +328,19 @@ export default function ReviewDetailModal({ open, onClose, review, courseName }:
 interface CommentItemProps {
   comment: ReviewComment;
   commentNumber: number;
+  showReportButton?: boolean;
   onUpdate?: (updatedComment: ReviewComment) => void;
 }
 
-function CommentItem({ comment, commentNumber, onUpdate }: CommentItemProps) {
-  const { t } = useTranslation('common');
+function CommentItem({ comment, commentNumber, showReportButton = true, onUpdate }: CommentItemProps) {
+  const { t, i18n } = useTranslation('common');
   const router = useRouter();
   const [userAvatar, setUserAvatar] = useState<string | null>(null);
   const [isLiked, setIsLiked] = useState(comment.userReaction === 'like');
   const [isDisliked, setIsDisliked] = useState(comment.userReaction === 'dislike');
   const [likeCount, setLikeCount] = useState(comment.stats?.like_count || 0);
   const [dislikeCount, setDislikeCount] = useState(comment.stats?.dislike_count || 0);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   useEffect(() => {
     if (comment.user?.id) {
@@ -436,20 +441,14 @@ function CommentItem({ comment, commentNumber, onUpdate }: CommentItemProps) {
           <span className={styles.commentUserName}>{comment.user?.nickname || t('allCourses.review.anonymous')}</span>
         </div>
         <span className={styles.commentTime}>
-          {new Date(comment.created_at).toLocaleString('zh-CN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-          })}
+          {formatDateTime(comment.created_at, i18n.language)}
         </span>
       </div>
       <div className={styles.commentContent}>{comment.content}</div>
       <div className={styles.commentFooter}>
         <span className={styles.commentNumber}>#{commentNumber}</span>
-        <div className={styles.commentActions}>
-          <div className={styles.commentActionButtonGroup}>
+      <div className={styles.commentActions}>
+        <div className={styles.commentActionButtonGroup}>
           <Tooltip title={isLiked ? t('allCourses.resource.unlike') : t('allCourses.resource.like')}>
             <button
               type="button"
@@ -490,9 +489,40 @@ function CommentItem({ comment, commentNumber, onUpdate }: CommentItemProps) {
               <span className={styles.commentActionCount}>{formatCount(dislikeCount)}</span>
             </button>
           </Tooltip>
+          {showReportButton && (
+            <Tooltip title={t('report.title')}>
+              <button
+                type="button"
+                className={styles.commentReportButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowReportModal(true);
+                }}
+              >
+                <svg
+                  className={styles.commentReportIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                  <line x1="4" y1="22" x2="4" y2="15" />
+                </svg>
+              </button>
+            </Tooltip>
+          )}
           </div>
         </div>
       </div>
+      <ReportModal
+        open={showReportModal}
+        onClose={() => setShowReportModal(false)}
+        entityType="review_comment"
+        entityId={comment.id}
+      />
     </div>
   );
 }

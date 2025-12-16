@@ -25,18 +25,31 @@
     --success-color: #10b981;  /* 成功色 */
     --error-color: #ef4444;    /* 错误色 */
 
+    --yellow-1: #fbbf24;       /* 黄色-1 (星星) */
+    --gray-7: #6b7280;         /* 灰色-7 (禁用/次要) */
+    --red-1: #dc2626;          /* 红色-1 */
+    --red-2: #fee2e2;          /* 红色-2 (浅红背景) */
+    --red-3: #fca5a5;          /* 红色-3 (浅红边框) */
+
     /* 透明度颜色 */
     --alpha-dark-1: rgba(0, 0, 0, 0.55);      /* 55%黑 */
     --alpha-dark-2: rgba(0, 0, 0, 0.35);      /* 35%黑 */
+    --alpha-dark-3: rgba(0, 0, 0, 0.5);       /* 50%黑 (遮罩层) */
     --alpha-light-1: rgba(255, 255, 255, 0.35); /* 35%白 */
     --alpha-light-2: rgba(255, 255, 255, 0.15); /* 15%白 */
     --alpha-light-3: rgba(255, 255, 255, 0.2);  /* 20%白 */
+    --alpha-blue-1: rgba(59, 130, 246, 0.1);  /* 10%蓝 (高亮) */
 
     /* 遮罩层相关 */
-    --overlay-bg: var(--alpha-dark-1);
+    --overlay-bg: var(--alpha-dark-3);
     --overlay-border: var(--alpha-light-1);
     --overlay-hover: var(--alpha-light-2);
     --scrollbar-thumb: var(--alpha-light-3);
+    
+    /* 图标颜色相关 */
+    --icon-star: var(--yellow-1);           /* 星星图标 */
+    --icon-heart: var(--error-color);       /* 心形图标 */
+    --icon-heart-disabled: var(--gray-7);   /* 禁用心形图标 */
     
     /* 状态相关 */
     --error: var(--error-color);
@@ -163,19 +176,32 @@
     
     --success-color: #10b981;  /* 成功色 */
     --error-color: #ef4444;    /* 错误色 */
+    
+    --yellow-1: #fbbf24;       /* 黄色-1 (星星) */
+    --gray-7: #6b7280;         /* 灰色-7 (禁用/次要) */
+    --red-1: #dc2626;          /* 红色-1 */
+    --red-2: #fee2e2;          /* 红色-2 (浅红背景) */
+    --red-3: #fca5a5;          /* 红色-3 (浅红边框) */
 
     /* 透明度颜色 */
     --alpha-dark-1: rgba(0, 0, 0, 0.55);      /* 55%黑 */
     --alpha-dark-2: rgba(0, 0, 0, 0.35);      /* 35%黑 */
+    --alpha-dark-3: rgba(0, 0, 0, 0.5);       /* 50%黑 (遮罩层) */
     --alpha-light-1: rgba(255, 255, 255, 0.35); /* 35%白 */
     --alpha-light-2: rgba(255, 255, 255, 0.15); /* 15%白 */
     --alpha-light-3: rgba(255, 255, 255, 0.2);  /* 20%白 */
+    --alpha-blue-1: rgba(59, 130, 246, 0.1);  /* 10%蓝 (高亮) */
 
     /* 遮罩层相关 */
-    --overlay-bg: var(--alpha-dark-1);
+    --overlay-bg: var(--alpha-dark-3);
     --overlay-border: var(--alpha-light-1);
     --overlay-hover: var(--alpha-light-2);
     --scrollbar-thumb: var(--alpha-light-3);
+    
+    /* 图标颜色相关 */
+    --icon-star: var(--yellow-1);           /* 星星图标 */
+    --icon-heart: var(--error-color);       /* 心形图标 */
+    --icon-heart-disabled: var(--gray-7);   /* 禁用心形图标 */
     
     /* 状态相关 */
     --error: var(--error-color);
@@ -272,6 +298,11 @@
     --tag-other-bg: var(--hover-bg);                /* 其他标签背景 */
     --tag-other-text: var(--text-secondary);        /* 其他标签文字 */
     --tag-other-border: var(--card-border);         /* 其他标签边框 */
+    
+    /* 图标颜色相关 */
+    --icon-star: var(--yellow-1);           /* 星星图标 */
+    --icon-heart: var(--error-color);       /* 心形图标 */
+    --icon-heart-disabled: var(--gray-7);   /* 禁用心形图标 */
     }
   }
 

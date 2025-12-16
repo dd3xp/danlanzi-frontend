@@ -1,0 +1,105 @@
+.modal :global(.ant-modal-content) {
+  background: var(--card) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+}
+
+.modal :global(.ant-modal-header) {
+  background: var(--card) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+  padding-bottom: 15px !important;
+  margin-bottom: 0 !important;
+}
+
+.modal :global(.ant-modal-body) {
+  padding: 24px !important;
+}
+
+.modal :global(.ant-modal-title) {
+  color: var(--text) !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+}
+
+.modal :global(.ant-modal-close) {
+  color: var(--text-secondary);
+}
+
+.modal :global(.ant-modal-close:hover) {
+  color: var(--text);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 8px 0;
+}
+
+.loadingState {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.commentCard {
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.commentText {
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.commentMeta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.floorNumber {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.time {
+  font-size: 13px;
+  color: var(--text-assist);
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  text-align: right;
+}
+
+.clickableEntity {
+  cursor: pointer;
+}

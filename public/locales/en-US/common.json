@@ -40,6 +40,12 @@
       "upload": "Upload avatar",
       "gallery": "System avatar"
     },
+    "avatar": {
+      "tabs": {
+        "upload": "Upload Avatar",
+        "system": "System Avatars"
+      }
+    },
     "fields": {
       "nickname": "Nickname",
       "studentId": "Student ID",
@@ -61,6 +67,7 @@
     "ariaLabel": "User menu",
     "profile": "Profile",
     "settings": "Settings",
+    "notifications": "Notifications",
     "logout": "Sign out"
   },
   "settings": {
@@ -114,7 +121,13 @@
     "courses": "Courses",
     "myResources": "My Resources",
     "resources": "Resources",
-    "brandName": "Dan Basket"
+    "brandName": "Dan Basket",
+    "announcements": "Announcements",
+    "moderation": "Moderation"
+  },
+  "homepage": {
+    "title": "Dan Lanzi",
+    "subtitle": "Dan Lanzi is a course resource sharing platform for Fudan University, dedicated to providing students with quality course materials and learning resources. Here, you can browse course information, share learning resources, view course reviews, and grow together with your classmates."
   },
   "allCourses": {
     "title": "All Courses",
@@ -239,6 +252,10 @@
       "noFavorited": "No favorited resources",
       "noUploaded": "No uploaded resources"
     },
+    "edit": "Edit Resource",
+    "editResource": "Edit Resource",
+    "updateSuccess": "Resource updated successfully",
+    "updateFailed": "Failed to update resource",
     "delete": "Delete Resource",
     "deleteSuccess": "Resource deleted successfully",
     "deleteFailed": "Failed to delete resource",
@@ -366,6 +383,199 @@
     "supportedTypes": "Supported PNG/JPG, max",
     "invalidImage": "Only PNG/JPG images are allowed",
     "fileTooLarge": "File is too large",
-    "fileTooLargeWithLimit": "File size must be less than {{limit}}MB"
+    "fileTooLargeWithLimit": "File size must be less than {{limit}}MB",
+    "uploadFailed": "Upload failed",
+    "loadSystemAvatarsFailed": "Failed to load system avatars"
+  },
+  "admin": {
+    "announcements": {
+      "title": "Announcement Management",
+      "subtitle": "Manage system announcements, create, edit and delete announcements",
+      "create": "Create Announcement",
+      "edit": "Edit",
+      "delete": "Delete",
+      "loading": "Loading...",
+      "loadFailed": "Failed to load",
+      "noAnnouncements": "No announcements",
+      "createTitle": "Create Announcement",
+      "editTitle": "Edit Announcement",
+      "deleteConfirmTitle": "Confirm Delete",
+      "deleteConfirmMessage": "Are you sure you want to delete announcement \"{{title}}\"? This action cannot be undone.",
+      "createSuccess": "Announcement created successfully",
+      "updateSuccess": "Announcement updated successfully",
+      "deleteSuccess": "Announcement deleted successfully",
+      "operationFailed": "Operation failed",
+      "titleRequired": "Please enter announcement title",
+      "submitting": "Submitting...",
+      "update": "Update",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "priority": "Priority",
+      "startsAt": "Starts At",
+      "endsAt": "Ends At",
+      "status": {
+        "scheduled": "Scheduled",
+        "active": "Active",
+        "ended": "Ended"
+      },
+      "tabs": {
+        "all": "All"
+      },
+      "filter": {
+        "all": "All",
+        "scheduled": "Scheduled",
+        "active": "Active",
+        "ended": "Ended"
+      },
+      "form": {
+        "title": "Title",
+        "titlePlaceholder": "Enter announcement title",
+        "content": "Content",
+        "contentPlaceholder": "Enter announcement content (optional)",
+        "priority": "Priority",
+        "startsAt": "Starts At",
+        "endsAt": "Ends At"
+      },
+      "prevPage": "Previous",
+      "nextPage": "Next",
+      "pageInfo": "Page {{page}} of {{totalPages}}"
+    },
+    "moderation": {
+      "title": "Moderation",
+      "subtitle": "Handle user reports and moderation queue",
+      "loading": "Loading...",
+      "loadFailed": "Failed to load",
+      "noReports": "No reports",
+      "noQueueItems": "No queue items",
+      "handle": "Handle",
+      "handleTitle": "Handle Moderation Item",
+      "handleSuccess": "Handled successfully",
+      "operationFailed": "Operation failed",
+      "submitting": "Submitting...",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "stats": {
+        "pending": "Pending",
+        "reports": "Pending Reports",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "tabs": {
+        "queue": "Moderation Queue",
+        "reports": "Reports",
+        "pendingReview": "Pending Review"
+      },
+      "action": {
+        "noViolation": "No Violation",
+        "delete": "Delete",
+        "hide": "Hide"
+      },
+      "filter": {
+        "all": "All",
+        "pending": "Pending",
+        "handled": "Handled",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "removed": "Removed"
+      },
+      "status": {
+        "pending": "Pending",
+        "handled": "Handled",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "removed": "Removed"
+      },
+      "entityType": {
+        "resource": "Resource",
+        "review": "Review",
+        "comment": "Comment"
+      },
+      "reason": "Reason",
+      "reporter": "Reporter",
+      "reportCount": "Report Count",
+      "handler": "Handler",
+      "handledAt": "Handled At",
+      "notes": "Notes",
+      "reportedContent": "Reported Content",
+      "sourceReview": "Source Review:",
+      "sourceResource": "Source Resource:",
+      "commentNotSupported": "Comment details are not supported here",
+      "createdAt": "Created At",
+      "form": {
+        "status": "Status",
+        "notes": "Notes",
+        "notesPlaceholder": "Enter notes (optional)"
+      },
+      "prevPage": "Previous",
+      "nextPage": "Next",
+      "pageInfo": "Page {{page}} of {{totalPages}}",
+      "deleteFailed": "Delete failed",
+      "deleteFailedWithCount": "Failed to delete {{count}} report records (may be unhandled reports)"
+    },
+    "report": {
+      "title": "Report Content",
+      "reason": "Reason",
+      "reasons": {
+        "plagiarism": "Plagiarism",
+        "abuse": "Abuse/Inappropriate",
+        "spam": "Spam",
+        "other": "Other"
+      },
+      "details": "Details (optional)",
+      "detailsPlaceholder": "Please describe the reason...",
+      "submit": "Submit Report",
+      "submitting": "Submitting...",
+      "cancel": "Cancel",
+      "submitSuccess": "Report submitted successfully",
+      "submitFailed": "Failed to submit report"
+    }
+  },
+  "notifications": {
+    "tabs": {
+      "ariaLabel": "Notification tabs",
+      "announcements": "System Announcements",
+      "messages": "User Messages"
+    },
+    "loading": "Loading...",
+    "loadFailed": "Failed to load",
+    "noAnnouncements": "No system announcements",
+    "noMessages": "No user messages",
+    "announcement": "System Announcement",
+    "message": "Message",
+    "markAsRead": "Mark as Read",
+    "markAsUnread": "Mark as Unread",
+    "markAllAsRead": "Mark All as Read",
+    "markAllReadSuccess": "All marked as read",
+    "markAllReadFailed": "Operation failed",
+    "delete": "Delete",
+    "deleteSuccess": "Deleted successfully",
+    "deleteFailed": "Delete failed",
+    "deleteAll": "Delete All",
+    "deleteAllSuccess": "All notifications deleted",
+    "deleteAllFailed": "Delete failed",
+    "confirmDeleteAll": "Are you sure you want to delete all notifications?",
+    "noContent": "No content",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageInfo": "Page {{page}} of {{totalPages}}",
+    "types": {
+      "resource": "Resource Notification",
+      "review": "Review Notification",
+      "comment": "Comment Notification",
+      "system": "System Notification"
+    },
+    "detail": "Notification Details",
+    "relatedEntity": "Related Content:",
+    "commentContent": "Comment Content",
+    "sourceReview": "Source Review:",
+    "sourceResource": "Source Resource:",
+    "entityTypes": {
+      "resource": "Resource",
+      "review": "Course Review",
+      "resource_comment": "Resource Comment",
+      "review_comment": "Review Reply",
+      "announcement": "Announcement"
+    },
+    "unreadCount": "{{count}} unread notifications"
   }
 }
